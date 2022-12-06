@@ -1,0 +1,286 @@
+// @use 'root';
+@import 'vxeCommon';
+
+
+:deep(.el-dialog){
+  border-radius: 10px;
+}
+//兼容顶部拖拽
+:deep(.el-dialog__header){
+  padding: 8px;
+}
+:deep(.el-dialog__body){
+  padding: 0 16px 16px 16px;
+}
+
+//按蓝湖调整关闭按钮位置
+:deep(.el-dialog__headerbtn) {
+  width: 36px;
+  height: 36px;
+  font-size: 20px;
+  right: 4px;
+}
+
+.el-divider--horizontal{
+  margin: 0;
+}
+
+.mainSection{
+  display: flex;
+    .left{
+      margin-right: 16px;
+      .logo{
+        width: 372px;
+        height: 468px;
+      }
+    }
+    .right{
+      padding: 50px;
+      .title{
+        // width: 167px;
+        height: 20px;
+        font-size: 20px;
+        font-family: Source Han Sans CN;
+        font-weight: 600;
+        line-height: 12px;
+        color: #000000;
+        margin-top: 12px;
+      }
+      .tip{
+        // width: 154px;
+        height: 14px;
+        font-size: 14px;
+        font-family: Source Han Sans CN;
+        font-weight: 400;
+        line-height: 12px;
+        color: #BBBBBB;
+        margin: 10px 0 40px 0
+        // opacity: 1;
+      }
+      .formBox{
+        position: relative;
+        @extend %flexColCen;
+        width: 300px;
+        .phoneSec{
+          position: relative;
+          width: 100%;
+          .dropBox{
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            cursor: pointer;
+          }
+        }
+        .el-form{
+          width: 100%;
+
+        }
+        .el-form-item {
+          margin-bottom: 30px;
+      }
+      .codeSec{
+        position: relative;
+        width: 100%;
+      .getcode {
+        width: 83px;
+        position: absolute;
+        top: 5px;
+        right: 14px;
+        color: #ff9712;
+        font-size: 16px;
+        font-family: MicrosoftYaHei;
+        line-height: 30px;
+        text-align: center;
+        cursor: pointer;
+        &:hover{
+          color: #ff9712;
+          background-color: transparent;
+          // border: 1px solid #ff9712;
+        }
+        &:actived{
+          color: #ff9712;
+          background-color: transparent;
+        }
+      }
+      .fetchCode{
+        position: absolute;
+        top: 0;
+        right: 35px;
+        color: #ff9712;
+        font-size: 16px;
+        font-family: MicrosoftYaHei;
+        line-height: 40px;
+      }
+    }
+    .submititem {
+      margin: 47px 0 10px 0;
+      .submitbtn {
+        // box-sizing: content-box;
+        width: 300px;
+        height: 40px;
+        background: rgba(255, 152, 18, 0.932);
+        border-radius: 4px;
+        font-size: 16px;
+        line-height: 40px;
+        color: #ffffff;
+        text-align: center;
+        font-family: Microsoft YaHei;
+        cursor: pointer;
+        // border: 1px solid #ff9712;
+        &:hover{
+          // border: 1px solid #ffffff;
+          background-color: #fcaf4c;
+
+        }
+        &:actived{
+          color: #f3f2f0;
+          background-color: #60dd41;
+        }
+        
+      }
+    }
+    .tipBox{
+      display: flex;
+      justify-content: space-between;
+      // line-height: 13px;
+      width: 100%;
+      .tip2{
+        // width: 182px;
+        // height: 19px;
+        // font-size: 14px;
+        font-family: Microsoft YaHei;
+        font-weight: 400;
+        line-height: 32px;
+        color: #CCCCCC;
+      }
+    }
+    .errorTip{
+      position: absolute;
+      top: 113px;
+      left: 2px;
+      font-family: MicrosoftYaHei;
+      color: #FF4040;
+    }
+      }
+    }
+
+    .right2{
+      padding: 50px;
+      @extend %flexColCen;
+      .title{
+        width: 300px;
+     display: flex;
+     justify-content: space-between;
+      
+      .tip{
+        width: 80px;
+        height: 20px;
+        font-size: 20px;
+        font-family: Source Han Sans CN;
+        font-weight: 600;
+        line-height: 12px;
+        color: #000000;
+      }
+      .exchangeBtn{
+        // width: 84px;
+        // height: 19px;
+        font-size: 14px;
+        font-family: Microsoft YaHei;
+        font-weight: 400;
+        // line-height: 12px;
+        color: #FF9712;
+        cursor: pointer;
+      }
+    }
+    .phoneBox{
+      width: 300px;
+      height: 304px;
+      margin-top: 20px;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      @extend %flexColCen;
+      overflow-y: scroll;
+      .listBox{
+        width: 280px;
+        height: 40px;
+        // border-bottom: 1px solid rgba(238,238,238,0.39);
+        &:hover{
+          // cursor: pointer;
+          background-color: rgba(248,248,248,0.39);
+        }
+        
+        .list{
+        height: 39px;
+          display: flex;
+          justify-content: space-between;
+          .phone{
+            // width: 90px;
+            // height: 19px;
+            font-size: 14px;
+            font-family: Microsoft YaHei;
+            font-weight: 400;
+            line-height: 40px;
+            color: #000000;
+            &:hover{
+              cursor: pointer;
+              color: #ff9712;
+            }
+          }
+          .onecolor {
+            color: #ff9712;
+            &:hover{
+              cursor: default;
+            }
+          }
+          .deleteBtn{
+            display: none;
+            margin-right: 6px;
+            line-height: 40px;
+            &:hover{
+              cursor: pointer;
+              color: #ff9712;
+            }
+          }
+          &:hover .deleteBtn{
+            display: block;
+          }
+        }
+      }
+      .one{
+        &:hover{
+          cursor: default;
+          background-color: rgb(255, 255, 255);
+        }
+    }
+    }
+
+    }
+
+}
+
+
+
+
+
+
+
+
+ .phoneBox::-webkit-scrollbar{
+        width:2px;
+        height:10px;
+        /**/
+      }
+      .phoneBox::-webkit-scrollbar-track{
+        background: rgb(239, 239, 239);
+        border-radius:2px;
+      }
+      .phoneBox::-webkit-scrollbar-thumb{
+        background: #bfbfbf;
+        border-radius:10px;
+      }
+      .phoneBox::-webkit-scrollbar-thumb:hover{
+        background: #333;
+      }
+      .phoneBox::-webkit-scrollbar-corner{
+        background: #179a16;
+      }

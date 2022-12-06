@@ -1,0 +1,83 @@
+
+//全局变量改变
+// :root{
+//   --el-color-primary: green;
+// }
+
+.xzzsymbol {
+  width: 1em; 
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+
+// /* 不可清除,补单关键词模块需要用到 */
+.el-message {  
+    min-width: 30px !important;
+    padding: 10px;
+    z-index: 9999 !important;
+  }
+  /* 不可清除,补单关键词模块需要用到 */
+//   .el-select-dropdown__item.selected {
+//     color:#ff9712;
+//   }
+//   .el-dialog__headerbtn:hover {
+//     color: #ff9712;
+//     .el-dialog__close{
+//     color: #ff9712;
+//     &:hover{
+//       color: #ff9712;
+//     }
+// }
+// }
+
+// .el-input__inner{
+//   &:focus{
+//   border-color: #ff9712;
+
+//   }
+//   &:hover{
+//     border-color: #ff9712;
+//   }
+// }
+
+
+// .el-input__wrapper:hover {
+//   box-shadow: 0 0 0 1px #ff9712;
+// }
+// .el-dropdown-menu__item:hover {
+//   background-color: #ffa9391f;
+//   color: #ff9712;
+// }
+
+.el-textarea__inner{
+  resize: none;
+}
+
+// div:has()
+
+//滚动条样式重写
+textarea,.vxe-modal--content,.el-table__body-wrapper, .keyWordSection, .arrListSection{
+
+&::-webkit-scrollbar{
+  width:2px;
+  height:10px;
+  /**/
+}
+&::-webkit-scrollbar-track{
+  background: rgb(239, 239, 239);
+  border-radius:2px;
+}
+&::-webkit-scrollbar-thumb{
+  background: #bfbfbf;
+  border-radius:10px;
+}
+&::-webkit-scrollbar-thumb:hover{
+  background: #333;
+}
+&::-webkit-scrollbar-corner{
+  background: #179a16;
+}
+}

@@ -1,0 +1,133 @@
+
+@import 'vxeCommon';
+.jclpanel {
+  z-index: 99;
+  position: fixed;
+  header {
+    .section {
+      padding: 10px;
+      background: linear-gradient(180deg, #ffad44 0%, #ff9712 100%);
+    }
+  }
+  .jclmain {
+      @extend %flexColCen;
+      >div {
+        margin: 5px 0;
+        font-family: MicrosoftYaHei;
+          .el-dropdown-link {
+            height: 38px;
+            @extend %flexCen;
+            color: #666;
+            cursor: pointer;
+            .jclicon {
+              margin-left: 10px;
+            }
+            .title {
+              width: 110px;
+              margin-left: 2px;
+            }
+            .arrow-right-czp {
+              margin: 0 10px 4px 0;
+              width: 12px;
+            }
+            &:hover {
+              color: #ff9712 !important;
+              background-color: #ffa9391f;
+            }
+          }
+          .title2{
+            font-family: MicrosoftYaHei;
+            font-weight: 400;
+          }
+      }
+      .version {
+        margin: 0 auto;
+        // text-align: center;
+        font-size: 14px;
+        line-height: 26px;
+        color: #999999;
+      }
+    }
+    footer{
+      .shrink{
+        text-align: center;
+        &:hover{
+          color: #ff9712;
+        }
+      }
+    }
+  }
+  
+
+//面板过渡动画
+.fade-enter-active, .fade-leave-active {
+  max-height: 800px;
+  transition: max-height 1s;
+}
+
+.fade-enter-from, .fade-leave-to {
+  max-height: 0;
+}
+
+//隐藏面板拖拽句柄
+.vdr.active:before {
+  display:none;
+}
+
+//整个面板背景及圆角
+:deep(.dragbox){
+  background-color: #fff;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+
+
+
+//二三级嵌套菜单面板
+
+// :deep(.el-dropdown-item2){
+//   .el-dropdown-link2{
+//     @extend %flexCen;
+//     justify-content: space-between;
+//   }
+// }
+
+
+.el-dropdown-link2{
+  height: 26px;
+  padding: 5px 5px; 
+  .title2{
+    width: 100px;
+  }
+}
+
+//二三级菜单中间鼠标悬浮
+:deep(.el-dropdown-item2){
+
+  padding:0 5px;  // 改变次级菜单范围
+  .el-dropdown-link2{
+    @extend %flexCen;
+    justify-content: space-between;
+  }
+  &:hover {
+      .title2{
+        color: #ff9712;
+      }
+      i{
+        color: #ff9712;
+      }
+  }
+ }
+//去除element菜单i默认参数
+ :deep(.el-dropdown-menu__item i ){
+  margin: 0 0 5px 0;
+}
+
+//修复店透视的颜色影响
+:deep(.el-dropdown-menu__item){
+  &:hover{
+    background-color: #fff1e0 !important;
+    color:#ff9712 !important;
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "name": "vv301",
+  "version": "1.0.0",
+  "description": "start build from 0",
+  "main": "content.js",
+  "scripts": {
+    "start": "webpack server",
+    "build": "webpack --env=production --mode=production",
+    "watch": "webpack --watch --mode=development --env=development",
+    "serve": "webpack serve"
+  },
+  "keywords": [
+    "xzz2022"
+  ],
+  "author": "xzz2022",
+  "license": "ISC",
+  "dependencies": {
+    "element-plus": "^2.2.12",
+    "pinia": "^2.0.20",
+    "pinia-plugin-persistedstate": "^2.3.0",
+    "vue": "^3.2.13",
+    "vxe-table": "^4.3.6",
+    "xe-utils": "^3.5.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "autoprefixer": "^10.4.13",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-import": "^1.13.5",
+    "blueimp-md5": "^2.19.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^9.0.1",
+    "css-loader": "^6.4.0",
+    "css-minimizer-webpack-plugin": "^4.1.0",
+    "dayjs": "^1.11.5",
+    "file-saver": "^2.0.5",
+    "html-webpack-plugin": "^5.3.2",
+    "jquery": "^3.6.0",
+    "js-table2excel": "^1.0.3",
+    "jsdoc": "^3.6.11",
+    "jszip": "^3.10.1",
+    "mini-css-extract-plugin": "^2.6.1",
+    "mitt": "^3.0.0",
+    "sass": "^1.54.3",
+    "sass-loader": "^13.0.2",
+    "style-loader": "^3.3.0",
+    "unplugin-auto-import": "^0.11.1",
+    "unplugin-vue-components": "^0.22.3",
+    "vue-loader": "^17.0.0",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.3.1",
+    "webpack-merge": "^5.8.0",
+    "ws": "^8.9.0",
+    "zip-webpack-plugin": "^4.0.1"
+  }
+}
