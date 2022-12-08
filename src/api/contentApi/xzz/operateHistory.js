@@ -8,6 +8,13 @@
 
 const operateHistory = {
     async add(obj){
+        // let obj = {
+        //     user_id: this.userid,
+        //     token: this.userToken,
+        //     platform,
+        //     type,
+        //     desc
+        //   }
         return new Promise( async (resolve, reject) => {
         if(Object.prototype.toString.call(obj) !== '[object Object]' && JSON.stringify(obj) === '{}'){
             resolve('设定失败:参数必须是object且不能为空')

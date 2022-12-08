@@ -6,7 +6,15 @@
                {name:'试试222', videourl: '', imgurl: ['https://img14.360buyimg.com/n2/jfs/t1/122295/27/18626/340950/6165b043Ed9f958ec/7a4fc3035bca0094.jpg', 'https://img13.360buyimg.com/n2/jfs/t1/193336/10/26161/112918/62c55835Ec20d50ad/7ab207e4ed7547d8.jpg']}]
  let a = await API.tableToExcel(column,data, '哈哈哈') -->
 </template>
-<script>
+<script setup>
+
+
+//平台状态store
+const busStore = piniaStore()
+//storeToRefs增加响应性,使用了proxy,所以需要用.value拿到值
+const { proBar, currentHref } = storeToRefs(busStore) 
+
+
 export default {
 data() {
     return {

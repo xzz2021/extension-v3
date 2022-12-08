@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-11-12 09:56:46
  * @LastEditors: xzz2021
- * @LastEditTime: 2022-11-30 17:54:48
+ * @LastEditTime: 2022-12-08 17:51:29
 -->
 <template>
   <vxe-modal className="taskProgressPanel"  v-model="taskShow" width="600" :position="{ top: 100 }" @hide="closeModal">
@@ -57,7 +57,7 @@
 </template>
 
 <script setup>
-    // ---------☆☆☆☆-----------proxy的值存储storage必须先stringify,取值时再parse---------☆☆☆☆----------
+    // ---------☆☆☆☆-----------proxy的值存储storage必须先stringify,取值时再parse----而且要注意拦截空值-----☆☆☆☆----------
     const taskShow = ref(false)
     const taskData = reactive({self:[]})
     const taskData2 = reactive({self:[]})
@@ -69,7 +69,7 @@
     
     await API.Storage.set({'taskData':JSON.stringify(newV)})
     // await API.Storage.set('taskData',taskData.self)
-      taskData2.value = newV
+      taskData2.self = newV
   }, { deep: true })
 
   const  closeModal = async() =>{
@@ -77,7 +77,7 @@
   const  deleteData =  async (it,index) => {
       if(searchKey.value !== ''){
         taskData.self = taskData.self.filter(item => item.timeStamp != it)
-        // await API.wait(0.05)
+        await API.wait(0.05)
         searchData()
       }else{
         taskData.self.splice(index,1)
@@ -103,10 +103,14 @@
       taskobj.timeStamp = Date.now()
       // taskobj.progress = 100
       taskData.self.unshift(taskobj)
+      // console.log('taskobj: ', taskobj);
       // console.log('taskData.self: ', JSON.parse(JSON.stringify(taskData.self)) );
+      // return
       await API.Storage.set({'taskData':JSON.stringify(taskData.self)})
+      // await API.Storage.set({'taskData':taskData.self})
     }
   onMounted(async () => { 
+
     API.emitter.on('openTaskprogress', () => {
       taskShow.value = true;
     })
@@ -118,8 +122,17 @@
     //   addTask({filetype: 'video',taskname: '视频总66.mp4',size: 1583253, progress: 30})
     // }, 3000);
 
-    taskData.self =  JSON.parse(await API.Storage.get('taskData')) || []
-    taskData2.self = taskData.self
+    // let aaa  =  await API.Storage.get('taskData') || []
+    // console.log('aaa: ', aaa);
+    // taskData.self =  JSON.parse(await API.Storage.get('taskData')) || []
+
+    //---------------必须做空值判断----不然json解析会卡死-----------
+    let aa = await API.Storage.get('taskData')
+    if(aa == '') return
+    // console.log('aa: ', aa);
+    taskData.self =  JSON.parse(aa)
+    taskData2.self = JSON.parse(aa)
+
   })
 
 

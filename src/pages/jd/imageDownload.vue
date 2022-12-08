@@ -287,7 +287,7 @@ const { proBar, currentHref } = storeToRefs(busStore)
        let dataSave = await selectZip.generateAsync({type: 'blob', compression: 'DEFLATE', compressionOptions: {level: 1}})
         // console.log('dataSave: ', dataSave); //blob对象
         saveAs(dataSave, zipname)
-        // API.emitter.emit('addTask',{filetype: 'zip',taskname: `${zipname}.zip`,size: dataSave.size,  progress: 100})
+        API.emitter.emit('addTask',{filetype: 'zip',taskname: `${zipname}.zip`,size: dataSave.size,  progress: 100})
     }
     const myProgress = async (val) => {   
        setTimeout(() => {

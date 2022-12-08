@@ -4,27 +4,23 @@
     <VueDragResize :isActive="true" :w="180" :h="60" :x="location.lx" :y="location.ly" :z="22" v-if="reloadDrag" :isResizable="false" @dragstop="onDragstop" >
       <!-- https://github.com/kirillmurashov/vue-drag-resize/tree/v2.0.3 -->
     <div class="dragbox">
-    <header class="jclheader">
-      <div class="section">
-        <img
-          style="width: 107px; height: 40px"
-          src="https://junchenlunoffice.oss-cn-shenzhen.aliyuncs.com/plugs/logo1/logobg.png"
-          alt=""
-        />
-      </div>
-    </header>
+        <panelHeader />
       <Transition name="fade">
     <!-- <el-collapse-transition> -->
     <main class="jclmain" v-show="showMain">
-        <div>
-        <el-dropdown placement="right-start" ref="subDropdown2">
-          <span class="el-dropdown-link">
-            <div class="jclicon"><i class="xzzicon3-tupian"></i></div>
-            <div class="title" >下载工具</div>
-            <div class="arrow-right-czp"><i class="xzzicon3-youjt"></i></div>
-          </span>
 
-          <template #dropdown>
+      <!-- 诊断工具 -->
+      <div>   
+            <el-dropdown placement="right-start" ref="subDropdown2">
+              <span class="entranceBox">
+                <div class="one">
+                    <xzzLogo name="dianpu" />
+                    <div class="title" >诊断工具</div>
+                </div>
+                <xzzLogoyjt />
+              </span>
+    
+              <template #dropdown>
              <el-dropdown-menu class="el-dropdown-menu2">
               <!-- 二级菜单开始 -->
               <el-dropdown-item class="el-dropdown-item2">
@@ -92,24 +88,170 @@
                 </span>
               </el-dropdown-item>
             </el-dropdown-menu>
-          </template>
-        </el-dropdown>
+              </template>
+            </el-dropdown>
       </div>
-          <div>
-        <el-dropdown>
-          <span class="addOperateRecord 商品搬家-商品搬家 el-dropdown-link" @click="try33" >
-            <div class="jclicon"><i class="xzzicon3-spbj"></i></div>
-            <div class="title">商品搬家</div>
-            <div class="arrow-right-czp"><i class=""></i></div>
+
+      <!-- 下载工具 -->
+        <div>
+            <el-dropdown placement="right-start" ref="subDropdown1">
+              <span class="entranceBox">
+                <div class="one">
+                    <xzzLogo name="tupian" />
+                    <div class="title" >下载工具</div>
+                </div>
+                <xzzLogoyjt />
+              </span>
+
+              <template #dropdown>
+             <el-dropdown-menu class="el-dropdown-menu2">
+              <!-- 二级菜单开始 -->
+              <el-dropdown-item class="el-dropdown-item2">
+                <el-dropdown  placement="right-start" @command="imgDownload" >
+                      <span class="el-dropdown-link2">
+                        <div class="title2">图片下载</div>
+                        <i class="xzzicon3-youjt"></i>
+                      </span>
+                  <template #dropdown>
+                    <el-dropdown-menu  @mouseenter.enter="() => { $refs.subDropdown1.handleOpen() }"
+                        @mouseleave.enter="() => { $refs.subDropdown1.handleClose() }">
+                    <el-dropdown-item :class="`addOperateRecord 图片下载-${item.name}`"
+                    :command="item" v-for="item in pictureOption" :key="item.name">
+                        {{ item.name }}
+                    </el-dropdown-item>
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
+              </el-dropdown-item>
+                <!-- 二级菜单结束 -->
+
+                 <!-- 二级菜单开始 -->
+              <el-dropdown-item class="el-dropdown-item2">
+                <el-dropdown placement="right-start" @command="downLoadJDcommentPicVue">
+                      <!-- <div class="title2">有图评价下载</div> -->
+                      <span class="el-dropdown-link2">
+                        <div class="title2">有图评价下载</div>
+                        <i class="xzzicon3-youjt"></i>
+                      </span>
+                  <template #dropdown>
+                    <el-dropdown-menu  @mouseenter.enter="() => { $refs.subDropdown2.handleOpen() }"
+                        @mouseleave.enter="() => { $refs.subDropdown2.handleClose() }">
+                        <!-- <el-dropdown-menu  > -->
+                    <el-dropdown-item :command="item.value" v-for="item in commentOptionPic" 
+                    :key="item.value">{{ item.value }}</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
+              </el-dropdown-item>
+                <!-- 二级菜单结束 -->
+
+                   <!-- 二级菜单开始 -->
+              <el-dropdown-item class="el-dropdown-item2">
+                <el-dropdown placement="right-start" @command="downLoadJDcommentNoPicVue">
+                      <!-- <div class="title2">无图评价下载</div> -->
+                      <span class="el-dropdown-link2">
+                        <div class="title2">无图评价下载</div>
+                        <i class="xzzicon3-youjt"></i>
+                      </span>
+                  <template #dropdown>
+                    <el-dropdown-menu  @mouseenter.enter="() => {$refs.subDropdown2.handleOpen() }"
+                        @mouseleave.enter="() => { $refs.subDropdown2.handleClose() }">
+                    <!-- <el-dropdown-menu  > -->
+                    <el-dropdown-item :command="item.value" v-for="item in commentOptionNoPic" 
+                    :key="item.value">{{ item.value }}</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
+              </el-dropdown-item>
+                <!-- 二级菜单结束 -->
+
+              <el-dropdown-item  class="addOperateRecord 下载工具-视频下载 el-dropdown-item2" @click.enter="downLoadJDVideoVue">
+                <span class="el-dropdown-link2">
+                  <div class="title2" >视频下载</div>
+                </span>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+      </div>
+
+      <!-- 补单工具 -->
+      <div >
+          <el-dropdown placement="right-start">
+            <span class="entranceBox">
+              <div class="one">
+                <xzzLogo name="bdgj" />
+                <div class="title" >补单工具</div>
+            </div>
+            <xzzLogoyjt />
+            </span>
+            <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item class="addOperateRecord 账号管理-操作记录" >操作记录</el-dropdown-item>
+              <el-dropdown-item class="addOperateRecord 账号管理-任务进程" >任务进程</el-dropdown-item>
+            </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </div>
+
+        <!-- 标题工具 -->
+      <div >
+          <el-dropdown placement="right-start">
+            <span class="entranceBox">
+              <div class="one">
+                <xzzLogo name="biaoti" />
+                <div class="title" >标题工具</div>
+            </div>
+            <xzzLogoyjt />
+            </span>
+            <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item class="addOperateRecord 账号管理-操作记录" >操作记录</el-dropdown-item>
+              <el-dropdown-item class="addOperateRecord 账号管理-任务进程" >任务进程</el-dropdown-item>
+            </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </div>
+
+
+      <div>
+          <span class="addOperateRecord 商品搬家-商品搬家 entranceBox" @click="try33" >
+            <div class="one">
+                <xzzLogo name="spbj" />
+                <div class="title" >商品搬家</div>
+            </div>
+            <xzzLogoyjt hide="true" />
           </span>
-        </el-dropdown>
       </div>
+      <div>
+          <span class="addOperateRecord 商品搬家-商品搬家 entranceBox"  >
+            <div class="one">
+                <xzzLogo name="home" />
+                <div class="title" >回到首页</div>
+            </div>
+            <xzzLogoyjt hide="true" />
+          </span>
+        </div>
+
+        <div>
+          <span class="addOperateRecord 商品搬家-商品搬家 entranceBox" @click="developing" >
+            <div class="one">
+                <xzzLogo name="login" />
+                <div class="title" >我的建议/反馈</div>
+            </div>
+            <xzzLogoyjt hide="true" />
+          </span>
+        </div>
+
+
         <div v-if="userid">
           <el-dropdown placement="right-start"  @command="accountManagement">
-            <span class="el-dropdown-link">
-              <div class="jclicon"><i :class="userid ? 'xzzicon3-exchange' : 'xzzicon3-login'"></i></div>
-              <div  class="title">{{userPhone}}</div>
-              <div class="arrow-right-czp"><i class="xzzicon3-youjt"></i></div>
+            <span class="entranceBox">
+              <div class="one">
+                <xzzLogo :name="userid ? 'exchange' : 'login'" />
+                <div class="title" >{{userPhone}}</div>
+            </div>
+            <xzzLogoyjt />
             </span>
             <template #dropdown>
             <el-dropdown-menu>
@@ -123,33 +265,33 @@
         </div>
 
         <div  v-else>
-          <el-dropdown>
-                <span class="el-dropdown-link" @click="goToLogin">
-                  <div class="jclicon"><i class="xzzicon3-login"></i></div>
-                  <div  class="title" >账号登录</div>
-                  <div class="arrow-right-czp"><i class=""></i></div>
+              <span class="entranceBox" @click="goToLogin">
+                <div class="one">
+                  <xzzLogo name="login" />
+                  <div class="title" >账号登录</div>
+                </div>
+                <xzzLogoyjt hide="true" />
                 </span>
-          </el-dropdown>
         </div>
 
         <div  class="version">版本:{{ version }} </div>
 
     </main>
-    <!-- </el-collapse-transition> -->
     </Transition>
 
     <footer @click="showMain = !showMain">
-      <div class="shrink"><i :class="!showMain? 'xzzicon3-shrink': 'xzzicon3-shrink2'"></i></div>
+      <div class="shrink">
+        <xzzLogo :name="showMain? 'shrink2': 'shrink'" />
+      </div>
     </footer>
     </div>
     </VueDragResize>
     </div>
     <loginPanel ref="loginRef" />
     <taskProgress ref="taskProgressRef" />
-    <operateHistory ref="operateHistoryRef" />
+    <operateHistory :sitePlatform="sitePlatform" ref="operateHistoryRef" />
     <jdScanRecord ref="ScanRecordRef"/>
     <!-- <jdShopDiagnosis ref="shopDiagnosisRef" /> -->
-    <!-- <MyProgress :show="progressVisible" :percentage="percentage" /> -->
     
       <jdImageDownload ref="imageDownloadRef"/>
     <!-- <commentDownload ref="commentDownloadRef" />
@@ -183,7 +325,8 @@ const { location } = storeToRefs(userstore)
 const busStore = piniaStore()
 //storeToRefs增加响应性,使用了proxy,所以需要用.value拿到值
 const { proBar,info_id, scanData, scanShow, currentHref } = storeToRefs(busStore) 
-
+// 从store拿到固定值
+const sitePlatform =  busStore.sitePlatform
 
 // const { proxy } = getCurrentInstance()
 //---------------单纯字符串变量不可使用reactive---------
@@ -204,8 +347,8 @@ const userid = ref('')
 const userPhone = ref('')
 
 const try33 = async () => {
-  await API.wait(2)
-  // console.log('--------我执行了-----77777777777------------')
+  // await API.wait(2)
+  console.log('--------我执行了-----77777777777------------')
 }
 const add3 = (e) => {
   console.log('-------我是新增事件--------------')
@@ -247,7 +390,8 @@ const commentOptionNoPic = reactive([{value: 20}, {value: 50}, {value: 100}, {va
                       ]
   const imageDownloadRef = ref(null)
   const imgDownload = (item) => {
-    // console.log('item: ', item);
+    let urlCheck = currentHref.value.indexOf('item.jd') == -1
+    if (urlCheck) return ElMessage.error({message: '请进入商品页面,再点击下载', duration: 2000})
       imageDownloadRef.value.startDownload(item.arg, item.platform);
   }
 //-------------------图片下载------------end-------------------------------------------
@@ -271,8 +415,10 @@ const downLoadJDVideoVue = async () => {
         let url = $('video source').attr('src')
         if(url == undefined) return  ElMessage.error({ message: '当前商品没有视频',  duration: 1500,})
         let name = new API.dayjs().format('YYYYMMDD') + '_' + skuId + '_商品视频.mp4'
-      let res = await  API.sendMessage({type: 'downloads', url, name}) 
-      res && ElMessage.success({ message: `视频${res}`, duration: 2500,})
+      let size = await  API.sendMessage({type: 'downloads', url, name}) 
+      console.log('size: ', size);
+      size && ElMessage.success({ message: `视频下载完成`, duration: 2500,})
+      API.emitter.emit('addTask',{filetype: 'video',taskname: name, size,  progress: 100})
 }
 // --------------------------视频下载 end-------------------
 
@@ -402,7 +548,7 @@ let userInfoStore  =  await  API.getUserinfo()
     }
 
   const  developing = async () => {
-      ElMessage.error({ message: `功能等待开发中`, duration: 3000, showClose: true });
+      ElMessage.error({ message: `功能等待开发中`, duration: 3000, showClose: true,grouping: true, });
     }
 
 onMounted(async () => {

@@ -48,6 +48,13 @@ import './src/css/style'
         //   }
         // })
 
+        // async copyInfo(val) {
+        //   if (val == '') return;
+        //   let str = val + '';
+        //   navigator.clipboard.writeText(str);
+        //   this.$message({ message: ` '${val}' 已复制到剪切板`, type: 'success', offset: 70, duration: 2000 });
+        // }
+
 //-------------------各平台实例引入----------------
 import app1688 from './src/pages/alibaba/app.vue'
 import apptmall from './src/pages/tmall/app.vue'

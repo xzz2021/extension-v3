@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-10-31 14:36:13
  * @LastEditors: xzz2021
- * @LastEditTime: 2022-12-01 11:33:31
+ * @LastEditTime: 2022-12-08 17:25:07
 -->
 <template>
 
@@ -51,11 +51,13 @@
 // const busStore = piniaStore()
 // //storeToRefs增加响应性,使用了proxy,所以需要用.value拿到值
 // const { userInfo } = storeToRefs(busStore) 
-
+const props = defineProps(['sitePlatform'])
       const Visible = ref(false)
       const totalCount =  ref(100)
       const historyTable = reactive({self: []})
       const userInfoStore = reactive({self: []})
+    // console.log('userInfoStore.self:1111111111111 ', userInfoStore.self);
+
       // historyTable: [
       // {id: 3,userPhone: 13467677683, platform: '京东', function: '店铺诊断', operate: '店铺诊断-销售前10商品', time: '2022-10-31 17:56' },
       // {id: 6,userPhone: 13467676873, platform: '京东', function: '店铺诊断', operate: '店铺诊断-销售前10商品', time: '2022-10-31 17:56' }]
@@ -76,107 +78,52 @@
       historyTable.self = list
       if (e == 1) { totalCount.value = count }
     }
-    // const  operationSummary = async (type, operation, platform) => {
-    //   let 下载工具 = ['图片下载', '有图评价下载', '无图评价下载']
-    //   if (下载工具.includes(type)) {
-    //     var desc = `下载工具-${type}-${operation}`
-    //     type = '下载工具'
-    //   } else if (type == "" || type.indexOf('****') > -1) {
-    //     type = operation
-    //     var desc = operation
-    //   } else {
-    //     var desc = type + '-' + operation
-    //   }
-
-    //   let obj = {
-    //     user_id: this.userid,
-    //     token: this.userToken,
-    //     platform,
-    //     type,
-    //     desc
-    //   }
-    //   // console.log(obj);
-    //   await API.operateHistory.add(obj)
-    // }
-
-    // const  bindEvent = async() => {
-    //   var si = setInterval(() => {
-    //     if (this.userid == '') {
-    //       jq('.drop-menu,.titletwo,main .title').css('pointer-events', 'none')
-    //     }
-
-    //     jq('.el-dropdown-menu.el-popper,.jclBox .el-dropdown').click(() => {
-    //       jq('.operateHistory .mytitle').click()
-    //     })
-
-    //     jq('.drop-menu,.titletwo,main .title').on('click', function (e) {
-    //       let ulId = jq(e.target).parents('ul').attr('id')
-    //       let parentText = jq('span[aria-controls=' + ulId + '] .title,span[aria-controls=' + ulId + '] .titletwo').text()
-    //       let originText = jq('.operateHistory .mytitle').text()
-    //       let platform = jq('.jclBox').attr('class').match(/ ?(.*?)_诊断/)[1]
-    //       jq('.operateHistory .mytitle').text(parentText + ',' + e.target.innerText + ',' + platform)
-    //       jq('.operateHistory .mytitle').click()
-    //       jq('.operateHistory .mytitle').text(originText)
-    //     })
-    //     clearInterval(si)
-    //   }, 1000);
-    // }
-
+    const addData = async (obj) => {
+      await API.operateHistory.add(obj)
+    }
     const getUserinfo = async () =>{
       userInfoStore.self  =  await  API.getUserinfo()
     }
 
-  
    onMounted(async() =>{
-    // this.bindEvent()
-
-    API.emitter.on('openOperateHistory', async () => {
       await getUserinfo()
+    API.emitter.on('openOperateHistory', async () => {
       await getDatabase(1)
       Visible.value = true
     });
 
-    // this.$myBus.$on('summary', async (event, params) => {
+    //------------当监听到登录事件后--------重新获取用户信息--------------
+    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+      message == 'loginEvent'? getUserInfo() : ''
+      sendResponse({status: true})
+      })
+    //---------------当未登录时拦截操作记录-----------------
+    if(userInfoStore.self.userid == undefined ) return
 
-    //   if (this.userid == '') return this.$myBus.$emit('iwantlogin2');
-    //   // console.log('summary', event, params, event.target.innerText);
-    //   // console.log('path', event.path);
-    //   if (event.target.innerText.indexOf(',') == -1) { return }
-    //   let [type, name, platform] = event.target.innerText.split(',')
-    //   console.log(type, name, platform);
-    //   this.operationSummary(type, name, platform)
-    // })
-    // await getUserinfo()
-    // await getDatabase(1)
-    //
+    //-------------------或者通过userid----??????????---不渲染-----------
+
+
+//--------------全局监听点击事件---------------start--------------------
     $(document).ready(() => {  //页面文档加载完再执行查询
       let node = $('.addOperateRecord')  //拿到所有标的项
       node.each(function(){
         //监听点击事件
         $(this).on('click',function(){
           //得到对应class值
-          console.log('$(this)[0].classList[1]: ', $(this)[0].classList[1]);
-
+          // console.log('$(this)[0].classList[1]: ', $(this)[0].classList[1]);
+      let obj = {
+        user_id: userInfoStore.self.userid,
+        token: userInfoStore.self.userToken,
+        platform: props.sitePlatform,
+        type: '开发调试,可忽略此账号记录',
+        desc: $(this)[0].classList[1]
+      }
+      addData(obj)
         })
       })
-      // for(let i=0; i<node.length; i++){
-      //   // node[i]
-      //   console.log('node[i]: ', node[i]);
-      // }
-      // node.on('click',function(e) {
-        // console.log('e: ', e);
-      //   // this.classList
-      //   console.log('this.classList: ', this);
-      // })
-    //   console.log('node: ', node);
-    //  for(let i=0; i<node.length; i++){
-    //     console.log('node[i]: ', node[i].attr('class'));
-
-    //   // node[i].addEventListener('click',()=> {
-    //   //   console.log('node[i]: ', node[i]);
-    //   // })
-    // }
    })
+//--------------全局监听点击事件---------------end--------------------
+
   })
 
 </script>

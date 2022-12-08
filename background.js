@@ -3,6 +3,7 @@
 
 //---------------引入分文件的所有自定义api-----------
 import { bgcApi as API } from './src/api/bgcApi/index'
+// API= API
 chrome.API = API // 挂载到全局,从而让api内部也能拿到所有函数
 //----------------------------------------------------------
 // console.log(chrome)
@@ -196,8 +197,10 @@ chrome.runtime.onMessage.addListener(
       }
         break;
       case 'downloads': {
-        chrome.downloads.download({ url: message.url, filename: message.name }, () => { })
-        sendResponse('下载完成')
+        (async () => {
+        let size = await API.chromeApi.download({ url: message.url, filename: message.name })
+        sendResponse(size)})()
+        return true
       }
         break;
       case 'tabQuery': {

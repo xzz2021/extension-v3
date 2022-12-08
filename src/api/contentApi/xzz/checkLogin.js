@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-12-02 17:07:14
  * @LastEditors: xzz2021
- * @LastEditTime: 2022-12-02 17:20:38
+ * @LastEditTime: 2022-12-08 16:31:24
  */
 //-----☆☆☆☆☆☆----------------☆☆☆☆☆☆--------
 //监听添加移除的公共事件
@@ -10,7 +10,7 @@ const checkLogin ={
 
   //未登录时的添加拦截事件
    addEvent (targetEvent) {
-      let item = $('.el-dropdown')
+      let item = $('.entranceBox')
       let item2 = $('.el-dropdown-menu')
        for(let i=0; i<item.length; i++){
         item[i].addEventListener('click',targetEvent,'capture')
@@ -21,7 +21,7 @@ const checkLogin ={
   },
   //登录后的移除拦截事件
    removeEvent(targetEvent) {
-      let item = $('.el-dropdown')
+      let item = $('.entranceBox')
       let item2 = $('.el-dropdown-menu')
        for(let i=0; i<item.length; i++){
         item[i].removeEventListener('click',targetEvent, 'useCapture')

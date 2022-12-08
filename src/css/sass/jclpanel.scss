@@ -3,32 +3,31 @@
 .jclpanel {
   z-index: 99;
   position: fixed;
-  header {
-    .section {
-      padding: 10px;
-      background: linear-gradient(180deg, #ffad44 0%, #ff9712 100%);
-    }
-  }
+
   .jclmain {
       @extend %flexColCen;
+      padding-top: 7px;
       >div {
         margin: 5px 0;
         font-family: MicrosoftYaHei;
-          .el-dropdown-link {
+          .entranceBox {
             height: 38px;
             @extend %flexCen;
+            justify-content: space-between;
             color: #666;
             cursor: pointer;
-            .jclicon {
-              margin-left: 10px;
+            background: rgba(255,252,246,0.39);
+            .one {
+              display: flex;
+              width: 130px;
+              margin-left: 15px;
+              .title{
+                font-size: 14px;
+                line-height: 16px;
+              }
             }
-            .title {
-              width: 110px;
-              margin-left: 2px;
-            }
-            .arrow-right-czp {
-              margin: 0 10px 4px 0;
-              width: 12px;
+            .two{
+
             }
             &:hover {
               color: #ff9712 !important;

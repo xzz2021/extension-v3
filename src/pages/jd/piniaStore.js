@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-09-15 11:21:04
  * @LastEditors: xzz2021
- * @LastEditTime: 2022-12-01 14:34:28
+ * @LastEditTime: 2022-12-07 16:36:15
  */
 
 import { defineStore } from 'pinia'
@@ -13,6 +13,7 @@ export const piniaStore = defineStore('selfInfo', {
       return {
         count: 0,
         info_id: 0,
+        sitePlatform: '京东',
         diagnosisStore:{
           show: false,
           percentage: 70,
