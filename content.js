@@ -77,7 +77,7 @@ function createEntry(myapp,id){
 
 
 //-----popup页面----------
-import popup from './src/popup/app.vue'
+// import popup from './src/popup/app.vue'
 // document.getElementById('pop') ? createApp(popup).use(pinia).mount('#pop'): ''
 // $('#pop')[0] ? createApp(popup).use(pinia).mount('#pop'): ''
 //-------------------------------------------------
@@ -104,8 +104,8 @@ switch (checkedUrl) {
     break;
   case 'taobao': createEntry(apptb, 'markettb')
   break;
-  case 'lemak': createApp(popup).mount('#pop')
-    break;
+  // case 'lemak': createApp(popup).mount('#pop')
+  //   break;
   // case 'localhost': createApp(popup).mount('#pop')
   //   break;
   default: ''

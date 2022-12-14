@@ -1,6 +1,5 @@
 <template>
 <div>
-<progressBar :visible="proBar.show" :percentage="proBar.percentage"/>
 </div>
 
 </template>
@@ -15,13 +14,10 @@
 //平台状态store
 const busStore = piniaStore()
 //storeToRefs增加响应性,使用了proxy,所以需要用.value拿到值
-const { proBar, currentHref } = storeToRefs(busStore) 
+const {  currentHref } = storeToRefs(busStore) 
 
     const  startDownload = async (arg,platform) => {
         // return
-        proBar.value.show = true
-        proBar.value.percentage = 0
-        myProgress(20)
         // return
         let plattitle = platform == 'pc' ? '电脑端': '移动端'
         let type = arg == 'main' ? '主图' : arg == 'detail' ? '详情图': arg == 'sku'? 'sku图': arg == 'all'  ? '全部图片' : '全部图片(带目录)'
@@ -31,9 +27,7 @@ const { proBar, currentHref } = storeToRefs(busStore)
         // return
         await getIds()
         platform == 'pc' ? await getData() : await getDataMobile()
-        myProgress(60)
         await zipData(arg,zipname)
-        proBar.value.show = false
         clearData()
     }
     //全局获取商品id
@@ -283,23 +277,16 @@ const { proBar, currentHref } = storeToRefs(busStore)
       })
       //生成压缩包并下载
     //   return
-      myProgress(100)
        let dataSave = await selectZip.generateAsync({type: 'blob', compression: 'DEFLATE', compressionOptions: {level: 1}})
         // console.log('dataSave: ', dataSave); //blob对象
         saveAs(dataSave, zipname)
         API.emitter.emit('addTask',{filetype: 'zip',taskname: `${zipname}.zip`,size: dataSave.size,  progress: 100})
-    }
-    const myProgress = async (val) => {   
-       setTimeout(() => {
-            proBar.value.percentage = val
-          }, 600);
     }
     const clearData = async () => {
         mainImg.self = []
         detailImg.self = []
         skuImg.self = []
         selectData.self = []
-        proBar.value.percentage = 0
     }
     const  addFolder = async (a,b,c) => {
         a.forEach((item)=>{item.name = `主图/${item.name}`})

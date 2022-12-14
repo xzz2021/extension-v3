@@ -3,6 +3,7 @@
 .jclpanel {
   z-index: 99;
   position: fixed;
+  
 
   .jclmain {
       @extend %flexColCen;
@@ -78,6 +79,7 @@
   background-color: #fff;
   border-radius: 4px;
   overflow: hidden;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 

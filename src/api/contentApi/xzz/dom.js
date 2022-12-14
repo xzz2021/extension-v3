@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-11-03 08:24:20
  * @LastEditors: xzz2021
- * @LastEditTime: 2022-11-14 09:28:50
+ * @LastEditTime: 2022-12-10 10:25:02
  */
 
 // 本页定义->>DOM操作<<-相关封装方法
@@ -30,8 +30,6 @@ const goTo = (url) => (location.href = url)
 const replace = (ele, newEle) => ele.parentNode.replaceChild(newEle, ele)
 
 
-//滚动到页面顶部
-const goToTop = () => window.scrollTo(0, 0)
 
 
 //用于弹窗背景穿透阻止body滚动方案,务必关联执行

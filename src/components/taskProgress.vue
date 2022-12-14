@@ -137,6 +137,10 @@
 
 
 // ------☆☆☆☆------任意组件内都可以使用此格式发送事件---------API.emitter.emit('addTask', {filetype: 'video',taskname: '视频.mp4',size: 1528753, progress: 30})
+  defineExpose({
+  taskShow
+})
+
 </script>
 
 <style lang="scss" scoped>

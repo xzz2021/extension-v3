@@ -23,7 +23,8 @@ const comconfig = {
     entry: {
         background: './background.js',
         content: './content.js',
-        inject: './inject.js'
+        inject: './inject.js',
+        popup: './src/popup/pop.js'
     },
     output: {
         filename: './[name].js',
@@ -41,7 +42,7 @@ const comconfig = {
         new HtmlWebpackPlugin({    // 可以实现自动生成新的html并自动导入js
             template: './src/popup/pop.html',  // 指定元html文件的位置
             filename: 'popup.html',   // 指定输出的名称
-            chunks: ['content'],          //指定自定义需要注入的js
+            chunks: ['popup'],          //指定自定义需要注入的js
             inject: 'body',
             // scriptLoading: 'defer'
             // minify: {

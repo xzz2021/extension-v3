@@ -234,10 +234,10 @@
         </div>
 
         <div>
-          <span class="addOperateRecord 商品搬家-商品搬家 entranceBox" @click="developing" >
+          <span class="addOperateRecord 我的建议/反馈 entranceBox" @click="developing" >
             <div class="one">
                 <xzzLogo name="login" />
-                <div class="title" >我的建议/反馈</div>
+                <div class="title">我的建议/反馈</div>
             </div>
             <xzzLogoyjt hide="true" />
           </span>
@@ -256,8 +256,8 @@
             <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item class="addOperateRecord 账号管理-操作记录" command="operate">操作记录</el-dropdown-item>
-              <el-dropdown-item class="addOperateRecord 账号管理-任务进程" command="progress">任务进程</el-dropdown-item>
-              <el-dropdown-item class="addOperateRecord 账号管理-切换账号" command="exchange">切换账号</el-dropdown-item>
+              <el-dropdown-item class="addOperateRecord 账号管理-任务进程" command="task">任务进程</el-dropdown-item>
+              <el-dropdown-item class="addOperateRecord 账号管理-切换账号" command="login">切换账号</el-dropdown-item>
               <el-dropdown-item class="addOperateRecord 账号管理-退出登录" command="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
             </template>
@@ -287,10 +287,15 @@
     </div>
     </VueDragResize>
     </div>
-    <loginPanel ref="loginRef" />
-    <taskProgress ref="taskProgressRef" />
-    <operateHistory :sitePlatform="sitePlatform" ref="operateHistoryRef" />
-    <jdScanRecord ref="ScanRecordRef"/>
+
+
+      <!-- 全平台公共组件挂载的总入口 -->
+            <communalApp />
+
+
+      <!-- 各平台自己的子组件挂载 -->
+
+    <!-- <jdScanRecord ref="ScanRecordRef"/> -->
     <!-- <jdShopDiagnosis ref="shopDiagnosisRef" /> -->
     
       <jdImageDownload ref="imageDownloadRef"/>
@@ -304,7 +309,8 @@
     </div>
     <!-- <jdChildComponent /> -->
     <!-- 通过将props动态值绑定到pinia上,可以全局实时更改调用,且不需要公共组件的pinia引入 不再需要$ref的定义及调用-->
-    <progressBar :visible="proBar.show" :percentage="proBar.percentage"/>
+    <!-- <progressBar :percentage="proBar.percentage"/> -->
+    <!-- 此方法弃用,改用深层注入 -->
 </template>
 
 <script setup>
@@ -324,18 +330,32 @@ const { location } = storeToRefs(userstore)
 //平台状态store
 const busStore = piniaStore()
 //storeToRefs增加响应性,使用了proxy,所以需要用.value拿到值
-const { proBar,info_id, scanData, scanShow, currentHref } = storeToRefs(busStore) 
+const { info_id, scanData, scanShow, currentHref } = storeToRefs(busStore) 
 // 从store拿到固定值
 const sitePlatform =  busStore.sitePlatform
+
+// 深层注入props//--------蒙版进度条使用注入后,则所有方法要把域名判断写到app方法中---才能调用打开app的子组件进度条
+const ratio = ref(null)
+provide('percentage', ratio)
+//封装打开蒙版进度条方法,参数为关闭的秒数
+const openPro = (seconds) => {
+  ratio.value = 0 
+  const aa = setInterval(() => {
+    ratio.value += 20
+    if(ratio.value == 100) clearInterval(aa)
+  }, seconds * 200);
+}
+
 
 // const { proxy } = getCurrentInstance()
 //---------------单纯字符串变量不可使用reactive---------
 //-----ref定义的数据：操作数据需要.value，读取数据时模板中直接读取不需要
 
 const test1 = async () => {
-  proBar.value.show = true
-  setInterval(() => {
-    proBar.value.percentage += 6
+  ratio.value = 0 
+  const aa = setInterval(() => {
+    ratio.value += 20
+    if(ratio.value == 100) clearInterval(aa)
   }, 1000);
 
 }
@@ -392,6 +412,7 @@ const commentOptionNoPic = reactive([{value: 20}, {value: 50}, {value: 100}, {va
   const imgDownload = (item) => {
     let urlCheck = currentHref.value.indexOf('item.jd') == -1
     if (urlCheck) return ElMessage.error({message: '请进入商品页面,再点击下载', duration: 2000})
+      openPro(3)
       imageDownloadRef.value.startDownload(item.arg, item.platform);
   }
 //-------------------图片下载------------end-------------------------------------------
@@ -416,7 +437,7 @@ const downLoadJDVideoVue = async () => {
         if(url == undefined) return  ElMessage.error({ message: '当前商品没有视频',  duration: 1500,})
         let name = new API.dayjs().format('YYYYMMDD') + '_' + skuId + '_商品视频.mp4'
       let size = await  API.sendMessage({type: 'downloads', url, name}) 
-      console.log('size: ', size);
+      // console.log('size: ', size);
       size && ElMessage.success({ message: `视频下载完成`, duration: 2500,})
       API.emitter.emit('addTask',{filetype: 'video',taskname: name, size,  progress: 100})
 }
@@ -487,8 +508,10 @@ const  backToHome =  () => {
 }
 
 //---------登录------start----------------
-const loginRef = ref(null)     // 子组件ref要声明才能拿到
-const goToLogin = () => { loginRef.value.loginShow = true }
+// const loginRef = ref(null)     // 子组件ref要声明才能拿到
+// const goToLogin = () => { loginRef.value.loginShow = true }
+const goToLogin = () => { API.emitter.emit('open','login') }
+
 //---------登录------end----------------
 
 
@@ -531,20 +554,7 @@ let userInfoStore  =  await  API.getUserinfo()
 }
 //------账号管理菜单函数-----------
  const accountManagement = async (arg) => {
-      switch(arg){
-        case 'operate': API.emitter.emit('openOperateHistory')
-          break
-        case 'progress': API.emitter.emit('openTaskprogress')
-          break
-        case 'exchange':   loginRef.value.loginShow = true;console.log('---------我执行了---222---------')
-          break
-        case 'logout': logout()
-          break
-        // case 'operate': this.$myBus.$emit('openOperateHistory')
-        //   break
-        default: ''
-          break
-      }
+      API.emitter.emit('open', arg)
     }
 
   const  developing = async () => {
@@ -565,6 +575,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   sendResponse({status: true})
   })
 getUserInfo()
+API.Storage.set({platform: '京东'})
 })
 
 </script>

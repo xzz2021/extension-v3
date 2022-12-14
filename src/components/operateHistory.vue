@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-10-31 14:36:13
  * @LastEditors: xzz2021
- * @LastEditTime: 2022-12-08 17:25:07
+ * @LastEditTime: 2022-12-13 17:11:33
 -->
 <template>
 
@@ -51,7 +51,7 @@
 // const busStore = piniaStore()
 // //storeToRefs增加响应性,使用了proxy,所以需要用.value拿到值
 // const { userInfo } = storeToRefs(busStore) 
-const props = defineProps(['sitePlatform'])
+// const props = defineProps(['sitePlatform'])
       const Visible = ref(false)
       const totalCount =  ref(100)
       const historyTable = reactive({self: []})
@@ -87,10 +87,7 @@ const props = defineProps(['sitePlatform'])
 
    onMounted(async() =>{
       await getUserinfo()
-    API.emitter.on('openOperateHistory', async () => {
       await getDatabase(1)
-      Visible.value = true
-    });
 
     //------------当监听到登录事件后--------重新获取用户信息--------------
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -108,13 +105,15 @@ const props = defineProps(['sitePlatform'])
       let node = $('.addOperateRecord')  //拿到所有标的项
       node.each(function(){
         //监听点击事件
-        $(this).on('click',function(){
+        $(this).on('click',async function(){
           //得到对应class值
           // console.log('$(this)[0].classList[1]: ', $(this)[0].classList[1]);
+          let platform = await API.Storage.get('platform')
+          // console.log('platform: ', platform);
       let obj = {
         user_id: userInfoStore.self.userid,
         token: userInfoStore.self.userToken,
-        platform: props.sitePlatform,
+        platform,
         type: '开发调试,可忽略此账号记录',
         desc: $(this)[0].classList[1]
       }
@@ -125,6 +124,10 @@ const props = defineProps(['sitePlatform'])
 //--------------全局监听点击事件---------------end--------------------
 
   })
+
+  defineExpose({
+  Visible,
+})
 
 </script>
 

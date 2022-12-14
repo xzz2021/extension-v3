@@ -146,6 +146,7 @@ const version = VERSION
 </script>
 
 <style lang="scss" scoped>
+@import "element-plus/theme-chalk/src/message.scss";
 body {
   background: url('https://junchenlunoffice.oss-cn-shenzhen.aliyuncs.com/plugs/logo1/mask.png') no-repeat;
 }
