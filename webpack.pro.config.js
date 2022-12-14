@@ -76,7 +76,7 @@ const proconfig = {
            }
         ),
         new MiniCssExtractPlugin({
-            filename: '[name].css'
+            filename: './css/[name].css'
         }),
         //可以定义全局上下文的变量
         new webpack.DefinePlugin({

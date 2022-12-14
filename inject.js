@@ -1,13 +1,13 @@
 /*
  * @Date: 2022-10-29 16:39:29
  * @LastEditors: xzz2021
- * @LastEditTime: 2022-11-10 08:31:42
+ * @LastEditTime: 2022-12-14 16:22:33
  */
 //------------注入函数到浏览器window---------------
 // window._ = _
 // window.jq = $
 
-function aa(){
+function tte(){
 
     console.log('------------trytrytry-------------')
 }
@@ -15,5 +15,5 @@ function aa(){
 
 // ---------------------------------------------ceshi---------------------------hebing----------------------
 // aa()
-window.aa = aa
+window.tte = tte
 

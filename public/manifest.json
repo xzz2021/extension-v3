@@ -26,11 +26,12 @@
       "https://*.pingduoduo.com/*", "http://*.junchenlun.com/*", "https://www.google.com/",
       "http://120.25.224.61:9001/*"
       ],
-      "js": ["content.js"]
+      "js": ["/js/content.js"]
     }
   ],
   "web_accessible_resources": [{
-    "resources": ["inject.js","content.js", "content.js.map", "inject.js.map", "jdi.js"],
+    "resources": ["/js/inject.js","/js/content.js", "/js/content.js.map", "/js/inject.js.map"],
+
     "matches": ["<all_urls>"]
   }]
 }
