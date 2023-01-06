@@ -12,26 +12,18 @@
 //平台状态store
 const busStore = piniaStore()
 //storeToRefs增加响应性,使用了proxy,所以需要用.value拿到值
-const { proBar, currentHref } = storeToRefs(busStore) 
+const { currentHref } = storeToRefs(busStore) 
 
+const skuId = ref(null)
 
-export default {
-data() {
-    return {
-        skuId: ''
-
-}},
-methods: {
-    async startDownload(cnum,type){
-        this.$message.success("有图评价下载开始!") 
-        let skuUrl = window.location.href
-        let regs = skuUrl.match(/item.jd.com.*?(\d+)/)
-        regs != null && (this.skuId = regs[1])
-        type == '有图'? await this.downLoadJDcommentPic(cnum) : await this.downLoadJDcommentNoPic(cnum)
-    },
-    async getCommentsData(cnum, pic_flag){
-        let commentUrl = "https://club.jd.com/comment/skuProductPageComments.action?callback=fetchJSON_comment98&productId=" + this.skuId + "&score=0&sortType=5&page=0&pageSize=10&isShadowSku=0&fold=1"
-
+    const startDownload = async (cnum,type) => {
+            let regs = currentHref.value.match(/item.jd.com.*?(\d+)/)
+            skuId.value = regs[1]
+            type == '有图'? await this.downLoadJDcommentPic(cnum) : await this.downLoadJDcommentNoPic(cnum)
+        }
+    
+    // 获取评价数据 start
+    const  getCommentsData = async (cnum, skuId, pic_flag) => {
     // 创建需要抓取的评价JSON链接数组 和 总页数
     let json_url_list = new Array();
     let total_page = 0;
@@ -47,14 +39,15 @@ methods: {
         }
     }
     for(var i = 0; i < total_page; i++){
-        let jsonUrl = "https://club.jd.com/comment/skuProductPageComments.action?productId=" + this.skuId + "&score=0&sortType=5&page=" + i + "&pageSize=10&isShadowSku=0&fold=1"
+        let jsonUrl = "https://club.jd.com/comment/skuProductPageComments.action?productId=" + skuId + "&score=0&sortType=5&page=" + i + "&pageSize=10&isShadowSku=0&fold=1"
         json_url_list.push(jsonUrl)
     }
 
     // 获取数据
     let sumData = new Array();
+
     for(var i = 0; i< total_page; i++){
-        /* let msg = {
+        let msg = {
             type: 'myfetch',
              
             config: { 
@@ -67,17 +60,8 @@ methods: {
             }
         }
     
-        let jsondata = await API.sendMessage(msg) */
-
-        let config = {
-            method: 'GET',
-            url: json_url_list[i]
-        }
-        let msgdata = '正在获取第' + (i+1) + '页评论'
-        Message.success(msgdata);
-        let htmlres1 = await 浏览器_跨域axios(config);
-        let jsondata = htmlres1.data;
-        //jsondata = parseJSON(jsondata)
+        let jsondata = await API.sendMessage(msg)
+        jsondata = parseJSON(jsondata)
         let nowPage = 0;
         if (jsondata.csv != undefined && jsondata.csv.indexOf('pageSize=') > -1 ){
             let regs = jsondata.csv.match(/pageSize=.*?(\d+)/);
@@ -86,8 +70,7 @@ methods: {
         // 获取最大页码
         let maxPage = jsondata.maxPage;
         // 初始化评价时间，默认获取当前时间
-        // let nowTime = getMyDateTime();
-        let nowTime = dayjs().format('YYYY-MM-DD HH:MM:SS')
+        let nowTime = getMyDateTime();
 
         let cmt_list = jsondata.comments
         for(var j = 0; j < cmt_list.length; j++){
@@ -149,7 +132,7 @@ methods: {
             
                 if (isNoPic == false && pic_flag == 'pic'){
                     let c_obj = {"order":order, "time":ctime, "content":all_content, "imgs":imgUrls, "videos":videoUrls}
-                   sumData.push(c_obj)
+                    sumData.push(c_obj)
                 }
                 if (isNoPic == true && pic_flag == 'nopic'){
                     let c_obj = {"order":order, "time":ctime, "content":all_content, "imgs":imgUrls, "videos":videoUrls}
@@ -157,10 +140,10 @@ methods: {
                 }
             }
         }
-        await sleep(1.5)
+        await API.wait(1)
     }
     return sumData
-    },
+},
     // 有图评价下载  
     async downLoadJDcommentPic(commentsNum) {
     if (this.skuId != undefined){
@@ -339,9 +322,6 @@ methods: {
         console.log("this.skuId : ", this.skuId)
         console.log("------- comments download error end -------")
     }
-}
-},
-mounted() {},
 }
 </script>
 <style lang='scss' scoped>

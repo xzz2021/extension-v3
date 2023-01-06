@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-09-15 11:21:04
  * @LastEditors: xzz2021
- * @LastEditTime: 2022-12-07 16:36:15
+ * @LastEditTime: 2022-12-14 17:09:27
  */
 
 import { defineStore } from 'pinia'
@@ -14,6 +14,7 @@ export const piniaStore = defineStore('selfInfo', {
         count: 0,
         info_id: 0,
         sitePlatform: '京东',
+        urlCheck: window.location.href.indexOf('item.jd') == -1, //检查当前页是否是商品页,true则return弹出提示
         diagnosisStore:{
           show: false,
           percentage: 70,

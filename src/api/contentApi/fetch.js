@@ -10,6 +10,7 @@ inital = {
     params: null,
     body: null,
     headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
+    // headers: { 'Content-Type': 'application/json;charset=utf-8'}, //Content-Type 客户端告诉服务器实际发送的数据类型
 	credentials: 'include', // include, *same-origin, omit
 	// cache: 'default', // *default, no-cache, reload, force-cache, only-if-cached
     redirect: 'follow',

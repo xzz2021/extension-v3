@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-10-22 10:23:59
  * @LastEditors: xzz2021
- * @LastEditTime: 2022-12-01 10:51:19
+ * @LastEditTime: 2022-12-14 16:53:00
 -->
 <template>
   <el-dialog  title="" :modal="true" width="400px" v-model="visible" :show-close="false" :close-on-click-modal="false" top="40vh">
@@ -20,13 +20,31 @@
 // const props = defineProps(['visible','percentage'])
 const visible = ref(false)
 // const percentage = ref(30)
-const percentage = inject('percentage', null)
+// const percentage = inject('percentage', null)
+  const percentage = ref(0)
 
-watch(percentage, async (newV, oldV)=> {
-      if(newV == 0) visible.value = true
-      if(newV == 100) visible.value = false
+// watch(percentage, async (newV, oldV)=> {
+//       if(newV == 0) visible.value = true
+//       if(newV == 100) visible.value = false
+// })
+
+const openPro = (time = 3) => {
+      visible.value = true
+      const myInt = setInterval(() => {
+            percentage.value += 20
+            if(percentage.value == 100){
+              clearInterval(myInt)
+              visible.value = false
+              percentage.value = 0
+            }
+        }, time * 200);
+    }
+
+onMounted(() => {
+  API.emitter.on('openPro', (msg) => openPro(msg))
 })
 </script>
+
 <style lang="scss" scoped>
 :deep(.el-dialog__body) {
   padding-top: 12px;

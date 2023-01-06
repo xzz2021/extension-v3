@@ -19,76 +19,6 @@
                 </div>
                 <xzzLogoyjt />
               </span>
-    
-              <template #dropdown>
-             <el-dropdown-menu class="el-dropdown-menu2">
-              <!-- 二级菜单开始 -->
-              <el-dropdown-item class="el-dropdown-item2">
-                <el-dropdown  placement="right-start" @command="imgDownload" >
-                      <span class="el-dropdown-link2">
-                        <div class="title2">图片下载</div>
-                        <i class="xzzicon3-youjt"></i>
-                      </span>
-                  <template #dropdown>
-                    <el-dropdown-menu  @mouseenter.enter="() => { $refs.subDropdown2.handleOpen() }"
-                        @mouseleave.enter="() => { $refs.subDropdown2.handleClose() }">
-                    <el-dropdown-item :class="`addOperateRecord 图片下载-${item.name}`"
-                    :command="item" v-for="item in pictureOption" :key="item.name">
-                        {{ item.name }}
-                    </el-dropdown-item>
-                    </el-dropdown-menu>
-                  </template>
-                </el-dropdown>
-              </el-dropdown-item>
-                <!-- 二级菜单结束 -->
-
-                 <!-- 二级菜单开始 -->
-              <el-dropdown-item class="el-dropdown-item2">
-                <el-dropdown placement="right-start" @command="downLoadJDcommentPicVue">
-                      <!-- <div class="title2">有图评价下载</div> -->
-                      <span class="el-dropdown-link2">
-                        <div class="title2">有图评价下载</div>
-                        <i class="xzzicon3-youjt"></i>
-                      </span>
-                  <template #dropdown>
-                    <el-dropdown-menu  @mouseenter.enter="() => { $refs.subDropdown2.handleOpen() }"
-                        @mouseleave.enter="() => { $refs.subDropdown2.handleClose() }">
-                        <!-- <el-dropdown-menu  > -->
-                    <el-dropdown-item :command="item.value" v-for="item in commentOptionPic" 
-                    :key="item.value">{{ item.value }}</el-dropdown-item>
-                    </el-dropdown-menu>
-                  </template>
-                </el-dropdown>
-              </el-dropdown-item>
-                <!-- 二级菜单结束 -->
-
-                   <!-- 二级菜单开始 -->
-              <el-dropdown-item class="el-dropdown-item2">
-                <el-dropdown placement="right-start" @command="downLoadJDcommentNoPicVue">
-                      <!-- <div class="title2">无图评价下载</div> -->
-                      <span class="el-dropdown-link2">
-                        <div class="title2">无图评价下载</div>
-                        <i class="xzzicon3-youjt"></i>
-                      </span>
-                  <template #dropdown>
-                    <el-dropdown-menu  @mouseenter.enter="() => {$refs.subDropdown2.handleOpen() }"
-                        @mouseleave.enter="() => { $refs.subDropdown2.handleClose() }">
-                    <!-- <el-dropdown-menu  > -->
-                    <el-dropdown-item :command="item.value" v-for="item in commentOptionNoPic" 
-                    :key="item.value">{{ item.value }}</el-dropdown-item>
-                    </el-dropdown-menu>
-                  </template>
-                </el-dropdown>
-              </el-dropdown-item>
-                <!-- 二级菜单结束 -->
-
-              <el-dropdown-item  class="addOperateRecord 下载工具-视频下载 el-dropdown-item2" @click.enter="downLoadJDVideoVue">
-                <span class="el-dropdown-link2">
-                  <div class="title2" >视频下载</div>
-                </span>
-              </el-dropdown-item>
-            </el-dropdown-menu>
-              </template>
             </el-dropdown>
       </div>
 
@@ -127,7 +57,7 @@
 
                  <!-- 二级菜单开始 -->
               <el-dropdown-item class="el-dropdown-item2">
-                <el-dropdown placement="right-start" @command="downLoadJDcommentPicVue">
+                <el-dropdown placement="right-start" @command="commentDownload">
                       <!-- <div class="title2">有图评价下载</div> -->
                       <span class="el-dropdown-link2">
                         <div class="title2">有图评价下载</div>
@@ -137,8 +67,8 @@
                     <el-dropdown-menu  @mouseenter.enter="() => { $refs.subDropdown2.handleOpen() }"
                         @mouseleave.enter="() => { $refs.subDropdown2.handleClose() }">
                         <!-- <el-dropdown-menu  > -->
-                    <el-dropdown-item :command="item.value" v-for="item in commentOptionPic" 
-                    :key="item.value">{{ item.value }}</el-dropdown-item>
+                    <el-dropdown-item :command="item.value + '有图' " v-for="item in commentOptions"
+                    :key="item.value">评价前{{ item.value }}</el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
@@ -147,7 +77,7 @@
 
                    <!-- 二级菜单开始 -->
               <el-dropdown-item class="el-dropdown-item2">
-                <el-dropdown placement="right-start" @command="downLoadJDcommentNoPicVue">
+                <el-dropdown placement="right-start" @command="commentDownload">
                       <!-- <div class="title2">无图评价下载</div> -->
                       <span class="el-dropdown-link2">
                         <div class="title2">无图评价下载</div>
@@ -157,8 +87,8 @@
                     <el-dropdown-menu  @mouseenter.enter="() => {$refs.subDropdown2.handleOpen() }"
                         @mouseleave.enter="() => { $refs.subDropdown2.handleClose() }">
                     <!-- <el-dropdown-menu  > -->
-                    <el-dropdown-item :command="item.value" v-for="item in commentOptionNoPic" 
-                    :key="item.value">{{ item.value }}</el-dropdown-item>
+                    <el-dropdown-item :command="item.value" v-for="item in commentOptions" 
+                    :key="item.value">评价前{{ item.value }}</el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
@@ -298,12 +228,12 @@
     <!-- <jdScanRecord ref="ScanRecordRef"/> -->
     <!-- <jdShopDiagnosis ref="shopDiagnosisRef" /> -->
     
-      <jdImageDownload ref="imageDownloadRef"/>
-    <!-- <commentDownload ref="commentDownloadRef" />
-    <keywordRanking ref="zrss" /> -->
+    <jdImageDownload ref="imageDownloadRef"/>
+    <!-- <jdCommentDownload ref="commentDownloadRef" /> -->
+     <!--<keywordRanking ref="zrss" /> -->
     <div class="test">
-      <div class="test1" @click="test1">
-      <el-button type="primary" >test1</el-button>
+      <div class="test1" >
+      <el-button type="primary" @click="test1">test1</el-button>
       </div>
       <el-button type="primary" @click="test2">test2</el-button>
     </div>
@@ -330,35 +260,30 @@ const { location } = storeToRefs(userstore)
 //平台状态store
 const busStore = piniaStore()
 //storeToRefs增加响应性,使用了proxy,所以需要用.value拿到值
-const { info_id, scanData, scanShow, currentHref } = storeToRefs(busStore) 
+const { urlCheck, info_id, scanData, scanShow, currentHref } = storeToRefs(busStore) 
 // 从store拿到固定值
 const sitePlatform =  busStore.sitePlatform
 
+
 // 深层注入props//--------蒙版进度条使用注入后,则所有方法要把域名判断写到app方法中---才能调用打开app的子组件进度条
-const ratio = ref(null)
-provide('percentage', ratio)
+// const ratio = ref(null)
+// provide('percentage', ratio)
 //封装打开蒙版进度条方法,参数为关闭的秒数
-const openPro = (seconds) => {
-  ratio.value = 0 
-  const aa = setInterval(() => {
-    ratio.value += 20
-    if(ratio.value == 100) clearInterval(aa)
-  }, seconds * 200);
-}
+//---------深层注入方法弃用因为兄弟组件无法传值------改用emitter监听发散----效率更高----值与方法直接内部定义即可------
+
+// const openPro = (seconds) => {
+//   ratio.value = 0 
+//   const aa = setInterval(() => {
+//     ratio.value += 20
+//     if(ratio.value == 100) clearInterval(aa)
+//   }, seconds * 200);
+// }
 
 
 // const { proxy } = getCurrentInstance()
 //---------------单纯字符串变量不可使用reactive---------
 //-----ref定义的数据：操作数据需要.value，读取数据时模板中直接读取不需要
 
-const test1 = async () => {
-  ratio.value = 0 
-  const aa = setInterval(() => {
-    ratio.value += 20
-    if(ratio.value == 100) clearInterval(aa)
-  }, 1000);
-
-}
 
 let curCookies  = ref('')
 let showMain  = ref(true)
@@ -368,18 +293,16 @@ const userPhone = ref('')
 
 const try33 = async () => {
   // await API.wait(2)
+
   console.log('--------我执行了-----77777777777------------')
 }
-const add3 = (e) => {
+    let arg = 3
+const test1 = () => {
+  API.emitter.emit('openPro', arg)
+  arg += 10
   console.log('-------我是新增事件--------------')
-        //三种方式兼容不同浏览器
-        e.stopImmediatePropagation()
-        e.cancelBubble = true //IE
-        e.stopPropagation()
 }
 const test2 = () => {
-  let dom = $('.test1')[0]
-  dom.removeEventListener('click', add3, 'useCapture')
   // API.scroll.goToBottomEase()
 }
 
@@ -391,8 +314,6 @@ const test2 = () => {
 
 
 const diagnosisOption = reactive([{value: 2}, {value: 5}, {value: 10}, {value: 20}])
-const commentOptionPic = reactive([{value: 20}, {value: 50}, {value: 100}, {value: 200}])
-const commentOptionNoPic = reactive([{value: 20}, {value: 50}, {value: 100}, {value: 200}])
 
 
 //----------------------图片下载------------start----------------------------------
@@ -410,12 +331,30 @@ const commentOptionNoPic = reactive([{value: 20}, {value: 50}, {value: 100}, {va
                       ]
   const imageDownloadRef = ref(null)
   const imgDownload = (item) => {
-    let urlCheck = currentHref.value.indexOf('item.jd') == -1
-    if (urlCheck) return ElMessage.error({message: '请进入商品页面,再点击下载', duration: 2000})
-      openPro(3)
+    if (urlCheck.value) return ElMessage.error({message: '请进入商品页面,再点击下载', duration: 2000})
+      API.emitter.emit('openPro')  //调用打开蒙版进度条
       imageDownloadRef.value.startDownload(item.arg, item.platform);
   }
 //-------------------图片下载------------end-------------------------------------------
+
+
+
+//----------------------评价下载------------start----------------------------------
+  const commentOptions  = [ {value: 20}, {value: 50}, {value: 100}, {value: 200}, {value: 300}]
+  const commentDownloadRef = ref(null)
+  const commentDownload = (value) => {
+    if (urlCheck.value) return ElMessage.error({message: '请进入商品页面,再点击下载', duration: 2000})
+      API.emitter.emit('openPro')  //调用打开蒙版进度条
+      let check = value.toString().indexOf('有图') != -1
+      if(check){
+          commentDownloadRef.value.startDownload(value.replace('有图', ''), '有图');
+        }else{
+          commentDownloadRef.value.startDownload(value, '无图');
+      }
+  }
+//-------------------评价下载------------end-------------------------------------------
+
+
 
 //---------------店铺诊断及历史记录----start-----------------
 const scanRecordRef = ref(null)
@@ -429,7 +368,8 @@ const OneClickDiagnosis = async(num) =>{
 
 // ---------------------视频下载 start--------------
 const downLoadJDVideoVue = async () => {
-      if (!(currentHref.value.indexOf('item.jd') > 1)) return alert('请进入商品详情页,再点击开始下载')
+      if (urlCheck.value) return ElMessage.error({message: '请进入商品页面,再点击下载', duration: 2000})
+      API.emitter.emit('openPro',2)  //调用打开蒙版进度条
       let regs = currentHref.value.match(/item.jd.com.*?(\d+)/);
         let skuId = regs.length >= 2 ? regs[1] : undefined;
         $('.video-icon').click()
@@ -443,22 +383,6 @@ const downLoadJDVideoVue = async () => {
 }
 // --------------------------视频下载 end-------------------
 
-
-// 评价下载 start
-// --- 有图评价下载 ---
-const downLoadJDcommentPicVue = (num) => {
-  let skd = getSkuId(currentHref);
-  let videoTitle = getVideoTitle();
-  downLoadJDcommentPic(skd, num, videoTitle);
-}
-
-// --- 无图评价下载 ---
-const downLoadJDcommentNoPicVue = (num) => {
-  let skd = getSkuId(currentHref)
-  let videoTitle = getVideoTitle();
-  downLoadJDcommentNoPic(skd, num, videoTitle);
-}
-// 评价下载 end
 
 
 // 订单备注 start
@@ -481,6 +405,8 @@ const setOrderTagJDVue = async () =>{
     console.log("data" , data)
 }
 // 订单备注 end
+
+
 
 //---------面板拖拽功能------start------------------
 let reloadDrag = ref(true)
@@ -511,38 +437,33 @@ const  backToHome =  () => {
 // const loginRef = ref(null)     // 子组件ref要声明才能拿到
 // const goToLogin = () => { loginRef.value.loginShow = true }
 const goToLogin = () => { API.emitter.emit('open','login') }
-
 //---------登录------end----------------
 
 
 //---------退出登录------start----------------
-const logout = () => {
-  API.Storage.remove('userInfo')
-  loginRef.value.checkPhone = false
-  ElMessage.success('账号退出成功!')
-}
+const logout = () => { API.emitter.emit('open','logout') }
 //---------退出登录------end----------------
 
 
 //-----☆☆☆☆☆☆----------------☆☆☆☆☆☆--------
-//监听添加移除的公共事件
- const targetEvent = (e) => {
-    //三种方式兼容不同浏览器
-    e.stopImmediatePropagation()
-    e.cancelBubble = true //IE
-    e.stopPropagation()
-    loginRef.value.loginShow = true  //因为api里拿不到ref所以无法抽离,只能在此处定义
-  }
+//监听添加移除的公共事件--------------第一版-------已废弃------通过公共emitter可以发散事件进行激活------
+//  const targetEvent = (e) => {
+//     //三种方式兼容不同浏览器
+//     e.stopImmediatePropagation()
+//     e.cancelBubble = true //IE
+//     e.stopPropagation()
+//     loginRef.value.loginShow = true  //因为api里拿不到ref所以无法抽离,只能在此处定义
+//   }
 //-----☆☆☆☆☆☆----------------☆☆☆☆☆☆--------
 
 const getUserInfo = async () => {
 let userInfoStore  =  await  API.getUserinfo()
 // console.log('userInfoStore: ', userInfoStore);
   if(userInfoStore.userid == undefined) {
-    API.checkLogin.addEvent(targetEvent)  //添加全局登录拦截
+    API.checkLogin.addEvent()  //添加全局登录拦截
     return 
     }else{
-      API.checkLogin.removeEvent(targetEvent)  //移除全局登录拦截
+      API.checkLogin.removeEvent()  //移除全局登录拦截
     }
   busStore.$patch((state)=>{
       state.userInfo = userInfoStore
