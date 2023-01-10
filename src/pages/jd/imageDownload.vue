@@ -4,32 +4,29 @@
 
 </template>
 <script setup>
-        const skuId = ref(null)
-        const mainSkuId = ref(null)
-        const mainImg = reactive({self:[]})
-        const detailImg = reactive({self:[]})
-        const skuImg = reactive({self:[]})
-        const selectData = reactive({self:[]})
 
-//平台状态store
-const busStore = piniaStore()
-//storeToRefs增加响应性,使用了proxy,所以需要用.value拿到值
-const {  currentHref } = storeToRefs(busStore) 
 
-    const  startDownload = async (arg,platform) => {
-        // return
-        // return
-        let plattitle = platform == 'pc' ? '电脑端': '移动端'
-        let type = arg == 'main' ? '主图' : arg == 'detail' ? '详情图': arg == 'sku'? 'sku图': arg == 'all'  ? '全部图片' : '全部图片(带目录)'
-        // let now = new API.dayjs()
-        let zipname = '京东' + new API.dayjs().format('YYYYMMDD') + plattitle + currentHref.value.match(/com\/(\d*)/g)[0].slice(4) + type
-        // console.log('zipname: ', zipname);
-        // return
-        await getIds()
-        platform == 'pc' ? await getData() : await getDataMobile()
-        await zipData(arg,zipname)
-        clearData()
-    }
+//公共的store数据 
+import {comStore} from '../../components/comStore' 
+const store = comStore() 
+const { openImg, percentage, mainImg, detailImg, skuImg } = storeToRefs(store)
+
+
+
+
+    const startDownload = async (platform) =>{
+            openImg.value = true
+            percentage.value = 10
+            let url = location.href
+            LinkData.value = url
+            let plattitle = platform == 'pc' ? '电脑端' : '移动端'
+            let shopId = url.match(/com\/(\d*)/g)[0].slice(4)
+            zipname.value = '京东' + dayjs().format('YYYYMMDD') + plattitle + shopId
+            platform == 'pc' ? await getData() : await getDataMobile()
+            
+        }
+
+
     //全局获取商品id
     const getIds = async () =>{
                 // 获取skuID

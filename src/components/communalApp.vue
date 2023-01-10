@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-12-13 16:22:15
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-10 15:13:21
+ * @LastEditTime: 2023-01-10 15:43:36
 -->
 <template>
 
@@ -10,7 +10,8 @@
     <taskProgress ref="taskProgressRef" />
     <operateHistory  ref="operateHistoryRef" />
     <feedbackPanel  ref="feedbackPanelRef" />
-    <!-- <commentPanel  /> -->
+    <commentPanel  />
+    <imagePanel  />
     <!-- <progressBar /> -->
 
 </template>

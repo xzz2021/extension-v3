@@ -41,8 +41,8 @@
                     <!-- 结果渲染区域 -->
                 <div class="resultContainer">
                 <div v-if="withPic == '有图评价'" class="picBox">
-                    <vxe-table width="auto" height="660" :data="dataWithPic" ref="table1" size="small" border
-                        :loading="dataWithPic.length == 0" show-overflow="false" stripe   >
+                    <vxe-table  width="auto" height="660" :data="dataWithPic" ref="table1" size="small" border
+                        :loading="dataWithPic.length == 0" show-overflow="false" stripe >
                         <vxe-column type="seq" title="序号" width="60"></vxe-column>
                         <vxe-column title="评价时间" field="time" width="180"></vxe-column>
                         <vxe-column title="内容评价" field="detail" width="300" >
@@ -105,10 +105,6 @@ const { openCom, percentage, dataWithPic, dataNoPic, commodityId, withPic } = st
 
 
 // store.$reset()
-
-
-// const withPic = ref('有图评价')
-
 
     const  dwnPic = async () => {   //有图下载
 

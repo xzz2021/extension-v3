@@ -17,7 +17,13 @@ export const comStore = defineStore('comInfo', {
         dataWithPic: [],
         dataNoPic: [],
         commodityId:null,
-        withPic: '有图评价'
+        withPic: '有图评价',
+        // 图片下载数据
+        openImg: false,
+        // percentage: 0,
+        mainImg: [],
+        detailImg: [],
+        skuImg: [],
       }
     },
     // persist: true, //持久化

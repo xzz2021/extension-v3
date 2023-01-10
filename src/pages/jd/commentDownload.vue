@@ -1,6 +1,7 @@
 <template>
-   <!-- <commentPanel  /> -->
+<!-- 此处只定义执行方法, 评价下载公共面板在全局已挂载 -->
    <div></div>
+   <!-- <commentPanel /> -->
 </template>
 <script setup>
 
@@ -9,6 +10,7 @@
 import {comStore} from '../../components/comStore' 
 const store = comStore() 
 const { openCom, percentage, dataWithPic, dataNoPic, commodityId, withPic } = storeToRefs(store)
+
 
 
 const dataWithPicTemp = reactive({self:[]})
@@ -32,7 +34,9 @@ const dataNoPicTemp = reactive({self:[]})
             dataWithPic.value.length = 1  //没有评价时,给个null值,关闭loading效果
             withPic.value = '无图评价'  //有图评价没有时,自动切换到无图评价
             }else{
-                dataWithPicTemp.self.map(item => dataWithPic.value.push({time: item['time'], content: item['content'], imglist: item['imgs'],videoUrl: item['videos'][0]}))
+                let resultArr = []
+                dataWithPicTemp.self.map(item => resultArr.push({time: item['time'], content: item['content'], imglist: item['imgs'],videoUrl: item['videos'][0]}))
+                dataWithPic.value = resultArr
             }
         dataNoPicTemp.self = await getCommentsData(num, "nopic")
         percentage.value = 100

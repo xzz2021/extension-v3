@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-09-30 16:00:59
  * @LastEditors: xzz2021
- * @LastEditTime: 2022-12-14 16:15:28
+ * @LastEditTime: 2023-01-10 17:52:03
  */
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -12,11 +12,11 @@ const watchconfig = {
     devtool: 'cheap-module-source-map',
     plugins: [
       new wsAutoReloadPlugin(),
-      // new CopyWebpackPlugin({
-      //       patterns: [
-      //       {from: 'public/logo.png', to: './logo.png'},
-      //       {from: 'public/manifest.json', to: './manifest.json'}
-      //   ]}),
+      new CopyWebpackPlugin({
+            patterns: [
+            {from: 'public/logo.png', to: './logo.png'},
+            {from: 'public/manifest.json', to: './manifest.json'}
+        ]}),
         //可以定义全局上下文的变量
       new webpack.DefinePlugin({
           // 此处解决vue未定义extension大量报错问题

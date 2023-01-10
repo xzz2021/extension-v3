@@ -23,8 +23,7 @@
     {
       "matches": ["https://*.1688.com/*", "https://*.tmall.com/*", "https://*.jd.com/*", 
       "https://*.taobao.com/*", "https://*.alibaba.com/*", "https://*.yangkeduo.com/*",
-      "https://*.pingduoduo.com/*", "http://*.junchenlun.com/*", "https://www.google.com/"
-    ],
+      "https://*.pingduoduo.com/*"],
       "js": ["/js/content.js"],
       "css": ["/css/content.css"]
     }

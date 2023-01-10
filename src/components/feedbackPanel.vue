@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-11-12 09:56:46
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-10 15:10:59
+ * @LastEditTime: 2023-01-10 15:17:59
 -->
 <template>
 <div>
@@ -14,17 +14,7 @@
       <div class="feedbackHeader">
           <div class="titleBox">
           <p class="headerTitle">我要建议/反馈</p>
-          <!-- <el-tooltip class="item" effect="dark" placement="top">
-                  <div class="topTip" slot="content">
-                      <div style="margin-bottom: 5px;">1.选择宝贝排序方式;</div>
-                      <div style="margin-bottom: 5px;">2.输入: 宝贝链接/宝贝ID;</div>
-                      <div style="margin-bottom: 5px;">3.可选择查询方式为: 自定义、最佳词、拆分词、相关词、推荐词;</div>
-                      <div style="margin-bottom: 5px;">4.点击“开始查询等待查询结果:等待过程中可点击”停止查询;</div>
-                  </div>
-                <div class="tipTitle">(操作说明)</div>
-          </el-tooltip> -->
           </div>
-          <!-- <div class="btn" @click="show = false;"><i class="xzzicon-guanbi"></i></div> -->
           <div class="closeSec" @click="show = false"><svg class="xzzsymbol" aria-hidden="true"><use xlink:href="#xzzicon3-guanbi"></use></svg></div>
       </div>
 
@@ -81,7 +71,6 @@
           class="el-upload-list__item-delete"
           @click="handleRemove(file)"
         >
-          <!-- <i class="el-icon-delete"></i> -->
           <div class="delsvg"><svg class="xzzsymbol" aria-hidden="true"><use xlink:href="#xzzicon3-delete"></use></svg></div>
         </span>
       </span>
@@ -182,10 +171,10 @@ import {uploadOss} from './upload_oss'
           }
       }
       const uploadSubmit = async () =>{
-        // if(platformValue.value == '') return ElMessage({message: '请选择反馈平台',type: 'error',offset: 70,duration: 1500,})
-        // if(tooltypeValue.value == '') return ElMessage({message: '请选择工具类型',type: 'error',offset: 70,duration: 1500,})
-        // if(feedbackContent.value == '') return ElMessage({message: '请输入留言内容',type: 'error',offset: 70,duration: 1500,})
-        // if(feedbackContent.length > 300) return ElMessage({message: '留言内容过长,不能超过300个字',type: 'error',offset: 70,duration: 1500,})
+        if(platformValue.value == '') return ElMessage({message: '请选择反馈平台',type: 'error',offset: 70,duration: 1500,})
+        if(tooltypeValue.value == '') return ElMessage({message: '请选择工具类型',type: 'error',offset: 70,duration: 1500,})
+        if(feedbackContent.value == '') return ElMessage({message: '请输入留言内容',type: 'error',offset: 70,duration: 1500,})
+        if(feedbackContent.length > 300) return ElMessage({message: '留言内容过长,不能超过300个字',type: 'error',offset: 70,duration: 1500,})
          await uploadImg()
         //提交数据给后端
         let userInfo  =  await  API.getUserinfo()

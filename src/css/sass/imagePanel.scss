@@ -1,0 +1,228 @@
+// --------重置默认样式,边距--------
+:deep(vxe-modal--header) {
+  border: none;
+  background-color: white;
+  padding: 0 !important;
+  height:30px;
+}
+:deep(.vxe-modal--content) {
+  padding: 0;
+}
+//--------------------------------
+
+// ::v-deep .searchBox .el-input__inner {
+//   height: 40px;
+//   width: 890px;
+//   border: 2px solid #ff800b;
+// }
+
+@mixin flexbet{
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin flexcenbet{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flexcencol{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+//初始声明,消除拼多多页面css覆写
+// *, :after, :before {
+//   box-sizing: content-box;
+// }
+
+
+  .xzzcontainer {
+    padding:0 30px 30px 30px;
+    width: 100%;
+    @include flexcencol;
+    box-sizing: border-box;
+    
+    //初始声明,消除阿里巴巴页面css覆写
+    // box-sizing: content-box;
+    // 顶部区域
+    .topContainer{
+      width: 100%;
+      @include flexcenbet;
+      margin-bottom: 20px;
+      position: sticky; // sticky 与背景色z-index搭配避免穿透
+      top: 0;
+      z-index: 2;
+      background: #fff;
+      .leftSec{
+        width: 455px;
+        @include flexcenbet;
+        .titleSec {
+          width: 116px;
+          @include flexcenbet;
+          font-size: 22px;
+          font-family: Microsoft YaHei;
+          font-weight: bold;
+          color: #000000;
+          .xzzsvg{
+            // margin-left: 10px;
+            font-size: 18px;
+            color: #ff9712;
+            cursor: help;
+            // svg{
+            //   width: 22px;
+            //   height: 22px;
+            // }
+          }
+        }
+        .myProgress{
+          // width: 320px;
+          width: 318px;
+          height: 30px;
+          @include flexcenbet;
+          background: #f8f8f8;
+          box-sizing: border-box;
+          padding: 0 10px;
+          border-radius: 6px;
+          .tiploading{
+            font-size: 16px;
+            font-family: Microsoft YaHei;
+            font-weight: 400;
+          }
+          .pro{
+            width: 224px;
+          }
+        }
+      }
+      .closeSec {
+        width: 20px;
+        cursor: pointer;
+      }
+    }
+    //搜索区域
+    .searchContainer{
+      width: 100%;
+      @include flexcenbet;
+      margin-bottom: 16px;
+      >div{
+        height: 40px;
+      }
+      .searchBox{
+        width: 890px;
+        :deep(.el-input__inner) {
+          // height: 40px;
+          // width: 814px;
+          border: 2px solid #ff800b;
+          border-radius: 6px 0 0 6px;
+        }
+        :deep(.el-input-group__append){
+          background: #ff9712;
+          border-color: #ff9712;
+          color: white;
+          cursor: pointer;
+          font-size: 16px;
+          font-family: Microsoft YaHei;
+          font-weight: 400;
+          color: #FFFFFF;
+          border-radius:0 6px 6px 0;
+        }
+      }
+      .divider{
+        width: 1px;
+        background-color: #eee;
+      }
+      .clearBtn{
+        .el-button{
+          font-size: 16px;
+          font-family: Microsoft YaHei;
+          font-weight: 400;
+          color: #555;
+          padding: 11px 20px;
+          background: rgba(238,238,238,0.39);
+        }
+
+      }
+      .dwnBtn{
+        .el-button{
+          font-size: 16px;
+          font-family: Microsoft YaHei;
+          font-weight: 400;
+          color: #FFFFFF;
+          padding: 11px 20px;
+        }
+      }
+    }
+
+    .resultContainer{
+      width: 100%;
+      height: 640px;
+      padding: 0 16px;
+      box-sizing: border-box;
+      // width: 1140px;
+      // height: 633px;
+      background: rgba(248,248,248,0.39);
+      overflow: overlay;
+      .imgBox{
+        .category{
+          @include flexcenbet;
+          // margin-bottom: 10px;
+        }
+        .checkList{
+          // margin-bottom: 20px;
+          .hasBorder{
+            border: 1px solid #FF9712;
+            border-radius: 2px;
+            box-sizing: border-box;
+          }
+        }
+        :deep(.checkList .el-checkbox){
+          margin-right: 33px;
+          &:nth-child(7n) {
+            margin-right: 0px;
+            }
+        }
+        :deep(.checkList .el-checkbox__input){
+          position: absolute;
+          top: 6px;
+          left: 6px;
+        }
+        :deep(.checkList .el-checkbox__label){
+          padding-left: 0px;
+          margin-bottom: 20px;
+        }
+      }
+    }
+
+
+
+  }
+
+
+
+  .resultContainer{
+      &::-webkit-scrollbar {
+    width: 8px;
+    height: 10px;
+    /**/
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgb(239, 239, 239);
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #bfbfbf;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #333;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: #179a16;
+  }
+  }
