@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-12-02 17:07:14
  * @LastEditors: xzz2021
- * @LastEditTime: 2022-12-08 16:31:24
+ * @LastEditTime: 2023-01-09 11:33:39
  */
 
 
@@ -21,10 +21,10 @@ const checkLogin ={
       let item = $('.entranceBox')
       let item2 = $('.el-dropdown-menu')
        for(let i=0; i<item.length; i++){
-        item[i].addEventListener('click',targetEvent,'capture')
+        item[i].addEventListener('click',this.targetEvent,'capture')
       }
       for(let i=0; i<item2.length; i++){
-        item2[i].addEventListener('click',targetEvent,'capture')
+        item2[i].addEventListener('click',this.targetEvent,'capture')
       }
   },
   //登录后的移除拦截事件
@@ -32,10 +32,10 @@ const checkLogin ={
       let item = $('.entranceBox')
       let item2 = $('.el-dropdown-menu')
        for(let i=0; i<item.length; i++){
-        item[i].removeEventListener('click',targetEvent, 'useCapture')
+        item[i].removeEventListener('click',this.targetEvent, 'useCapture')
       }
       for(let i=0; i<item2.length; i++){
-        item2[i].removeEventListener('click',targetEvent, 'useCapture')
+        item2[i].removeEventListener('click',this.targetEvent, 'useCapture')
       }
   }
 

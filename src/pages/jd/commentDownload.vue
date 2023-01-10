@@ -1,29 +1,52 @@
 <template>
-<div class="commentDownload"></div>
-
- 	<!--excel下载及数据格式 let column = [{title: '名称',key: 'name',type: 'text'},{title: '视频链接',key: 'videourl',type: 'text'},{title: '图片',key: 'imgurl',type: 'image'}]
-   let data = [{name:'试试111',videourl: 'http://weh.wefw.com60buyimg.com/n2/jfs/t1/193336/10/26161/112918/6/wefew.mp4', imgurl: 'https://img13.360buyimg.com/n2/jfs/t1/193336/10/26161/112918/62c55835Ec20d50ad/7ab207e4ed7547d8.jpg'},
-               {name:'试试222', videourl: '', imgurl: ['https://img14.360buyimg.com/n2/jfs/t1/122295/27/18626/340950/6165b043Ed9f958ec/7a4fc3035bca0094.jpg', 'https://img13.360buyimg.com/n2/jfs/t1/193336/10/26161/112918/62c55835Ec20d50ad/7ab207e4ed7547d8.jpg']}]
- let a = await API.tableToExcel(column,data, '哈哈哈') -->
+   <!-- <commentPanel  /> -->
+   <div></div>
 </template>
 <script setup>
 
 
-//平台状态store
-const busStore = piniaStore()
-//storeToRefs增加响应性,使用了proxy,所以需要用.value拿到值
-const { currentHref } = storeToRefs(busStore) 
+//公共的store数据 
+import {comStore} from '../../components/comStore' 
+const store = comStore() 
+const { openCom, percentage, dataWithPic, dataNoPic, commodityId, withPic } = storeToRefs(store)
 
-const skuId = ref(null)
 
-    const startDownload = async (cnum,type) => {
-            let regs = currentHref.value.match(/item.jd.com.*?(\d+)/)
-            skuId.value = regs[1]
-            type == '有图'? await this.downLoadJDcommentPic(cnum) : await this.downLoadJDcommentNoPic(cnum)
-        }
-    
-    // 获取评价数据 start
-    const  getCommentsData = async (cnum, skuId, pic_flag) => {
+const dataWithPicTemp = reactive({self:[]})
+const dataNoPicTemp = reactive({self:[]})
+
+    const  startDownload = async (num) =>{
+        let skuUrl = window.location.href
+        let regs = skuUrl.match(/item.jd.com.*?(\d+)/)
+        regs != null && (commodityId.value = regs[1])
+        openCom.value = true
+        percentage.value = 10
+        await getWholeData(num)
+    }
+    const getWholeData = async (num) =>{  //获取完整数据
+        percentage.value = 30
+        dataWithPicTemp.self = await getCommentsData(num, "pic")
+        percentage.value = 70
+        if(dataWithPicTemp.self.length == 0){ 
+            console.log('当前商品未找到有图评价: =============');
+            ElMessage.error({ message: '当前商品未找到有图评价', showClose: true, duration: 6000 })
+            dataWithPic.value.length = 1  //没有评价时,给个null值,关闭loading效果
+            withPic.value = '无图评价'  //有图评价没有时,自动切换到无图评价
+            }else{
+                dataWithPicTemp.self.map(item => dataWithPic.value.push({time: item['time'], content: item['content'], imglist: item['imgs'],videoUrl: item['videos'][0]}))
+            }
+        dataNoPicTemp.self = await getCommentsData(num, "nopic")
+        percentage.value = 100
+        if(dataNoPicTemp.self.length == 0){ 
+            ElMessage.error({ message: '当前商品未找到无图评价', showClose: true, duration: 6000 })
+            dataNoPic.value.length = 1
+            // this.withPic = '有图评价'
+            }else{
+                dataNoPicTemp.self.map(item => dataNoPic.value.push({time: item['time'], content: item['content']}))
+            }
+    }
+    const getCommentsData = async (cnum, pic_flag) =>{
+        
+    let commentUrl = "https://club.jd.com/comment/skuProductPageComments.action?callback=fetchJSON_comment98&productId=" + commodityId.value + "&score=0&sortType=5&page=0&pageSize=10&isShadowSku=0&fold=1"
     // 创建需要抓取的评价JSON链接数组 和 总页数
     let json_url_list = new Array();
     let total_page = 0;
@@ -39,13 +62,14 @@ const skuId = ref(null)
         }
     }
     for(var i = 0; i < total_page; i++){
-        let jsonUrl = "https://club.jd.com/comment/skuProductPageComments.action?productId=" + skuId + "&score=0&sortType=5&page=" + i + "&pageSize=10&isShadowSku=0&fold=1"
+        let jsonUrl = "https://club.jd.com/comment/skuProductPageComments.action?productId=" + commodityId.value + "&score=0&sortType=5&page=" + i + "&pageSize=10&isShadowSku=0&fold=1"
+        // console.log('jsonUrl: ', jsonUrl);
         json_url_list.push(jsonUrl)
+        // console.log('json_url_list: ', json_url_list);
     }
 
     // 获取数据
     let sumData = new Array();
-
     for(var i = 0; i< total_page; i++){
         let msg = {
             type: 'myfetch',
@@ -61,7 +85,8 @@ const skuId = ref(null)
         }
     
         let jsondata = await API.sendMessage(msg)
-        jsondata = parseJSON(jsondata)
+        jsondata = JSON.parse(jsondata)
+
         let nowPage = 0;
         if (jsondata.csv != undefined && jsondata.csv.indexOf('pageSize=') > -1 ){
             let regs = jsondata.csv.match(/pageSize=.*?(\d+)/);
@@ -70,7 +95,9 @@ const skuId = ref(null)
         // 获取最大页码
         let maxPage = jsondata.maxPage;
         // 初始化评价时间，默认获取当前时间
-        let nowTime = getMyDateTime();
+        // let nowTime = getMyDateTime();
+        // let nowTime = dayjs().format('YYYY-MM-DD HH:MM:SS')
+        let nowTime = API.dayjs().format('YYYYMMDD HH:MM:SS')
 
         let cmt_list = jsondata.comments
         for(var j = 0; j < cmt_list.length; j++){
@@ -132,197 +159,25 @@ const skuId = ref(null)
             
                 if (isNoPic == false && pic_flag == 'pic'){
                     let c_obj = {"order":order, "time":ctime, "content":all_content, "imgs":imgUrls, "videos":videoUrls}
-                    sumData.push(c_obj)
+                   sumData.push(c_obj)
                 }
                 if (isNoPic == true && pic_flag == 'nopic'){
                     let c_obj = {"order":order, "time":ctime, "content":all_content, "imgs":imgUrls, "videos":videoUrls}
                     sumData.push(c_obj)
                 }
+                    // console.log('sumData: ', sumData);
             }
         }
-        await API.wait(1)
+        await API.wait(1.5)
     }
     return sumData
-},
-    // 有图评价下载  
-    async downLoadJDcommentPic(commentsNum) {
-    if (this.skuId != undefined){
-        //ElMessage.success({ message: '商品有图评价开始下载！'});
-        let dataall = await this.getCommentsData(commentsNum, "pic")
-
-        let excelDatas = new Array();
-        for(let di = 1; di <= dataall.length ; di+= 50){
-            excelDatas.push(dataall.slice(di, di+50))
-        }
-        
-        for(let ki = 0; ki < excelDatas.length; ki++){
-            let datas = excelDatas[ki];
-            
-            let column = [
-                {
-                  title: '序号', 
-                  key: 'order',
-                  type: 'text'
-                },
-                {
-                  title: '评价内容', 
-                  key: 'content',
-                  type: 'text',
-                  width: 150,
-                  height: 150
-                }
-            ]
-            
-            //datas = changePicData(column, datas)
-    
-            //获取图片数组、视频数组最大值
-            let img_max = 0;
-            let video_max = 0;
-            for(var i =0; i< datas.length; i++){
-                let img_i_max = datas[i].imgs.length;
-                let video_i_max = datas[i].videos.length;
-                if(img_i_max > img_max){
-                    img_max = img_i_max
-                }
-                if(video_i_max > video_max){
-                  video_max = video_i_max
-                }
-            }
-            // 表格模板视频个数补充
-            for(var i = 0; i< video_max; i++){
-                let vtitle = "视频链接"
-                let vkey = 'video'
-                let vtitlei = i + 1;
-                if(video_max > 1){
-                    vtitle = vtitle + vtitlei;
-                }
-                vkey = vkey + vtitlei
-                let vobj = {
-                  title: vtitle, 
-                  key: vkey,
-                  type: 'text'
-                }
-                column.push(vobj)
-            }
-            for(var i = 0; i< img_max; i++){
-                let vtitle = "图片"
-                let vkey = 'img'
-                let vtitlei = i + 1;
-                if(img_max > 1){
-                    vtitle = vtitle + vtitlei;
-                }
-                vkey = vkey + vtitlei
-                let vobj = {
-                  title: vtitle, 
-                  key: vkey,
-                  type: 'image',
-                  width: 150,
-                  height: 150
-                }
-                column.push(vobj)
-            }
-    
-    
-            // 数组赋值，补充不足的地方
-            for(var i =0; i< datas.length; i++){
-                
-                let img_i_max = datas[i].imgs.length;
-                let video_i_max = datas[i].videos.length;
-                if(img_i_max < img_max){
-                    let cha = img_max - img_i_max;
-                    for(var chai = 0; chai < cha; chai++){
-                        datas[i].imgs.push("")
-                    }
-                }
-                if(video_i_max < video_max){
-                  let cha = video_max - video_i_max;
-                    for(var chai = 0; chai < cha; chai++){
-                        datas[i].videos.push("")
-                    }
-                }
-            }
-            // 数组改变值
-            for(var i =0; i< datas.length; i++){
-                //改变图片值
-                for(var j1 = 0; j1 < img_max; j1++){
-                    let imgkey = "img";
-                    let imgkeyj = j1 + 1;
-                    imgkey = imgkey + imgkeyj
-                    datas[i][imgkey] = datas[i].imgs[j1]
-                }
-                for(var j2 = 0; j2 < video_max; j2++){
-                    let videokey = "video";
-                    let videokeyj = j2 + 1;
-                    videokey = videokey + videokeyj
-                    datas[i][videokey] = datas[i].videos[j2]
-                }
-                
-            } 
-    
-            let timenum = ztime.ymd2()
-            let excelName = timenum + '_' + this.skuId + '_有图评价_' + ki
-    
-            /* excelName = '有图评价.xlsx'    
-            if(xlsxtitle != undefined){
-                excelName = "有图评价_" + xlsxtitle + ".xlsx"
-            }      */       //文件名称
-    
-            // console.log('datas: ', datas);
-            //table2excel(column, datas, excelName)    //生成Excel表格，自动下载
-            // 函数_excel下载_得带文件信息(column, datas, excelName)
-            let size =  await 函数_excel下载_得带文件信息(column, datas, excelName)
-            this.$myBus.$emit('addTask',{filetype: 'doc',taskname: `京东${excelName}.xls`,size, timeStamp: Date.now(), progress: 100})
-        }
-    
-    } else {
-        //ElMessage.error({ message: '下载商品有图评价失败！'});
-        console.log("------- comments download error start -------")
-        console.log("commentsNum : ", commentsNum)
-        console.log("this.skuId : ", this.skuId)
-        console.log("------- comments download error end -------")
     }
-    },
-    // 无图评价下载  start
-    async downLoadJDcommentNoPic(commentsNum) {
-    if (this.skuId != undefined){
-        //ElMessage.success({ message: '商品无图评价开始下载！'});
-        let datas = await this.getCommentsData(commentsNum, "nopic")
-        let column = [
-            {
-              title: '序号', 
-              key: 'order',
-              type: 'text'
-            },
-            {
-              title: '评价内容', 
-              key: 'content',
-              type: 'text',
-              width: 150,
-              height: 150
-            }
-        ]
 
-        let timenum = ztime.ymd2()
-        let excelName = timenum + '_' + this.skuId + '_无图评价'
 
-        /* let excelName = '无图评价.xlsx'    
-        if(xlsxtitle != undefined){
-            excelName = "无图评价_" + xlsxtitle + ".xlsx"
-        }         */    
-        //文件名称
-        //table2excel(column, datas, excelName)    //生成Excel表格，自动下载
-        // 函数_excel下载_得带文件信息(column, datas, excelName)
-        let size =  await 函数_excel下载_得带文件信息(column, datas, excelName)
-        this.$myBus.$emit('addTask',{filetype: 'doc',taskname: `京东${excelName}.xls`,size, timeStamp: Date.now(), progress: 100})
-        
-    } else {
-        //ElMessage.error({ message: '下载商品无图评价失败！'});
-        console.log("------- comments download error start -------")
-        console.log("commentsNum : ", commentsNum)
-        console.log("this.skuId : ", this.skuId)
-        console.log("------- comments download error end -------")
-    }
-}
+    onMounted(()=> { })
+
+defineExpose({ startDownload })
 </script>
 <style lang='scss' scoped>
+
 </style>

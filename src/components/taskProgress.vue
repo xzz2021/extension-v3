@@ -1,10 +1,12 @@
 <!--
  * @Date: 2022-11-12 09:56:46
  * @LastEditors: xzz2021
- * @LastEditTime: 2022-12-08 17:51:29
+ * @LastEditTime: 2023-01-10 09:55:16
 -->
 <template>
-  <vxe-modal className="taskProgressPanel"  v-model="taskShow" width="600" :position="{ top: 100 }" @hide="closeModal">
+<!-- vxe-modal必须包裹一层div,不然头部样式:deep无法更改 -->
+<div className="taskProgressPanel">   
+  <vxe-modal   v-model="taskShow" width="600" :position="{ top: 100 }" @hide="closeModal">
     <template #title>
       <div class="tasktitle"> 任务进程</div>
     </template>
@@ -27,8 +29,8 @@
         <div class="taskList" v-for="(item, index) in taskData2.self" :key="index">
           <div class="detailBox">
             <div class="taskSymbol"> <svg class="xzzsymbol" aria-hidden="true"> 
-                <use :xlink:href="`#xzzicon2-${item.filetype}`"></use>
-                <!-- <use xlink:href="#xzzicon2-zip"></use> -->
+                <use :xlink:href="`#xzzicon3-${item.filetype}`"></use>
+                <!-- <use xlink:href="#xzzicon3-zip"></use> -->
                 </svg>
             </div>
             <div class="detailInfo">
@@ -53,6 +55,7 @@
     </div>
     </div>
   </vxe-modal>
+    </div>
 
 </template>
 
@@ -145,5 +148,4 @@
 
 <style lang="scss" scoped>
 @import '../css/sass/taskProgress.scss';
-
 </style>

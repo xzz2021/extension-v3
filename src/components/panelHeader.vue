@@ -12,7 +12,7 @@
                 <div>此区域按住鼠标左键可以自由拖动面板</div>
               </template>
               <svg @mousedown="tooldisabled = true" @mouseup="tooldisabled = false" class="xzzsymbol" aria-hidden="true">
-                <use xlink:href="#xzzicon2-tishi"></use>
+                <use xlink:href="#xzzicon3-tishi"></use>
               </svg>
         </el-tooltip>
       </div>

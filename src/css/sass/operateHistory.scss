@@ -1,27 +1,35 @@
 
+//黄色拖拽背景标题居中css
+:deep(.vxe-modal--header) {
+  background: #FF9712;
+  padding: 0 !important;
+}
+:deep(.vxe-modal--box) {
+  border: none !important;
+}
 
-// ::v-deep .vxe-modal--header {
-//   background: #FF9712;
-//   padding: 0 !important;
-// }
-// ::v-deep .vxe-modal--box {
-//   border: none !important;
-// }
 
-
-// ::v-deep .vxe-modal--close-btn{
+:deep(.vxe-modal--close-btn){
 // top: 12px ;
-// color: white;
-// &:hover{
-//   color: white;
-// }
-// }
+color: white;
+&:hover{
+  color: white;
+}
+}
 
-// .mytitle {
-// color: white;
-//   line-height: 40px;
-//   text-align: center;
-// }
+:deep(.vxe-modal--header-title){
+  padding: 0 !important;
+  color: #fff;
+  line-height: 40px;
+  text-align: center;
+  font-size: 18px;
+  font-family: MicrosoftYaHei;
+  font-weight: 500;
+  margin-left: 20px;
+}
+//-------------------------------------------
+
+
 .containerBox{
   width: 570px;
 height: 450px;

@@ -1,22 +1,25 @@
 <!--
  * @Date: 2022-12-13 16:22:15
  * @LastEditors: xzz2021
- * @LastEditTime: 2022-12-13 17:14:28
+ * @LastEditTime: 2023-01-10 15:13:21
 -->
 <template>
 
     <loginPanel ref="loginRef" />
+
     <taskProgress ref="taskProgressRef" />
     <operateHistory  ref="operateHistoryRef" />
-
-    <progressBar />
+    <feedbackPanel  ref="feedbackPanelRef" />
+    <!-- <commentPanel  /> -->
+    <!-- <progressBar /> -->
 
 </template>
 <script setup>
 
-const operateHistoryRef = ref(null)
-const taskProgressRef = ref(null)
 const loginRef = ref(null)     // 子组件ref要声明才能拿到
+const taskProgressRef = ref(null)
+const operateHistoryRef = ref(null)
+const feedbackPanelRef = ref(null)
 
 
 const exchangeShow = (msg) => {
@@ -24,6 +27,8 @@ const exchangeShow = (msg) => {
                 case 'operate' : operateHistoryRef.value.Visible = true
                     break;
                 case 'task' : taskProgressRef.value.taskShow = true
+                    break;
+                case 'feedback' : feedbackPanelRef.value.show = true
                     break;
                 case 'login' : loginRef.value.loginShow = true
                     break;

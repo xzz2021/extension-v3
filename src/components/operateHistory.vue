@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-10-31 14:36:13
  * @LastEditors: xzz2021
- * @LastEditTime: 2022-12-13 17:11:33
+ * @LastEditTime: 2023-01-10 09:45:18
 -->
 <template>
 
@@ -125,9 +125,7 @@
 
   })
 
-  defineExpose({
-  Visible,
-})
+  defineExpose({ Visible })
 
 </script>
 

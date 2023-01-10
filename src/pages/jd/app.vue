@@ -14,7 +14,7 @@
             <el-dropdown placement="right-start" ref="subDropdown2">
               <span class="entranceBox">
                 <div class="one">
-                    <xzzLogo name="dianpu" />
+                    <xzzLogo name="zdgj" />
                     <div class="title" >诊断工具</div>
                 </div>
                 <xzzLogoyjt />
@@ -27,7 +27,7 @@
             <el-dropdown placement="right-start" ref="subDropdown1">
               <span class="entranceBox">
                 <div class="one">
-                    <xzzLogo name="tupian" />
+                    <xzzLogo name="xzgj" />
                     <div class="title" >下载工具</div>
                 </div>
                 <xzzLogoyjt />
@@ -40,7 +40,7 @@
                 <el-dropdown  placement="right-start" @command="imgDownload" >
                       <span class="el-dropdown-link2">
                         <div class="title2">图片下载</div>
-                        <i class="xzzicon3-youjt"></i>
+                        <xzzLogoyjt />
                       </span>
                   <template #dropdown>
                     <el-dropdown-menu  @mouseenter.enter="() => { $refs.subDropdown1.handleOpen() }"
@@ -60,14 +60,14 @@
                 <el-dropdown placement="right-start" @command="commentDownload">
                       <!-- <div class="title2">有图评价下载</div> -->
                       <span class="el-dropdown-link2">
-                        <div class="title2">有图评价下载</div>
-                        <i class="xzzicon3-youjt"></i>
+                        <div class="title2">评价下载</div>
+                        <xzzLogoyjt />
                       </span>
                   <template #dropdown>
                     <el-dropdown-menu  @mouseenter.enter="() => { $refs.subDropdown2.handleOpen() }"
                         @mouseleave.enter="() => { $refs.subDropdown2.handleClose() }">
                         <!-- <el-dropdown-menu  > -->
-                    <el-dropdown-item :command="item.value + '有图' " v-for="item in commentOptions"
+                    <el-dropdown-item :command="item.value" v-for="item in commentOptions"
                     :key="item.value">评价前{{ item.value }}</el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -75,25 +75,7 @@
               </el-dropdown-item>
                 <!-- 二级菜单结束 -->
 
-                   <!-- 二级菜单开始 -->
-              <el-dropdown-item class="el-dropdown-item2">
-                <el-dropdown placement="right-start" @command="commentDownload">
-                      <!-- <div class="title2">无图评价下载</div> -->
-                      <span class="el-dropdown-link2">
-                        <div class="title2">无图评价下载</div>
-                        <i class="xzzicon3-youjt"></i>
-                      </span>
-                  <template #dropdown>
-                    <el-dropdown-menu  @mouseenter.enter="() => {$refs.subDropdown2.handleOpen() }"
-                        @mouseleave.enter="() => { $refs.subDropdown2.handleClose() }">
-                    <!-- <el-dropdown-menu  > -->
-                    <el-dropdown-item :command="item.value" v-for="item in commentOptions" 
-                    :key="item.value">评价前{{ item.value }}</el-dropdown-item>
-                    </el-dropdown-menu>
-                  </template>
-                </el-dropdown>
-              </el-dropdown-item>
-                <!-- 二级菜单结束 -->
+                  
 
               <el-dropdown-item  class="addOperateRecord 下载工具-视频下载 el-dropdown-item2" @click.enter="downLoadJDVideoVue">
                 <span class="el-dropdown-link2">
@@ -129,7 +111,7 @@
           <el-dropdown placement="right-start">
             <span class="entranceBox">
               <div class="one">
-                <xzzLogo name="biaoti" />
+                <xzzLogo name="btgj" />
                 <div class="title" >标题工具</div>
             </div>
             <xzzLogoyjt />
@@ -144,64 +126,19 @@
         </div>
 
 
-      <div>
-          <span class="addOperateRecord 商品搬家-商品搬家 entranceBox" @click="try33" >
-            <div class="one">
-                <xzzLogo name="spbj" />
-                <div class="title" >商品搬家</div>
-            </div>
-            <xzzLogoyjt hide="true" />
-          </span>
-      </div>
-      <div>
-          <span class="addOperateRecord 商品搬家-商品搬家 entranceBox"  >
-            <div class="one">
-                <xzzLogo name="home" />
-                <div class="title" >回到首页</div>
-            </div>
-            <xzzLogoyjt hide="true" />
-          </span>
+         <div>
+          <plainMenu logoName="home" title="回到首页" @click.enter="backToHome"/>
         </div>
-
-        <div>
-          <span class="addOperateRecord 我的建议/反馈 entranceBox" @click="developing" >
-            <div class="one">
-                <xzzLogo name="login" />
-                <div class="title">我的建议/反馈</div>
-            </div>
-            <xzzLogoyjt hide="true" />
-          </span>
-        </div>
-
 
         <div v-if="userid">
-          <el-dropdown placement="right-start"  @command="accountManagement">
-            <span class="entranceBox">
-              <div class="one">
-                <xzzLogo :name="userid ? 'exchange' : 'login'" />
-                <div class="title" >{{userPhone}}</div>
-            </div>
-            <xzzLogoyjt />
-            </span>
-            <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item class="addOperateRecord 账号管理-操作记录" command="operate">操作记录</el-dropdown-item>
-              <el-dropdown-item class="addOperateRecord 账号管理-任务进程" command="task">任务进程</el-dropdown-item>
-              <el-dropdown-item class="addOperateRecord 账号管理-切换账号" command="login">切换账号</el-dropdown-item>
-              <el-dropdown-item class="addOperateRecord 账号管理-退出登录" command="logout">退出登录</el-dropdown-item>
-            </el-dropdown-menu>
-            </template>
-          </el-dropdown>
+          <plainMenu logoName="jyfk" title="我的建议/反馈" ref="myadviceref" @click.enter="openFeedback"/>
         </div>
 
+        <div v-if="userid">
+          <accountMange />
+        </div>
         <div  v-else>
-              <span class="entranceBox" @click="goToLogin">
-                <div class="one">
-                  <xzzLogo name="login" />
-                  <div class="title" >账号登录</div>
-                </div>
-                <xzzLogoyjt hide="true" />
-                </span>
+          <plainMenu logoName="login" title="账号登录" @click.enter="goToLogin"/>
         </div>
 
         <div  class="version">版本:{{ version }} </div>
@@ -210,10 +147,9 @@
     </Transition>
 
     <footer @click="showMain = !showMain">
-      <div class="shrink">
-        <xzzLogo :name="showMain? 'shrink2': 'shrink'" />
-      </div>
+      <div class="shrink"> <xzzLogo :name="showMain? 'shrink2': 'shrink'" /> </div>
     </footer>
+
     </div>
     </VueDragResize>
     </div>
@@ -228,15 +164,15 @@
     <!-- <jdScanRecord ref="ScanRecordRef"/> -->
     <!-- <jdShopDiagnosis ref="shopDiagnosisRef" /> -->
     
-    <jdImageDownload ref="imageDownloadRef"/>
-    <!-- <jdCommentDownload ref="commentDownloadRef" /> -->
+    <jdImageDownload ref="imageDownloadRef" />
+    <jdCommentDownload ref="commentDownloadRef"/>
      <!--<keywordRanking ref="zrss" /> -->
-    <div class="test">
+    <!-- <div class="test">
       <div class="test1" >
       <el-button type="primary" @click="test1">test1</el-button>
       </div>
       <el-button type="primary" @click="test2">test2</el-button>
-    </div>
+    </div> -->
     <!-- <jdChildComponent /> -->
     <!-- 通过将props动态值绑定到pinia上,可以全局实时更改调用,且不需要公共组件的pinia引入 不再需要$ref的定义及调用-->
     <!-- <progressBar :percentage="proBar.percentage"/> -->
@@ -244,18 +180,12 @@
 </template>
 
 <script setup>
-import {videoDownloadczp} from './js/JDVideo.js'
-import {downLoadJDcommentPic, downLoadJDcommentNoPic} from './js/JDcomments.js'
-import { getMainImg, getSkuImg, packageImages, packageSkuImages, downloadDtlImg, downloadAllImg, getMainImgPhone, getSkuImgPhone, getDtlImgPhone, getAllImgPhone } from './js/JDPCPicture.js'
+
 import { getOrderList, setOrderList } from './js/JDorderTag.js'
-import { getVideoTitle, getSkuId, diagnosisProduct} from './js/JDDetailData.js'
-import {dwdJDPCMainPics, dwdJDPCSkuPics, dwdJDPCDtlPics, dwdJDPCallPics, dwdJDPCallPicsDir} from './js/JDImage.js'
-import {dwdJDYDMainPics, dwdJDYDskuPics, dwdJDYDdtlPics, dwdJDYDallPics, dwdJDYDallPicsDir} from './js/JDImage.js'
 
 //各平台持久化的store数据
 const userstore = userStore()
 const { location } = storeToRefs(userstore)
-
 
 //平台状态store
 const busStore = piniaStore()
@@ -289,7 +219,6 @@ let curCookies  = ref('')
 let showMain  = ref(true)
 const version = VERSION
 const userid = ref('')
-const userPhone = ref('')
 
 const try33 = async () => {
   // await API.wait(2)
@@ -340,17 +269,15 @@ const diagnosisOption = reactive([{value: 2}, {value: 5}, {value: 10}, {value: 2
 
 
 //----------------------评价下载------------start----------------------------------
+const commentNum = ref(null)
   const commentOptions  = [ {value: 20}, {value: 50}, {value: 100}, {value: 200}, {value: 300}]
   const commentDownloadRef = ref(null)
-  const commentDownload = (value) => {
+  const commentDownload = (num) => {
+    // commentNum.value = num
     if (urlCheck.value) return ElMessage.error({message: '请进入商品页面,再点击下载', duration: 2000})
-      API.emitter.emit('openPro')  //调用打开蒙版进度条
-      let check = value.toString().indexOf('有图') != -1
-      if(check){
-          commentDownloadRef.value.startDownload(value.replace('有图', ''), '有图');
-        }else{
-          commentDownloadRef.value.startDownload(value, '无图');
-      }
+
+          commentDownloadRef.value.startDownload(num);
+
   }
 //-------------------评价下载------------end-------------------------------------------
 
@@ -427,7 +354,9 @@ const onDragstop = (e) => {
 }
 //---------面板拖拽功能------end------------------
 
-
+const openFeedback = () => {
+   API.emitter.emit('open', 'feedback')
+}
 
 const  backToHome =  () => {
   window.open('https://www.jd.com/')
@@ -469,14 +398,11 @@ let userInfoStore  =  await  API.getUserinfo()
       state.userInfo = userInfoStore
     })
     userid.value = userInfoStore.userid
-    let a  = userInfoStore.userPhone + ''
-  let b = a.substring(3,7)
-  userPhone.value = a.replace(b, '****')
 }
 //------账号管理菜单函数-----------
- const accountManagement = async (arg) => {
-      API.emitter.emit('open', arg)
-    }
+//  const accountManagement = async (arg) => {
+//       API.emitter.emit('open', arg)
+//     }
 
   const  developing = async () => {
       ElMessage.error({ message: `功能等待开发中`, duration: 3000, showClose: true,grouping: true, });
@@ -496,7 +422,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   sendResponse({status: true})
   })
 getUserInfo()
-API.Storage.set({platform: '京东'})
+// API.Storage.set({platform: '京东'})
 })
 
 </script>

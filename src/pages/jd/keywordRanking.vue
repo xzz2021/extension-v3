@@ -119,7 +119,7 @@
           <div v-if="!UrlData.url" class="right">
             <div class="emptyBox">
               <svg class="xzzsymbol emptySymbol" aria-hidden="true"> 
-            <use xlink:href="#xzzicon2-emptybox"></use>
+            <use xlink:href="#xzzicon3-emptybox"></use>
             </svg>
               <p class="emptytip">你还未设置商品信息，请在左边设置</p>
             </div>

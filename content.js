@@ -117,6 +117,7 @@ switch (checkedUrl) {
 
 //----参考------https://stackoverflow.com/questions/9515704/use-a-content-script-to-access-the-page-context-variables-and-functions/9517879#9517879
 const s = document.createElement('script')
+// eslint-disable-next-line no-undef
 s.src = chrome.runtime.getURL('js/inject.js')
 s.onload = function() {
     this.remove()

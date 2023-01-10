@@ -1,0 +1,191 @@
+// --------重置默认样式,边距--------
+:deep(.vxe-modal--header ){
+  border: none;
+  height:24px;
+  background-color: #fff;
+  padding: 0;
+}
+:deep(.vxe-modal--content) {
+  padding: 0;
+}
+//--------------------------------
+
+
+@mixin flexbet{
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin flexcenbet{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flexcencol{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+//初始声明,消除拼多多页面css覆写
+// *, :after, :before {
+//   box-sizing: content-box;
+// }
+
+
+  .xzzcontainer {
+    padding:0 30px 30px 30px;
+    width: 100%;
+    @include flexcencol;
+    box-sizing: border-box;
+    
+    //初始声明,消除阿里巴巴页面css覆写
+    // box-sizing: content-box;
+    // 顶部区域
+    .topContainer{
+      width: 100%;
+      @include flexcenbet;
+      margin-bottom: 20px;
+      position: sticky; // sticky 与背景色z-index搭配避免穿透
+      top: 0;
+      z-index: 2;
+      background: #fff;
+      .leftSec{
+        width: 455px;
+        @include flexcenbet;
+        .titleSec {
+          width: 116px;
+          @include flexcenbet;
+          font-size: 22px;
+          font-family: Microsoft YaHei;
+          font-weight: bold;
+          color: #000000;
+          .xzzsvg{
+            // margin-left: 10px;
+            font-size: 18px;
+            color: #ff9712;
+            cursor: help;
+            // svg{
+            //   width: 22px;
+            //   height: 22px;
+            // }
+          }
+        }
+        .myProgress{
+          width: 318px;
+          height: 30px;
+          @include flexcenbet;
+          background: #f8f8f8;
+          box-sizing: border-box;
+          padding: 0 10px;
+          border-radius: 6px;
+          .tiploading{
+            font-size: 16px;
+            font-family: Microsoft YaHei;
+            font-weight: 400;
+          }
+          .pro{
+            width: 224px;
+          }
+          :deep(.el-progress-bar__innerText){
+            color: #fff !important;
+          }
+        }
+      }
+      .closeSec {
+        // width: 20px;
+        cursor: pointer;
+        svg{
+          font-size: 18px;
+        }
+      }
+    }
+    //搜索区域
+    .funcContainer{
+      width: 100%;
+      @include flexcenbet;
+      margin-bottom: 20px;
+      .selectBox{
+        :deep(.el-radio-button__inner){
+          background-color: #f8f8f8;
+          border: none;
+        }
+      }
+      .dwnBtn{
+        .el-button{
+          font-size: 16px;
+          font-family: Microsoft YaHei;
+          font-weight: 400;
+          color: #FFFFFF;
+          // padding: 11px 20px;
+        }
+      }
+    }
+
+    .resultContainer{
+      width: 100%;
+      height: 660px;
+      box-sizing: border-box;
+      background: rgba(248,248,248,0.39);
+      .picBox{
+        .content, .videourl{
+          // width: 154px;
+            white-space:nowrap;  /* 设置文字在一行显示，不能换行 */  
+            overflow: hidden;    /* 文字长度超出限定宽度，则隐藏超出的内容 */
+            text-overflow: ellipsis;
+            cursor: help;
+        }
+        .videourl{
+          cursor: default;
+        }
+        .imgCon{
+          display:flex;
+          overflow: hidden;
+          .list{
+            margin-right: 20px;
+          }
+        }
+      }
+      .noPicBox{
+        .content{
+          // width: 154px;
+            white-space:nowrap;  /* 设置文字在一行显示，不能换行 */  
+            overflow: hidden;    /* 文字长度超出限定宽度，则隐藏超出的内容 */
+            text-overflow: ellipsis;
+            cursor: help;
+        }
+      }
+    }
+
+
+
+  }
+
+
+
+// .imgCon{
+//   &::-webkit-scrollbar {
+//     width: 8px;
+//     height: 10px;
+//     /**/
+//   }
+
+//   &::-webkit-scrollbar-track {
+//     background: rgb(239, 239, 239);
+//     border-radius: 2px;
+//   }
+
+//   &::-webkit-scrollbar-thumb {
+//     background: #bfbfbf;
+//     border-radius: 10px;
+//   }
+
+//   &::-webkit-scrollbar-thumb:hover {
+//     background: #333;
+//   }
+
+//   &::-webkit-scrollbar-corner {
+//     background: #179a16;
+//   }
+// }

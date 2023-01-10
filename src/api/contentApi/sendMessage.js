@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-11-10 08:30:50
  * @LastEditors: xzz2021
- * @LastEditTime: 2022-11-26 14:02:10
+ * @LastEditTime: 2023-01-10 09:15:38
  */
 
 
@@ -28,7 +28,7 @@ const sendMessage =  (message) => {
         if(message.type == undefined) return reject('发送的请求消息类型不合法')
         chrome.runtime.sendMessage( message, (response) => {
             // console.log('-----------option: -----response-------', response)
-            resolve(response)
+            response? resolve(response): resolve('异常中断')
             // console.log('response: ', response);
             // if (response.state) {
             //     resolve(response.data);

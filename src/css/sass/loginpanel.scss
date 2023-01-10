@@ -1,6 +1,22 @@
 // @use 'root';
-@import 'vxeCommon';
+// @import 'vxeCommon';
 
+@mixin flexbet{
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin flexcenbet{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flexcencol{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
 
 :deep(.el-dialog){
   border-radius: 10px;
@@ -59,7 +75,7 @@
       }
       .formBox{
         position: relative;
-        @extend %flexColCen;
+        @include flexcencol;
         width: 300px;
         .phoneSec{
           position: relative;
@@ -166,7 +182,7 @@
 
     .right2{
       padding: 50px;
-      @extend %flexColCen;
+      @include flexcencol;
       .title{
         width: 300px;
      display: flex;
@@ -198,7 +214,7 @@
       margin-top: 20px;
       border: 1px solid #eee;
       border-radius: 4px;
-      @extend %flexColCen;
+      @include flexcencol;
       overflow-y: scroll;
       .listBox{
         width: 280px;

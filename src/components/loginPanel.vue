@@ -1,6 +1,6 @@
 <template>
   <div class="loginPanel">
-    <el-dialog :model-value="loginShow" width="820px" @closed="loginClose(ruleFormRef)" draggable  center>
+    <el-dialog :model-value="loginShow" width="820px" @closed="loginClose(ruleFormRef)"  draggable  center>
     <!-- <el-button type="primary">Prima233</el-button> -->
       <div class="mainSection">
         <div class="left">

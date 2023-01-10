@@ -1,14 +1,38 @@
-@import 'vxeCommon';
+//黄色拖拽背景标题居中css
+:deep(.vxe-modal--header) {
+  background: #FF9712;
+  padding: 0 !important;
+}
+:deep(.vxe-modal--box) {
+  border: none !important;
+}
+
+
+:deep(.vxe-modal--close-btn){
+// top: 12px ;
+color: white;
+&:hover{
+  color: white;
+}
+}
+
+:deep(.vxe-modal--header-title){
+  padding: 0 !important;
+  color: #fff;
+  line-height: 40px;
+  text-align: center;
+  font-size: 18px;
+  font-family: MicrosoftYaHei;
+  font-weight: 500;
+  margin-left: 20px;
+}
+//-------------------------------------------
 
 .taskProgressPanel{
-
   .probar :deep(.el-progress__text){
     font-size: 12px;
     color: #FF9712;
   }
-// .tasktitle {
-//   //无需样式,因为全局已设定默认值
-//   }
   .searchBox{
       display: flex;
       justify-content: space-between;

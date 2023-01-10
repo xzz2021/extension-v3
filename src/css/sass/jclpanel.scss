@@ -1,20 +1,36 @@
 
-@import 'vxeCommon';
+@mixin flexbet{
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin flexcenbet{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flexcencol{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+
 .jclpanel {
   z-index: 99;
   position: fixed;
   
 
   .jclmain {
-      @extend %flexColCen;
+      @include flexcencol;
       padding-top: 7px;
       >div {
         margin: 5px 0;
         font-family: MicrosoftYaHei;
           .entranceBox {
             height: 38px;
-            @extend %flexCen;
-            justify-content: space-between;
+            @include flexcenbet;
             color: #666;
             cursor: pointer;
             background: rgba(255,252,246,0.39);
@@ -108,8 +124,7 @@
 
   padding:0 5px;  // 改变次级菜单范围
   .el-dropdown-link2{
-    @extend %flexCen;
-    justify-content: space-between;
+    @include flexcenbet;
   }
   &:hover {
       .title2{

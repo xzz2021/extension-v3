@@ -1,0 +1,198 @@
+// @import 'vxeCommon';
+
+
+  :deep(.vxe-modal--header) {
+        border: none;
+        background-color: white;
+      }
+
+:deep(.vxe-modal--content){
+    padding: 30px;
+    padding-top: 0;
+}
+
+      .feedbackHeader{
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 20px;
+          background-color: #ffffff;
+  
+          .headerTitle {
+              font-size: 24px;
+              font-family: Microsoft YaHei;
+              font-weight: bold;
+              color: #000000;
+            }
+          .titleBox{
+              display: flex;
+              justify-content: space-between;
+              align-items: baseline;
+              // width: 220px;
+              width: 260px;
+                .headerTitle {
+                  font-size: 24px;
+                  font-family: Microsoft YaHei;
+                  font-weight: bold;
+                  color: #000000;
+                }
+                .tipTitle{
+                  font-size: 18px;
+                  cursor: help;
+                }
+        
+              }
+          .closeSec{
+            cursor: pointer;
+            svg{
+              font-size: 18px;
+            }
+          }
+      }
+
+      .feedbackContainer{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        // 左侧
+        .feedbackBox{
+          width: 800px;
+          box-sizing: border-box;
+          padding: 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          background: rgba(248,248,248,0.39);
+          .eachBox{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+          }
+          .platformBox{
+
+          }
+          .messageBox{
+            position: relative;
+            .countLimit{
+              position: absolute;
+              right: 5px;
+              bottom: 5px;
+            }
+            .countExceed{
+              position: absolute;
+              right: 5px;
+              bottom: 5px;
+              color: red;
+            }
+
+          }
+          .imageBox{
+            position: relative;
+            >div{
+                width: 684px;
+                min-height: 108px;
+                max-height: 220px;
+                overflow: overlay; //auto会挤压换行
+            }
+            // ::v-deep .el-upload-list__item-actions{
+              .addsvg {
+                line-height: 42px;
+                font-family: Microsoft YaHei;
+                font-weight: 400;
+                color: #CCCCCC;
+                &:hover{
+                  color: #ff9712;
+                }
+                svg{
+                  margin-top: 25px;
+                  width: 20px;
+                  height: 20px;
+                }
+                .addtitle{
+                  line-height: 0px;
+                  font-size: 14px;
+                }
+              }
+              .delsvg{
+                line-height: 98px;
+                svg{
+                  width: 28px;
+                  height: 28px;
+                }
+              }
+            // } 
+            
+            :deep(.el-upload-list__item){
+              width: 94px;
+              height: 94px;
+              margin: 0 20px 8px 0;
+              >div{
+                line-height: 88px;
+              }
+            }
+            :deep(.el-upload){
+              width: 94px;
+              height: 94px;
+            }
+            :deep(.el-upload--picture-card){
+              line-height: 96px;
+            }
+
+            .uploadtip{
+              position: absolute;
+              bottom: -23px;
+              left: 78px;
+              color: #afafaf;
+            //   &::before{
+            //     content: "*";
+            //     color: red;
+            //     display: inline;
+            // }
+            }
+          }
+          .xzzdivider2{
+            width: 760px;
+            height: 1px;
+            background-color: #EEE;
+            margin-bottom: 20px;
+          }
+          .submitBox{
+            .el-button{
+              width: 178px;
+            }
+          }
+          .el-select, .el-textarea{
+            width: 684px;
+          }
+        }
+
+        // 分隔线
+      .xzzdivider{
+        width: 1px;
+        background-color: #ddd;
+      }
+      // 二维码
+      .QRcodeBox{
+        width: 300px;
+        // height: 495px;
+        background: rgba(248,248,248,0.39);
+        background-image: url('https://junchenlunoffice.oss-cn-shenzhen.aliyuncs.com/plugs/logo1/wechatbj.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        text-align: center;
+        .container{
+          margin: 140px 74px 0 74px;
+          >p{
+            margin-top: 16px;
+            font-size: 16px;
+            font-family: Microsoft YaHei;
+            font-weight: 400;
+            // line-height: 21px;
+            color: #000000;
+          }
+        }
+      }
+    }

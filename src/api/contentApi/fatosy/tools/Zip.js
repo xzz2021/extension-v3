@@ -1,5 +1,5 @@
 import JSZip from 'jszip';
-import {saveAs} from 'file-saver';
+// import {saveAs} from 'file-saver';
 
 // 图片文件流转码
 const getBase64 = (img, callback) => {
