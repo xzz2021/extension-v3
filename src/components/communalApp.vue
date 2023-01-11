@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-12-13 16:22:15
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-10 15:43:36
+ * @LastEditTime: 2023-01-11 10:49:59
 -->
 <template>
 
@@ -25,7 +25,7 @@ const feedbackPanelRef = ref(null)
 
 const exchangeShow = (msg) => {
     switch(msg){    //   子组件所有需要调用的值和方法都需要先暴露出去defineExpose
-                case 'operate' : operateHistoryRef.value.Visible = true
+                case 'operate' : operateHistoryRef.value.getDatabase(1); operateHistoryRef.value.Visible = true
                     break;
                 case 'task' : taskProgressRef.value.taskShow = true
                     break;

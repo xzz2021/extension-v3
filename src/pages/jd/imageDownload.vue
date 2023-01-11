@@ -1,7 +1,5 @@
 <template>
-<div>
-</div>
-
+<div></div>
 </template>
 <script setup>
 
@@ -9,7 +7,7 @@
 //公共的store数据 
 import {comStore} from '../../components/comStore' 
 const store = comStore() 
-const { openImg, percentage, mainImg, detailImg, skuImg } = storeToRefs(store)
+const { openImg, percentage, mainImg, detailImg, skuImg, zipname, LinkData } = storeToRefs(store)
 
 
 
@@ -21,16 +19,20 @@ const { openImg, percentage, mainImg, detailImg, skuImg } = storeToRefs(store)
             LinkData.value = url
             let plattitle = platform == 'pc' ? '电脑端' : '移动端'
             let shopId = url.match(/com\/(\d*)/g)[0].slice(4)
-            zipname.value = '京东' + dayjs().format('YYYYMMDD') + plattitle + shopId
+            zipname.value = '京东' + API.dayjs().format('YYYYMMDD') + plattitle + shopId
+            getIds()
+            percentage.value = 20
             platform == 'pc' ? await getData() : await getDataMobile()
-            
+            percentage.value = 100
         }
 
 
     //全局获取商品id
+    const skuId = ref('')
+    const mainSkuId = ref('')
     const getIds = async () =>{
                 // 获取skuID
-    let regs = currentHref.value.match(/item.jd.com.*?(\d+)/);
+    let regs = location.href.match(/item.jd.com.*?(\d+)/);
     skuId.value = regs.length >= 2 ? regs[1] : undefined;
 
     // 获取mainSkuId
@@ -46,8 +48,15 @@ const { openImg, percentage, mainImg, detailImg, skuImg } = storeToRefs(store)
     }
     const getData = async () => {
         await getMainImg()
+        percentage.value = 40
+        // console.log('mainImg: ', mainImg.value);
         await getDetailImg()
+        percentage.value = 60
+        // console.log('detailImg: ', detailImg.value);
         await getSkulImg()
+        percentage.value = 80
+        // console.log('skuImg: ', skuImg.value);
+
     }
     const getDataMobile = async () => {
         await getMainImgm()
@@ -65,8 +74,9 @@ const { openImg, percentage, mainImg, detailImg, skuImg } = storeToRefs(store)
         if(img_url.indexOf('png') > -1 || img_url.indexOf('jpg') > -1){
             // main_img_list.push(img_url);
             let name = '主图' + (i + 1) + '.jpg';
-            let url = img_url;
-            mainImg.self.push({name,url})
+            let src = img_url;
+            mainImg.value.push({name,src, isCheck: true})
+            // console.log('mainImg.value: ', mainImg.value);
         }
     }
     }
@@ -114,7 +124,7 @@ const { openImg, percentage, mainImg, detailImg, skuImg } = storeToRefs(store)
     }
 
     img_list.forEach((item,index)=>{
-        detailImg.self.push({url: item, name: '详情图' + (index + 1) + '.jpg'})
+        detailImg.value.push({src: item, name: '详情图' + (index + 1) + '.jpg', isCheck: true})
         })
     }
     // 获取PC端SKU图
@@ -134,8 +144,8 @@ const { openImg, percentage, mainImg, detailImg, skuImg } = storeToRefs(store)
             //     "text": img_text
             // }
             // sku_list.push(img_obj);
-            skuImg.self.push({name:`SKU图${i+ 1}-${img_text}.jpg`,url:img_url})
-            // console.log('skuImg.self: ', skuImg.self);
+            skuImg.value.push({name:`SKU图${i+ 1}-${img_text}.jpg`,src:img_url, isCheck: true})
+            // console.log('skuImg.value: ', skuImg.value);
         }
     }
     }
@@ -160,8 +170,8 @@ const { openImg, percentage, mainImg, detailImg, skuImg } = storeToRefs(store)
         if(imgstrall instanceof Array){
             for(var i = 0; i<imgstrall.length; i++){
                 let name = '主图' + (i + 1) + '.jpg';
-                let url = "https://m.360buyimg.com/mobilecms/" + imgstrall[i];
-                mainImg.self.push({name,url})
+                let src = "https://m.360buyimg.com/mobilecms/" + imgstrall[i];
+                mainImg.value.push({name,src, isCheck: true})
     }}}
     }
     const getDetailImgm = async () => {
@@ -182,7 +192,7 @@ const { openImg, percentage, mainImg, detailImg, skuImg } = storeToRefs(store)
                     let imgstr = regs[i].replace('<img src=',"");
                     let imgUrl = imgstr.replace(' alt=>',"");
                     // dtlImgList.push(imgUrl);
-                    detailImg.self.push({ name: `详情图${i + 1}.jpg`, url:imgUrl })
+                    detailImg.value.push({ name: `详情图${i + 1}.jpg`, src:imgUrl, isCheck: true })
                 }
             }
         }else{
@@ -194,7 +204,7 @@ const { openImg, percentage, mainImg, detailImg, skuImg } = storeToRefs(store)
                     imgUrl = imgUrl.split(' ')[0]
                     //console.log(imgUrl)
                     // dtlImgList.push(imgUrl);
-                    detailImg.self.push({ name: `详情图${i + 1}.jpg`, url:imgUrl })
+                    detailImg.value.push({ name: `详情图${i + 1}.jpg`, src:imgUrl, isCheck: true })
                 }
             }
         }
@@ -237,7 +247,7 @@ const { openImg, percentage, mainImg, detailImg, skuImg } = storeToRefs(store)
                         // }
                         // skuImgList.push(img_obj);
                         let name = `SKU图${(i + 1)}${skuNameAll.replace('/','')}.jpg`
-                        skuImg.self.push({name,url:imgUrl})
+                        skuImg.value.push({name,src:imgUrl, isCheck: true})
                     }
                 }
             }
@@ -247,27 +257,26 @@ const { openImg, percentage, mainImg, detailImg, skuImg } = storeToRefs(store)
     //压缩并下载所有文件
     const zipData = async (arg, zipname) =>  {
 
-    //   selectData.self = []
+    //   selectData.value = []
       let selectZip = new API.jszip()  
       //每次运行都会new一个新对象,之所以需要new一个对象,在于新赋的值都是新的new对象,没有原型链数据残留,
       //如果在API里先new,因为是全局对象,始终存在,所以会导致数据在全局累加
       switch(arg){
-        case 'main':      selectData.self = mainImg.self
+        case 'main':      selectData.value = mainImg.value
           break;
-        case 'detail':    selectData.self = detailImg.self
+        case 'detail':    selectData.value = detailImg.value
           break;
-        case 'sku':       selectData.self = skuImg.self
+        case 'sku':       selectData.value = skuImg.value
           break;
-        case 'all':       selectData.self = [...mainImg.self, ...detailImg.self, ...skuImg.self]
-          break;
-        case 'allwith':   await addFolder(mainImg.self,detailImg.self,skuImg.self); selectData.self = [...mainImg.self, ...detailImg.self, ...skuImg.self]
+        case 'all':       selectData.value = [...mainImg.value, ...detailImg.value, ...skuImg.value]
           break;
         default: ''
           break
       }
       //保存每一张图片
-       selectData.self.forEach( (item, index) => {
-        let base64URL =  API.imgToBase64(item.url)
+        selectData.value = selectData.value.filter(item=>item.isCheck == true)
+       selectData.value.forEach( (item, index) => {
+        let base64URL =  API.imgToBase64(item.src)
         // console.log('base64URL: ', base64URL)
         // return
         selectZip.file(item.name, base64URL, {base64: true})
@@ -279,20 +288,7 @@ const { openImg, percentage, mainImg, detailImg, skuImg } = storeToRefs(store)
         saveAs(dataSave, zipname)
         API.emitter.emit('addTask',{filetype: 'zip',taskname: `${zipname}.zip`,size: dataSave.size,  progress: 100})
     }
-    const clearData = async () => {
-        mainImg.self = []
-        detailImg.self = []
-        skuImg.self = []
-        selectData.self = []
-    }
-    const  addFolder = async (a,b,c) => {
-        a.forEach((item)=>{item.name = `主图/${item.name}`})
-        b.forEach((item)=>{item.name = `详情图/${item.name}`})
-        c.forEach((item)=>{item.name = `sku图/${item.name}`})
-    }
     onMounted(() => {
-        // API.dayjs.format('YYYYMMDD')
-        // console.log('API.dayjs.format', API.dayjs.format('YYYYMMDD'))
     })
 //setup内部的实例对象默认只在内部,外部调用需要手动暴露出去
     defineExpose({ startDownload })

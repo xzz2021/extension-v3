@@ -10,7 +10,7 @@
             </svg>
 </template>
 <script setup>
-const props = defineProps(['fs','name'])
+const props = defineProps(['name'])
 // fs不传时默认是14
 </script>
 <style  lang='scss' scoped>

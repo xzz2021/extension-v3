@@ -1,9 +1,9 @@
 // --------重置默认样式,边距--------
-:deep(vxe-modal--header) {
+:deep(.vxe-modal--header) {
   border: none;
   background-color: white;
-  padding: 0 !important;
-  height:30px;
+  padding: 0 ;
+  height:30px ;
 }
 :deep(.vxe-modal--content) {
   padding: 0;
@@ -106,40 +106,43 @@
       width: 100%;
       @include flexcenbet;
       margin-bottom: 16px;
-      >div{
-        height: 40px;
-      }
+      // >div{
+      //   height: 40px;
+      // }
       .searchBox{
         width: 890px;
-        :deep(.el-input__inner) {
-          // height: 40px;
-          // width: 814px;
-          border: 2px solid #ff800b;
-          border-radius: 6px 0 0 6px;
+        border: 2px solid #ff800b;
+        border-radius: 6px;
+        :deep(.el-input__wrapper){
+          box-shadow: none;
         }
+        // :deep(.el-input__inner) {
+        //   border: 2px solid #ff800b;
+        //   border-radius: 6px;
+        // }
         :deep(.el-input-group__append){
           background: #ff9712;
-          border-color: #ff9712;
-          color: white;
           cursor: pointer;
           font-size: 16px;
-          font-family: Microsoft YaHei;
+          // font-family: Microsoft YaHei;
           font-weight: 400;
           color: #FFFFFF;
-          border-radius:0 6px 6px 0;
+          box-shadow: none;
         }
       }
       .divider{
+        height: 40px;
         width: 1px;
         background-color: #eee;
       }
       .clearBtn{
         .el-button{
           font-size: 16px;
+          width: 86px;
           font-family: Microsoft YaHei;
           font-weight: 400;
           color: #555;
-          padding: 11px 20px;
+          // padding: 11px 20px;
           background: rgba(238,238,238,0.39);
         }
 
@@ -150,7 +153,7 @@
           font-family: Microsoft YaHei;
           font-weight: 400;
           color: #FFFFFF;
-          padding: 11px 20px;
+          // padding: 11px 20px;
         }
       }
     }
@@ -178,6 +181,7 @@
           }
         }
         :deep(.checkList .el-checkbox){
+          height: auto;
           margin-right: 33px;
           &:nth-child(7n) {
             margin-right: 0px;

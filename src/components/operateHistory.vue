@@ -125,7 +125,7 @@
 
   })
 
-  defineExpose({ Visible })
+  defineExpose({ Visible, getDatabase })
 
 </script>
 

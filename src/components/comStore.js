@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-09-15 11:21:04
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-10 14:31:16
+ * @LastEditTime: 2023-01-11 16:48:38
  */
 
 import { defineStore } from 'pinia'
@@ -24,6 +24,8 @@ export const comStore = defineStore('comInfo', {
         mainImg: [],
         detailImg: [],
         skuImg: [],
+        zipname: '',
+        LinkData: '',
       }
     },
     // persist: true, //持久化

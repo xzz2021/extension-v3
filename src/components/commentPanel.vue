@@ -9,9 +9,9 @@
                     <div class="leftSec">
                         <div class="titleSec">
                             <div class="headerTitle">评价下载</div>
-                            <el-tooltip class="item" effect="dark" placement="top">
+                            <el-tooltip class="item" effect="dark" >
                                 <template class="topTip" #content>
-                                    <div style="margin-bottom: 5px;">1、软件会自动获取当前商品用户评价</div>
+                                    <div style="margin-bottom: 5px;">1、软件会自动获取当前商品用户评价;</div>
                                     <div style="margin-bottom: 5px;">2、点击有图评价和无图评价按钮可以切换相应数据;</div>
                                     <div style="margin-bottom: 5px;">3、点击表格下载,会自动下载当前表格数据</div>
                                 </template>
@@ -34,7 +34,7 @@
                             </el-radio-group>
                         </div>
                         <div class="dwnBtn">
-                            <el-button type="primary" @click="downLoadExcel">表格下载</el-button>
+                            <el-button type="primary" size="large" @click="downLoadExcel">表格下载</el-button>
                         </div>
                     </div>
 
@@ -48,7 +48,7 @@
                         <vxe-column title="内容评价" field="detail" width="300" >
                           <template #default="{ row }">
                             <div class="commentCon">
-                                <el-tooltip placement="top" width="200" :content="row.content">
+                                <el-tooltip placement="top" style="width:200px;" :content="row.content">
                                     <div  class="content">{{row.content}}</div>
                                 </el-tooltip>
                             </div>
@@ -129,7 +129,7 @@ const { openCom, percentage, dataWithPic, dataNoPic, commodityId, withPic } = st
                 { title: '图片5', key: 'pic5', type: 'image', width: 130, height: 130 },
                 { title: '图片6', key: 'pic6', type: 'image', width: 130, height: 130 },
             ]
-            let name = `${API.dayjs().format('YYYYMMDD')}_${commodityId}_有图商品评价.xls`
+            let name = `${API.dayjs().format('YYYYMMDD')}_${commodityId.value}_有图商品评价.xls`
             let size = await API.tableToExcel(head, commentList, name)
             API.emitter.emit('addTask', { filetype: 'doc', taskname: name, size, progress: 100 })
     }
@@ -146,8 +146,8 @@ const { openCom, percentage, dataWithPic, dataNoPic, commodityId, withPic } = st
             }
         ]
 
-        let excelName = API.dayjs().format('YYYYMMDD') + '_' + commodityId + '_无图评价'
-        let size =  await API.tableToExcel(column, dataNoPic, excelName)
+        let excelName = API.dayjs().format('YYYYMMDD') + '_' + commodityId.value + '_无图评价'
+        let size =  await API.tableToExcel(column, dataNoPic.value, excelName)
         API.emitter.emit('addTask',{filetype: 'doc',taskname: `${excelName}.xls`,size, progress: 100})
         
     }

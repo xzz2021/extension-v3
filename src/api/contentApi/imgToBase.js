@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-12-01 16:03:50
  * @LastEditors: xzz2021
- * @LastEditTime: 2022-12-02 15:19:23
+ * @LastEditTime: 2023-01-11 09:47:18
  */
 
 // ☆☆☆☆☆☆学习用法☆☆☆☆☆☆
@@ -41,8 +41,8 @@ const imgToBase64666 = (url) => {
       var reader = new FileReader()
       reader.readAsDataURL(response)
       reader.onload = function (e) {
-        let 格式化base64 = e.target.result.replace(/^data:image\/(png|jpg|jpeg|gif);base64,/, '')
-        res(格式化base64)
+        let res = e.target.result.replace(/^data:image\/(png|jpg|jpeg|gif);base64,/, '')
+        res(res)
       }
     })
 

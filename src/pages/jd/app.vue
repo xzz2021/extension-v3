@@ -24,7 +24,7 @@
 
       <!-- 下载工具 -->
         <div>
-            <el-dropdown placement="right-start" ref="subDropdown1">
+            <el-dropdown placement="right-start" ref="subDropdown1" >
               <span class="entranceBox">
                 <div class="one">
                     <xzzLogo name="xzgj" />
@@ -37,16 +37,16 @@
              <el-dropdown-menu class="el-dropdown-menu2">
               <!-- 二级菜单开始 -->
               <el-dropdown-item class="el-dropdown-item2">
-                <el-dropdown  placement="right-start" @command="imgDownload" >
+                <el-dropdown   placement="right-start" @command="imgDownload" >
                       <span class="el-dropdown-link2">
                         <div class="title2">图片下载</div>
-                        <xzzLogoyjt />
+                        <xzzLogoyjt type="true"/>
                       </span>
                   <template #dropdown>
                     <el-dropdown-menu  @mouseenter.enter="() => { $refs.subDropdown1.handleOpen() }"
                         @mouseleave.enter="() => { $refs.subDropdown1.handleClose() }">
                     <el-dropdown-item :class="`addOperateRecord 图片下载-${item.name}`"
-                    :command="item" v-for="item in pictureOption" :key="item.name">
+                    :command="item.platform" v-for="item in pictureOption" :key="item.name">
                         {{ item.name }}
                     </el-dropdown-item>
                     </el-dropdown-menu>
@@ -61,11 +61,11 @@
                       <!-- <div class="title2">有图评价下载</div> -->
                       <span class="el-dropdown-link2">
                         <div class="title2">评价下载</div>
-                        <xzzLogoyjt />
+                        <xzzLogoyjt type="true"/>
                       </span>
                   <template #dropdown>
-                    <el-dropdown-menu  @mouseenter.enter="() => { $refs.subDropdown2.handleOpen() }"
-                        @mouseleave.enter="() => { $refs.subDropdown2.handleClose() }">
+                    <el-dropdown-menu  @mouseenter.enter="() => { $refs.subDropdown1.handleOpen() }"
+                        @mouseleave.enter="() => { $refs.subDropdown1.handleClose() }">
                         <!-- <el-dropdown-menu  > -->
                     <el-dropdown-item :command="item.value" v-for="item in commentOptions"
                     :key="item.value">评价前{{ item.value }}</el-dropdown-item>
@@ -246,23 +246,12 @@ const diagnosisOption = reactive([{value: 2}, {value: 5}, {value: 10}, {value: 2
 
 
 //----------------------图片下载------------start----------------------------------
-  const pictureOption  = [
-                      {name: 'PC端_全部下载(带目录)', arg: 'allwith', platform: 'pc'},
-                      {name: 'PC端_全部下载', arg: 'all', platform: 'pc'},
-                      {name: 'PC端_主图下载', arg: 'main', platform: 'pc'},
-                      {name: 'PC端_详情图下载', arg: 'detail', platform: 'pc'},
-                      {name: 'PC端_SKU图下载', arg: 'sku', platform: 'pc'},
-                      {name: '移动端_全部下载(带目录)', arg: 'allwith', platform: 'mobile'},
-                      {name: '移动端_全部下载', arg: 'all', platform: 'mobile'},
-                      {name: '移动端_主图下载', arg: 'main', platform: 'mobile'},
-                      {name: '移动端_详情图下载', arg: 'detail', platform: 'mobile'},
-                      {name: '移动端_SKU图下载', arg: 'sku', platform: 'mobile'}
-                      ]
+  const pictureOption  = [ {name: 'PC端_图片下载',  platform: 'pc'}, {name: '移动端_图片下载', platform: 'mobile'}]
   const imageDownloadRef = ref(null)
-  const imgDownload = (item) => {
+  const imgDownload = (platform) => {
     if (urlCheck.value) return ElMessage.error({message: '请进入商品页面,再点击下载', duration: 2000})
-      API.emitter.emit('openPro')  //调用打开蒙版进度条
-      imageDownloadRef.value.startDownload(item.arg, item.platform);
+      // API.emitter.emit('openPro')  //调用打开蒙版进度条
+      imageDownloadRef.value.startDownload(platform);
   }
 //-------------------图片下载------------end-------------------------------------------
 
@@ -422,7 +411,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   sendResponse({status: true})
   })
 getUserInfo()
-// API.Storage.set({platform: '京东'})
+API.Storage.set({platform: '京东'})  //必须声明此项,其他独立公共组件才能拿到值
 })
 
 </script>

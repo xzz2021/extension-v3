@@ -8,9 +8,9 @@
 // 此处定义所有外部引用的小模块
 import dayjs from "dayjs"
 import mitt from "mitt"
-import jszip from 'jszip';
+import JSZip  from 'jszip';
+import { saveAs } from 'file-saver'
+// const jszip = require('jszip')
 
 
-
-
-export default {dayjs, jszip,  emitter:mitt()}
+export default {dayjs, JSZip, saveAs,  emitter:mitt()}
