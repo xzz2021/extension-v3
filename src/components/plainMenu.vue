@@ -1,11 +1,11 @@
 <!--
  * @Date: 2022-12-08 15:11:25
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-10 11:53:49
+ * @LastEditTime: 2023-01-12 11:26:52
 -->
 <template>
 <!-- 此组件定义没有下拉的纯净菜单项 -->
-<span :class="`addOperateRecord ${title} entranceBox`">
+<span :class="`addOperateRecord ${title} entranceBox`" @click="openTool">
             <div class="xzzone">
                 <svg class="xzzsymbol xzzsvg"  aria-hidden="true">  <use :xlink:href="`#xzzicon3-${logoName}`"></use> </svg>
                 <div class="title" >{{title}}</div>
@@ -14,11 +14,16 @@
           </span>
 </template>
 <script setup>
-const props = defineProps(['title','logoName'])
+const props = defineProps(['title','logoName', 'openKey'])
 
-// const openTool = (arg) => {
-//   console.log('arg: ', arg);
-// }
+const openTool = () => {
+  if(props.openKey == undefined) return ElMessage.error({message: '请给组件传props值openKey', duration: 2000})
+  if(props.openKey.includes('https')){
+    window.open(props.openKey)
+  }else{
+    API.emitter.emit('open', props.openKey)
+  }
+}
 //   defineExpose({ openTool })
 </script>
 <style  lang='scss' scoped>

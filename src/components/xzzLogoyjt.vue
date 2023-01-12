@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-12-08 15:11:25
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-11 10:35:02
+ * @LastEditTime: 2023-01-12 14:21:27
 -->
 <template>
 
@@ -21,7 +21,7 @@ const props = defineProps(['hide', 'type'])
 }
 
 .xzzsvg2{
-    font-size: 10px; 
+    font-size: 10px;
     margin-left:5px;
 }
 

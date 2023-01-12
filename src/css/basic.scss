@@ -28,10 +28,10 @@
 // div:has()
 
 //滚动条样式重写
-textarea,.vxe-modal--content,.el-table__body-wrapper, .keyWordSection, .arrListSection{
+textarea,.vxe-modal--content,.el-table__body-wrapper, .keyWordSection, .arrListSection, .vxe-table--body-wrapper{
 
 &::-webkit-scrollbar{
-  width:2px;
+  width:8px;
   height:10px;
   /**/
 }

@@ -5,6 +5,7 @@
             <!-- 全部内容的盒子 -->
             <div class="xzzcontainer">
                 <!--标题-->
+                <div>{{count}}</div>
                 <div class="topContainer">
                     <div class="leftSec">
                         <div class="titleSec">
@@ -103,6 +104,13 @@ import {comStore} from './comStore'
 const store = comStore() 
 const { openCom, percentage, dataWithPic, dataNoPic, commodityId, withPic } = storeToRefs(store)
 
+
+// import {tempStore} from './comStore' 
+// const tempstore = tempStore() 
+// const { count } = storeToRefs(tempstore)
+// setInterval(() => {
+//     count.value++
+// }, 2000);
 
 // store.$reset()
 

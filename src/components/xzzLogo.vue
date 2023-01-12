@@ -5,7 +5,7 @@
 -->
 <template>
 
-            <svg class="xzzsymbol xzzsvg" style="font-size: 16px; margin-right: 4px;"  aria-hidden="true"> 
+            <svg class="xzzsymbol xzzsvg" style="font-size: 16px;"  aria-hidden="true"> 
                 <use :xlink:href="`#xzzicon3-${name}`"></use>
             </svg>
 </template>

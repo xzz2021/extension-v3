@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-11-12 09:56:46
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-10 09:55:16
+ * @LastEditTime: 2023-01-12 14:09:03
 -->
 <template>
 <!-- vxe-modal必须包裹一层div,不然头部样式:deep无法更改 -->
@@ -140,9 +140,7 @@
 
 
 // ------☆☆☆☆------任意组件内都可以使用此格式发送事件---------API.emitter.emit('addTask', {filetype: 'video',taskname: '视频.mp4',size: 1528753, progress: 30})
-  defineExpose({
-  taskShow
-})
+  defineExpose({ taskShow })
 
 </script>
 

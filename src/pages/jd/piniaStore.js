@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-09-15 11:21:04
  * @LastEditors: xzz2021
- * @LastEditTime: 2022-12-14 17:09:27
+ * @LastEditTime: 2023-01-12 15:02:18
  */
 
 import { defineStore } from 'pinia'
@@ -13,7 +13,7 @@ export const piniaStore = defineStore('selfInfo', {
       return {
         count: 0,
         info_id: 0,
-        sitePlatform: '京东',
+        // sitePlatform: '京东',
         urlCheck: window.location.href.indexOf('item.jd') == -1, //检查当前页是否是商品页,true则return弹出提示
         diagnosisStore:{
           show: false,
@@ -42,9 +42,17 @@ export const piniaStore = defineStore('selfInfo', {
     },
     // persist: true, //持久化
       actions: {  //支持异步
-        increment() {
+        async increment() {
+          await API.wait(6)
           this.count++
         },
+        // async storingLoc(val){
+        //   this.panelLocation = val
+            
+        // },
+        // async getLocation(){
+        //   this.panelLocation = await API.Storage.get('panelLocation') || {lx: 60, ly: 110}
+        // }
         // //自动获取当前登录用户信息挂载到store里
         // async getUserinfo(){
         //   this.userInfo = await API.Storage.get('userInfo')
@@ -71,8 +79,7 @@ export const userStore = defineStore('userInfo', {
   // arrow function recommended for full type inference
   state: () => {
     return {
-      count: 0,
-      location: { lx: 60, ly: 120 },
+      panelLocation: { lx: 60, ly: 120 },
       // userInfo: {
       //   userid: '',
       //   userToken: '',
@@ -89,9 +96,6 @@ export const userStore = defineStore('userInfo', {
   },
   persist: true, //持久化
   actions: {  //支持异步
-    increment() {
-      this.count++
-    },
   },
   getters: {
   }

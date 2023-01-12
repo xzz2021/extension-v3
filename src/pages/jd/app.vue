@@ -1,12 +1,12 @@
 <template>
 <div class="jclpanel" >
   
-    <VueDragResize :isActive="true" :w="180" :h="60" :x="location.lx" :y="location.ly" :z="22" v-if="reloadDrag" :isResizable="false" @dragstop="onDragstop" >
+    <VueDragResize :isActive="true" :w="180" :h="60" :x="panelLocation.lx" :y="panelLocation.ly" :z="22" v-if="reloadDrag" :isResizable="false" @dragstop="onDragstop" >
       <!-- https://github.com/kirillmurashov/vue-drag-resize/tree/v2.0.3 -->
     <div class="dragbox">
         <panelHeader />
       <Transition name="fade">
-    <!-- <el-collapse-transition> -->
+
     <main class="jclmain" v-show="showMain">
 
       <!-- 诊断工具 -->
@@ -19,6 +19,35 @@
                 </div>
                 <xzzLogoyjt />
               </span>
+
+               <template #dropdown>
+                    <el-dropdown-menu class="el-dropdown-menu2">
+                    <!-- 二级菜单开始 -->
+                      <el-dropdown-item class="el-dropdown-item2">
+                          <el-dropdown   placement="right-start" @command="commodityDiagnosis" >
+                                <span class="el-dropdown-link2">
+                                  <div class="title2">商品诊断</div>
+                                  <xzzLogoyjt type="true"/>
+                                </span>
+                            <template #dropdown>
+                              <el-dropdown-menu  @mouseenter.enter="() => { $refs.subDropdown2.handleOpen() }"
+                                  @mouseleave.enter="() => { $refs.subDropdown2.handleClose() }">
+                              <el-dropdown-item :class="`addOperateRecord 诊断工具-商品诊断-销售前${item.name}商品`"
+                              :command="item.value" v-for="item in diagnosisOption" :key="item.name">
+                                  销售前{{ item.value }}商品 </el-dropdown-item>
+                              <el-dropdown-item command="scan">浏览记录</el-dropdown-item>
+                              </el-dropdown-menu>
+                            </template>
+                          </el-dropdown>
+                      </el-dropdown-item>
+
+                        <el-dropdown-item  class="addOperateRecord 诊断工具-店铺诊断 el-dropdown-item2" >
+                          <span class="el-dropdown-link2">
+                            <div class="title2" >店铺诊断</div>
+                          </span>
+                        </el-dropdown-item>
+                    </el-dropdown-menu>
+               </template>
             </el-dropdown>
       </div>
 
@@ -75,11 +104,9 @@
               </el-dropdown-item>
                 <!-- 二级菜单结束 -->
 
-                  
-
               <el-dropdown-item  class="addOperateRecord 下载工具-视频下载 el-dropdown-item2" @click.enter="downLoadJDVideoVue">
                 <span class="el-dropdown-link2">
-                  <div class="title2" >视频下载</div>
+                  <div class="title2" >主图视频下载</div>
                 </span>
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -88,27 +115,11 @@
       </div>
 
       <!-- 补单工具 -->
-      <div >
-          <el-dropdown placement="right-start">
-            <span class="entranceBox">
-              <div class="one">
-                <xzzLogo name="bdgj" />
-                <div class="title" >补单工具</div>
-            </div>
-            <xzzLogoyjt />
-            </span>
-            <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item class="addOperateRecord 账号管理-操作记录" >操作记录</el-dropdown-item>
-              <el-dropdown-item class="addOperateRecord 账号管理-任务进程" >任务进程</el-dropdown-item>
-            </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-        </div>
+          <orderToolPanel />
 
         <!-- 标题工具 -->
       <div >
-          <el-dropdown placement="right-start">
+          <el-dropdown placement="right-start" >
             <span class="entranceBox">
               <div class="one">
                 <xzzLogo name="btgj" />
@@ -118,27 +129,26 @@
             </span>
             <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item class="addOperateRecord 账号管理-操作记录" >操作记录</el-dropdown-item>
-              <el-dropdown-item class="addOperateRecord 账号管理-任务进程" >任务进程</el-dropdown-item>
+              <el-dropdown-item class="addOperateRecord 账号管理-操作记录" >标题采集</el-dropdown-item>
+              <el-dropdown-item class="addOperateRecord 账号管理-任务进程" >浏览记录</el-dropdown-item>
             </el-dropdown-menu>
             </template>
           </el-dropdown>
         </div>
 
-
          <div>
-          <plainMenu logoName="home" title="回到首页" @click.enter="backToHome"/>
+          <plainMenu logoName="home" title="回到首页" openKey='https://www.jd.com/'/>
         </div>
 
         <div v-if="userid">
-          <plainMenu logoName="jyfk" title="我的建议/反馈" ref="myadviceref" @click.enter="openFeedback"/>
+          <plainMenu logoName="jyfk" title="我的建议/反馈"  openKey="feedback"/>
         </div>
-
+        <!-- 账号管理个人中心 -->
         <div v-if="userid">
           <accountMange />
         </div>
         <div  v-else>
-          <plainMenu logoName="login" title="账号登录" @click.enter="goToLogin"/>
+          <plainMenu logoName="login" title="账号登录" openKey="login" />
         </div>
 
         <div  class="version">版本:{{ version }} </div>
@@ -148,7 +158,11 @@
 
     <footer @click="showMain = !showMain">
       <div class="shrink"> <xzzLogo :name="showMain? 'shrink2': 'shrink'" /> </div>
+      <!-- <div>{{count}}</div> -->
     </footer>
+
+      <!-- 广告面板挂载 -->
+        <advertisingPanel :openAd="showMain" />
 
     </div>
     </VueDragResize>
@@ -185,14 +199,13 @@ import { getOrderList, setOrderList } from './js/JDorderTag.js'
 
 //各平台持久化的store数据
 const userstore = userStore()
-const { location } = storeToRefs(userstore)
+const { panelLocation } = storeToRefs(userstore)
 
 //平台状态store
 const busStore = piniaStore()
 //storeToRefs增加响应性,使用了proxy,所以需要用.value拿到值
-const { urlCheck, info_id, scanData, scanShow, currentHref } = storeToRefs(busStore) 
-// 从store拿到固定值
-const sitePlatform =  busStore.sitePlatform
+const { urlCheck, info_id, scanData, scanShow, currentHref  } = storeToRefs(busStore) 
+
 
 
 // 深层注入props//--------蒙版进度条使用注入后,则所有方法要把域名判断写到app方法中---才能调用打开app的子组件进度条
@@ -200,14 +213,6 @@ const sitePlatform =  busStore.sitePlatform
 // provide('percentage', ratio)
 //封装打开蒙版进度条方法,参数为关闭的秒数
 //---------深层注入方法弃用因为兄弟组件无法传值------改用emitter监听发散----效率更高----值与方法直接内部定义即可------
-
-// const openPro = (seconds) => {
-//   ratio.value = 0 
-//   const aa = setInterval(() => {
-//     ratio.value += 20
-//     if(ratio.value == 100) clearInterval(aa)
-//   }, seconds * 200);
-// }
 
 
 // const { proxy } = getCurrentInstance()
@@ -222,7 +227,6 @@ const userid = ref('')
 
 const try33 = async () => {
   // await API.wait(2)
-
   console.log('--------我执行了-----77777777777------------')
 }
     let arg = 3
@@ -242,7 +246,7 @@ const test2 = () => {
 
 
 
-const diagnosisOption = reactive([{value: 2}, {value: 5}, {value: 10}, {value: 20}])
+
 
 
 //----------------------图片下载------------start----------------------------------
@@ -275,8 +279,9 @@ const commentNum = ref(null)
 //---------------店铺诊断及历史记录----start-----------------
 const scanRecordRef = ref(null)
 const shopDiagnosisRef = ref(null)
-const OneClickDiagnosis = async(num) =>{
-  if(num =='scanRecord') return scanRecordRef.value.getScanData(num)  //调用历史记录模块
+const diagnosisOption = reactive([{value: 2}, {value: 5}, {value: 10}, {value: 20}, {value: 50}])
+const commodityDiagnosis = async(num) =>{
+  if(num =='scan') return scanRecordRef.value.getScanData(num)  //调用历史记录模块
   // shopDiagnosisRef.value.startDiagnosis(num)
 }
 //---------------店铺诊断及历史记录----end-----------------
@@ -326,7 +331,7 @@ const setOrderTagJDVue = async () =>{
 
 //---------面板拖拽功能------start------------------
 let reloadDrag = ref(true)
-const onDragstop = (e) => {
+const onDragstop = async (e) => {
   let winHeight = window.innerHeight - 60
   let winWidth = window.innerWidth - 200
   if(e.top < 0 || e.left < 0 || e.top > winHeight || e.left > winWidth){
@@ -336,25 +341,21 @@ const onDragstop = (e) => {
     }, 100)
   }else{
     userstore.$patch((state)=>{ //数据存放于持久化的pinia里
-      state.location.lx = e.left
-      state.location.ly =  e.top
+      state.panelLocation.lx = e.left
+      state.panelLocation.ly =  e.top
     })
   }
 }
 //---------面板拖拽功能------end------------------
 
-const openFeedback = () => {
-   API.emitter.emit('open', 'feedback')
-}
 
-const  backToHome =  () => {
-  window.open('https://www.jd.com/')
-}
+
+
 
 //---------登录------start----------------
 // const loginRef = ref(null)     // 子组件ref要声明才能拿到
 // const goToLogin = () => { loginRef.value.loginShow = true }
-const goToLogin = () => { API.emitter.emit('open','login') }
+// const goToLogin = () => { API.emitter.emit('open','login') }
 //---------登录------end----------------
 
 
@@ -376,7 +377,6 @@ const logout = () => { API.emitter.emit('open','logout') }
 
 const getUserInfo = async () => {
 let userInfoStore  =  await  API.getUserinfo()
-// console.log('userInfoStore: ', userInfoStore);
   if(userInfoStore.userid == undefined) {
     API.checkLogin.addEvent()  //添加全局登录拦截
     return 
@@ -399,13 +399,10 @@ let userInfoStore  =  await  API.getUserinfo()
 
 onMounted(async () => {
 curCookies.value = document.cookie
-//  	let column = [{title: '名称',key: 'name',type: 'text'},{title: '视频链接',key: 'videourl',type: 'text'},{title: '图片',key: 'imgurl',type: 'image'}]
-//    let data = [{name:'试试111',videourl: 'http://weh.wefw.com60buyimg.com/n2/jfs/t1/193336/10/26161/112918/6/wefew.mp4', imgurl: 'https://img13.360buyimg.com/n2/jfs/t1/193336/10/26161/112918/62c55835Ec20d50ad/7ab207e4ed7547d8.jpg'},
-//                {name:'试试222', videourl: '', imgurl: ['https://img14.360buyimg.com/n2/jfs/t1/122295/27/18626/340950/6165b043Ed9f958ec/7a4fc3035bca0094.jpg', 'https://img13.360buyimg.com/n2/jfs/t1/193336/10/26161/112918/62c55835Ec20d50ad/7ab207e4ed7547d8.jpg']}]
-//  let a = await API.tableToExcel(column,data, '哈哈哈')
 })
 
 onBeforeMount(async () => {
+   
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   message == 'loginEvent'? getUserInfo() : ''
   sendResponse({status: true})

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-11-12 09:56:46
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-10 15:17:59
+ * @LastEditTime: 2023-01-12 16:17:51
 -->
 <template>
 <div>
@@ -43,34 +43,20 @@
 
             <div class="eachBox imageBox">
                 <p style="width:56px;">上传截图</p>
-                <el-upload
-  action="#"
-  list-type="picture-card"
-  :auto-upload="false"
-  :file-list="fileList.self"
-  :limit="10"
-  :multiple="true"
-  :on-exceed="handleExceed"
-   accept="image/jpeg,image/gif,image/png"
-   :on-change="onUploadChange"
-  >
+                <el-upload action="#" list-type="picture-card" :auto-upload="false" v-model:file-list="fileList.self" :limit="10"
+                 :multiple="true" :on-exceed="handleExceed" accept="image/jpeg,image/gif,image/png" :on-change="onUploadChange">
     
-    <template  #default >
-      <div class="addsvg">
-        <svg class="xzzsymbol" aria-hidden="true"><use xlink:href="#xzzicon3-tianjia"></use></svg>
-        <div class="addtitle">添加图片</div>
-      </div>
-    </template>
-    <template  #file="{ file }">
+                <template  #default >
+                  <div class="addsvg">
+                    <svg class="xzzsymbol" aria-hidden="true"><use xlink:href="#xzzicon3-tianjia"></use></svg>
+                    <div class="addtitle">添加图片</div>
+                  </div>
+                </template>
+                <template  #file="{ file }">
       
-      <img
-        class="el-upload-list__item-thumbnail"
-        :src="file.url" alt="" >
+      <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" >
       <span class="el-upload-list__item-actions">
-        <span
-          class="el-upload-list__item-delete"
-          @click="handleRemove(file)"
-        >
+        <span class="el-upload-list__item-delete" @click="handleRemove(file)">
           <div class="delsvg"><svg class="xzzsymbol" aria-hidden="true"><use xlink:href="#xzzicon3-delete"></use></svg></div>
         </span>
       </span>
@@ -148,12 +134,13 @@ import {uploadOss} from './upload_oss'
         if (!isIMAGE) return ElMessage.error('只能上传jpg/png图片!')
         if (!isLt3M)  return ElMessage.error('上传文件大小不能超过 5MB!')
           fileList.self.push(file)  //  
-          console.log('fileList.self: ', fileList.self);
       }
 
     const  handleRemove = (file) => {
         let curIndex = fileList.self.findIndex(item => item.uid == file.uid)
+        if(curIndex == -1) return
         fileList.self.splice(curIndex,1)
+        console.log('fileList.self: ', fileList.self);
       }
 
 
@@ -163,7 +150,7 @@ import {uploadOss} from './upload_oss'
       }
       const uploadImg = async () => {
           // forEach会异步执行-------故而需要使用for循环,不然上传未结束就会直接提交
-          let ll =fileList.self
+          let ll = fileList.self
           if(ll.length == 0) return ElMessage({message: '请添加反馈图片后再提交',type: 'error',offset: 70,duration: 2000,})
           for(let i=0;i<ll.length; i++){
             let res  = await uploadOss(ll[i].raw,ll[i].uid)
@@ -187,6 +174,8 @@ import {uploadOss} from './upload_oss'
           desc: feedbackContent.value,
           imgs: JSON.stringify(imgList.self),
         }
+        // console.log('obj: ', obj);
+
       let config = {
         url: '?s=Dpzd.User_FeedBack.advice',
         body: obj

@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-09-15 11:21:04
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-11 16:48:38
+ * @LastEditTime: 2023-01-12 08:36:18
  */
 
 import { defineStore } from 'pinia'
@@ -58,3 +58,12 @@ export const comStore = defineStore('comInfo', {
 //-----------------------------------
 
 // export default { comStore }
+
+
+// setup写法
+
+// export const tempStore = defineStore('tempInfo', () => {
+//   const count = ref(7)
+
+//  return { count}
+// })
