@@ -55,7 +55,7 @@
                             </div>
                           </template>
                         </vxe-column>
-                        <vxe-column field="videoUrl" title="视频链接" width="300" >
+                        <vxe-column field="videoUrl" title="视频链接" width="295" >
                             <template #default="{ row }">
                             <div class="videoCon">
                                 <!-- <el-tooltip placement="top-start" width="200" :content="row.videoUrl"> -->
@@ -102,7 +102,7 @@
 //公共的store数据 
 import {comStore} from './comStore' 
 const store = comStore() 
-const { openCom, percentage, dataWithPic, dataNoPic, commodityId, withPic } = storeToRefs(store)
+const { openCom, percentage, dataWithPic, dataNoPic, withPic, docName } = storeToRefs(store)
 
 
 // import {tempStore} from './comStore' 
@@ -137,9 +137,9 @@ const { openCom, percentage, dataWithPic, dataNoPic, commodityId, withPic } = st
                 { title: '图片5', key: 'pic5', type: 'image', width: 130, height: 130 },
                 { title: '图片6', key: 'pic6', type: 'image', width: 130, height: 130 },
             ]
-            let name = `${API.dayjs().format('YYYYMMDD')}_${commodityId.value}_有图商品评价.xls`
-            let size = await API.tableToExcel(head, commentList, name)
-            API.emitter.emit('addTask', { filetype: 'doc', taskname: name, size, progress: 100 })
+            let excelName = `${docName.value}_有图商品评价.xls`
+            let size = await API.tableToExcel(head, commentList, excelName)
+            API.emitter.emit('addTask', { filetype: 'doc', taskname: excelName, size, progress: 100 })
     }
     const  dwnNoPic = async () =>{   //无图下载
 
@@ -154,9 +154,9 @@ const { openCom, percentage, dataWithPic, dataNoPic, commodityId, withPic } = st
             }
         ]
 
-        let excelName = API.dayjs().format('YYYYMMDD') + '_' + commodityId.value + '_无图评价'
+        let excelName = `${docName.value}_无图商品评价.xls`
         let size =  await API.tableToExcel(column, dataNoPic.value, excelName)
-        API.emitter.emit('addTask',{filetype: 'doc',taskname: `${excelName}.xls`,size, progress: 100})
+        API.emitter.emit('addTask',{filetype: 'doc',taskname: excelName,size, progress: 100})
         
     }
     const downLoadExcel = async () =>{

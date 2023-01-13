@@ -9,17 +9,20 @@
 //公共的store数据 
 import {comStore} from '../../components/comStore' 
 const store = comStore() 
-const { openCom, percentage, dataWithPic, dataNoPic, commodityId, withPic } = storeToRefs(store)
+const { openCom, percentage, dataWithPic, dataNoPic, docName, withPic } = storeToRefs(store)
 
 
 
 const dataWithPicTemp = reactive({self:[]})
 const dataNoPicTemp = reactive({self:[]})
+const commodityId = ref(null)
 
     const  startDownload = async (num) =>{
         let skuUrl = window.location.href
         let regs = skuUrl.match(/item.jd.com.*?(\d+)/)
-        regs != null && (commodityId.value = regs[1])
+        if(regs == null) return ElMessage.error({ message: '当前链接不是商品页面', showClose: true, duration: 46000 })
+        commodityId.value = regs[1]
+        docName.value = API.dayjs().format('YYYYMMDD') + commodityId.value
         openCom.value = true
         percentage.value = 10
         await getWholeData(num)

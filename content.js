@@ -104,8 +104,6 @@ switch (checkedUrl) {
     break;
   case 'taobao': createEntry(apptb, 'markettb')
   break;
-  // case 'lemak': createApp(popup).mount('#pop')
-  //   break;
   // case 'localhost': createApp(popup).mount('#pop')
   //   break;
   default: ''

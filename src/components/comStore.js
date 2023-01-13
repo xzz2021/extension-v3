@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-09-15 11:21:04
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-12 08:36:18
+ * @LastEditTime: 2023-01-13 15:01:22
  */
 
 import { defineStore } from 'pinia'
@@ -16,7 +16,7 @@ export const comStore = defineStore('comInfo', {
         percentage: 0,
         dataWithPic: [],
         dataNoPic: [],
-        commodityId:null,
+        docName: '',
         withPic: '有图评价',
         // 图片下载数据
         openImg: false,

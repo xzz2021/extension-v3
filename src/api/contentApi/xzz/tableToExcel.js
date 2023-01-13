@@ -127,7 +127,7 @@ const tableToExcel = async (column, data, excelName) => {
                 //     let url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = `${excelName}.xls`
+                    a.download = excelName
                     a.click();
                     // setTimeout(() => {
                     //  URL.revokeObjectURL(url);

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-11-12 09:56:46
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-12 16:17:51
+ * @LastEditTime: 2023-01-13 14:47:54
 -->
 <template>
 <div>
@@ -152,8 +152,10 @@ import {uploadOss} from './upload_oss'
           // forEach会异步执行-------故而需要使用for循环,不然上传未结束就会直接提交
           let ll = fileList.self
           if(ll.length == 0) return ElMessage({message: '请添加反馈图片后再提交',type: 'error',offset: 70,duration: 2000,})
+          if(ll.length == 0) return ElMessage({message: '请添加反馈图片后再提交',type: 'error',offset: 70,duration: 2000,})
+          let resofkey = await  API.sendMessage({type: 'myfetch',config: { url: 'http://pddzd.junchenlun.com/?s=Home.Aliapi.aliossUpload'}})
           for(let i=0;i<ll.length; i++){
-            let res  = await uploadOss(ll[i].raw,ll[i].uid)
+            let res  = await uploadOss(ll[i].raw,ll[i].uid, resofkey.data)
             imgList.self.push(res)
           }
       }
@@ -164,6 +166,7 @@ import {uploadOss} from './upload_oss'
         if(feedbackContent.length > 300) return ElMessage({message: '留言内容过长,不能超过300个字',type: 'error',offset: 70,duration: 1500,})
          await uploadImg()
         //提交数据给后端
+        // return
         let userInfo  =  await  API.getUserinfo()
         // userInfo:{timeStamp: 16686236989352, userPhone: 167**3727, userToken: 'FF0C0CD6F2E086CF6D3650F', userid: 4}
         let obj = {  // 上传给后端的数据
@@ -186,7 +189,7 @@ import {uploadOss} from './upload_oss'
       console.log('res: ', res);
       if(res.data.msg == '留言成功'){
         closeModal()   // 发送完成后关闭面板,置空数据
-        ElMessage.success({message: '提交成功',offset: 70,duration: 1500,})
+        ElMessage.success({message: '信息提交成功,感谢您的反馈!',offset: 70,duration: 1500,})
       }else{
          ElMessage.error({message: '提交失败,原因:'+ res.data.msg, offset: 70,duration: 2000,})
       }
