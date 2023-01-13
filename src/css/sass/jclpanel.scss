@@ -35,9 +35,8 @@
 
 
 .jclpanel {
-  z-index: 99;
+  z-index: 666;
   position: fixed;
-  
 
   .jclmain {
       @include flexcencol;
@@ -166,6 +165,8 @@
 
 //修复店透视的颜色影响
 :deep(.el-dropdown-menu__item){
+  font-family: MicrosoftYaHei;
+  font-weight: 400;
   &:hover{
     background-color: #fff1e0 !important;
     color:#ff9712 !important;

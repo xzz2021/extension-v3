@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-01-09 14:07:13
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-10 09:00:07
+ * @LastEditTime: 2023-01-12 16:40:09
 -->
 <template>
 <el-dropdown placement="right-start"  @command="accountManagement">
@@ -87,5 +87,13 @@ onBeforeMount(async () => {
                 margin-right: 15px;
             }
           }
+:deep(.el-dropdown-menu__item){
+  font-family: MicrosoftYaHei;
+  font-weight: 400;
+  &:hover{
+    background-color: #fff1e0 !important;
+    color:#ff9712 !important;
+  }
+}
 
 </style>
