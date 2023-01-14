@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-09-15 11:21:04
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-12 15:02:18
+ * @LastEditTime: 2023-01-14 16:30:12
  */
 
 import { defineStore } from 'pinia'
@@ -11,6 +11,8 @@ export const piniaStore = defineStore('selfInfo', {
     // arrow function recommended for full type inference
     state: () => {
       return {
+        // panelLocation: { lx: 60, ly: 120 },
+        panelLocation: JSON.parse(localStorage.getItem('panelLocation')) || { lx: 60, ly: 120 },
         count: 0,
         info_id: 0,
         // sitePlatform: '京东',
@@ -46,6 +48,10 @@ export const piniaStore = defineStore('selfInfo', {
           await API.wait(6)
           this.count++
         },
+        storeLoc(loc){
+          this.panelLocation = loc
+          localStorage.setItem('panelLocation', JSON.stringify(loc))
+          }
         // async storingLoc(val){
         //   this.panelLocation = val
             
@@ -68,11 +74,11 @@ export const piniaStore = defineStore('selfInfo', {
         // }
     },
     getters: {
-      // diagnosisData2: (state) => {
-      //   return API.isExpired(state.diagnosisData.timeTamp, 5) ? diagnosisData : {}
+      // panelLocation: (state) => {
+      //   let aa = localStorage.getItem('panelLocation')
+      //   return  aa ? JSON.parse(aa)  : { lx: 60, ly: 120 }
       // }
     }
-  
   })
 
 export const userStore = defineStore('userInfo', {

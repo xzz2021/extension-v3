@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-12-08 17:05:04
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-12 14:29:04
+ * @LastEditTime: 2023-01-14 17:19:03
 -->
 <template>
 <header class="headerbox">
@@ -37,6 +37,8 @@
       background-position:  0% 0%, 100% 0%, 0% 0%;
       background-size: 90px 60px, 89px 60px, 180px 60px;
       background-repeat: no-repeat;
+      // position: relative;
+      // user-select: none;
       .section {
         display: flex;
         align-items: center;

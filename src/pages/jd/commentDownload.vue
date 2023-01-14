@@ -48,7 +48,9 @@ const commodityId = ref(null)
             dataNoPic.value.length = 1
             // this.withPic = '有图评价'
             }else{
-                dataNoPicTemp.self.map(item => dataNoPic.value.push({time: item['time'], content: item['content']}))
+                let resultArr = []
+                dataNoPicTemp.self.map(item => resultArr.value.push({time: item['time'], content: item['content']}))
+                dataNoPic.value = resultArr
             }
     }
     const getCommentsData = async (cnum, pic_flag) =>{

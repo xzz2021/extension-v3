@@ -167,7 +167,7 @@ const { openImg, percentage, mainImg, detailImg, skuImg, zipname, LinkData } = s
                 default: ''
                     break
             }
-            console.log('selectData: ', toRaw(selectData));
+            // console.log('selectData: ', toRaw(selectData));
             selectData = selectData.filter(item=>item.isCheck == true)
             selectData = toRaw(selectData)
             if(selectData.length == 0) return this.$message.error('数据为空,请重新选择下载')

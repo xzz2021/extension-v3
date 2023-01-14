@@ -1,7 +1,8 @@
 <template>
 <div class="jclpanel" >
   
-    <VueDragResize :isActive="true" :w="180" :h="60" :x="panelLocation.lx" :y="panelLocation.ly" :z="22" v-if="reloadDrag" :isResizable="false" @dragstop="onDragstop" >
+    <VueDragResize dragHandle=".headerbox" :isActive="true" :w="180" :h="60" :x="panelLocation.lx" :y="panelLocation.ly" :z="22" v-if="reloadDrag" :isResizable="false" @dragstop="onDragstop" >
+    <!-- <VueDragResize dragCancel=".jclmain" dragHandle=".headerbox" :isActive="true" :w="180" :h="60" :x="panelLocation.lx" :y="panelLocation.ly" :z="22" v-if="reloadDrag" :isResizable="false" @dragstop="onDragstop" > -->
       <!-- https://github.com/kirillmurashov/vue-drag-resize/tree/v2.0.3 -->
     <div class="dragbox">
         <panelHeader />
@@ -115,7 +116,7 @@
       </div>
 
       <!-- 补单工具 -->
-          <orderToolPanel />
+          <orderToolPanel  banId='146'/>
 
         <!-- 标题工具 -->
       <div >
@@ -145,7 +146,7 @@
         </div>
         <!-- 账号管理个人中心 -->
         <div v-if="userid">
-          <accountMange />
+          <accountMange  />
         </div>
         <div  v-else>
           <plainMenu logoName="login" title="账号登录" openKey="login" />
@@ -198,13 +199,16 @@
 import { getOrderList, setOrderList } from './js/JDorderTag.js'
 
 //各平台持久化的store数据
-const userstore = userStore()
-const { panelLocation } = storeToRefs(userstore)
+// const userstore = userStore()
+// const { panelLocation } = storeToRefs(userstore)
 
 //平台状态store
 const busStore = piniaStore()
 //storeToRefs增加响应性,使用了proxy,所以需要用.value拿到值
-const { urlCheck, info_id, scanData, scanShow, currentHref  } = storeToRefs(busStore) 
+const { urlCheck, info_id, scanData, scanShow, currentHref ,panelLocation } = storeToRefs(busStore) 
+// busStore.panelLocation
+console.log('busStore.panelLocation: ', busStore.panelLocation);
+console.log('panelLocation: ', panelLocation.value);
 
 
 
@@ -332,6 +336,8 @@ const setOrderTagJDVue = async () =>{
 //---------面板拖拽功能------start------------------
 let reloadDrag = ref(true)
 const onDragstop = async (e) => {
+  // console.log('=========zhixing==========')
+  if(panelLocation.value.lx == e.left && panelLocation.value.ly == e.top) return window.open('http://pddzd.junchenlun.com/plugs/index.html#/')
   let winHeight = window.innerHeight - 60
   let winWidth = window.innerWidth - 200
   if(e.top < 0 || e.left < 0 || e.top > winHeight || e.left > winWidth){
@@ -340,11 +346,18 @@ const onDragstop = async (e) => {
     reloadDrag.value = true
     }, 100)
   }else{
-    userstore.$patch((state)=>{ //数据存放于持久化的pinia里
-      state.panelLocation.lx = e.left
-      state.panelLocation.ly =  e.top
-    })
+    // busStore.$patch((state)=>{ //数据存放于持久化的pinia里
+    //   state.panelLocation.lx = e.left
+    //   state.panelLocation.ly =  e.top
+    // })
+    // let loc =  { lx: e.left, ly: e.top }
+    // panelLocation.value = loc
+    // localStorage.setItem('panelLocation', JSON.stringify(loc))
+    busStore.storeLoc({ lx: e.left, ly: e.top })   //移动后存储和更新最新的坐标
+
+
   }
+  // console.log('=========zhixing====222222222222======')
 }
 //---------面板拖拽功能------end------------------
 

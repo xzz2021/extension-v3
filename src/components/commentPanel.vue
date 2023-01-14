@@ -5,7 +5,6 @@
             <!-- 全部内容的盒子 -->
             <div class="xzzcontainer">
                 <!--标题-->
-                <div>{{count}}</div>
                 <div class="topContainer">
                     <div class="leftSec">
                         <div class="titleSec">
@@ -105,14 +104,6 @@ const store = comStore()
 const { openCom, percentage, dataWithPic, dataNoPic, withPic, docName } = storeToRefs(store)
 
 
-// import {tempStore} from './comStore' 
-// const tempstore = tempStore() 
-// const { count } = storeToRefs(tempstore)
-// setInterval(() => {
-//     count.value++
-// }, 2000);
-
-// store.$reset()
 
     const  dwnPic = async () => {   //有图下载
 

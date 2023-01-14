@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-09 11:31:54
+ * @LastEditTime: 2023-01-14 17:28:14
 -->
 <template>
 <div class="vdr"
@@ -205,6 +205,7 @@ export default {
             right: null,
             bottom: null,
             minHeight: null,
+            _uid: null
         };
     },
 
@@ -223,6 +224,7 @@ export default {
     },
 
     mounted() {
+        this._uid = this.getuid()
         this.parentElement = this.$el.parentNode;
         this.parentWidth = this.parentW ? this.parentW : this.parentElement.clientWidth;
         this.parentHeight = this.parentH ? this.parentH : this.parentElement.clientHeight;
@@ -263,6 +265,13 @@ export default {
     },
 
     methods: {
+        getuid() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0,
+            v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+            });
+        },
         deselect() {
             if (this.preventActiveBehavior) {
                 return;
