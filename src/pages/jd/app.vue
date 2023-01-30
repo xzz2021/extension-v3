@@ -1,8 +1,8 @@
 <template>
 <div class="jclpanel" >
   
-    <VueDragResize dragHandle=".headerbox" :isActive="true" :w="180" :h="60" :x="panelLocation.lx" :y="panelLocation.ly" :z="22" v-if="reloadDrag" :isResizable="false" @dragstop="onDragstop" >
-    <!-- <VueDragResize dragCancel=".jclmain" dragHandle=".headerbox" :isActive="true" :w="180" :h="60" :x="panelLocation.lx" :y="panelLocation.ly" :z="22" v-if="reloadDrag" :isResizable="false" @dragstop="onDragstop" > -->
+    <!-- <VueDragResize dragCancel=".dragbox .advertiseBox,.dragbox .footer,.dragbox  .jclmain" :isActive="true" :w="180" :h="60" :x="panelLocation.lx" :y="panelLocation.ly" :z="22" v-if="reloadDrag" :isResizable="false" @dragstop="onDragstop" > -->
+    <VueDragResize dragCancel=".jclmain" dragHandle=".handleBox" :isActive="true" :w="180" :h="60" :x="panelLocation.lx" :y="panelLocation.ly" :z="22" v-if="reloadDrag" :isResizable="false" @dragstop="onDragstop" >
       <!-- https://github.com/kirillmurashov/vue-drag-resize/tree/v2.0.3 -->
     <div class="dragbox">
         <panelHeader />
@@ -157,7 +157,7 @@
     </main>
     </Transition>
 
-    <footer @click="showMain = !showMain">
+    <footer class="footer" @click="showMain = !showMain">
       <div class="shrink"> <xzzLogo :name="showMain? 'shrink2': 'shrink'" /> </div>
       <!-- <div>{{count}}</div> -->
     </footer>
@@ -206,9 +206,7 @@ import { getOrderList, setOrderList } from './js/JDorderTag.js'
 const busStore = piniaStore()
 //storeToRefs增加响应性,使用了proxy,所以需要用.value拿到值
 const { urlCheck, info_id, scanData, scanShow, currentHref ,panelLocation } = storeToRefs(busStore) 
-// busStore.panelLocation
-console.log('busStore.panelLocation: ', busStore.panelLocation);
-console.log('panelLocation: ', panelLocation.value);
+
 
 
 

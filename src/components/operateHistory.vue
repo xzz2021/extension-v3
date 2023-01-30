@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-10-31 14:36:13
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-10 09:45:18
+ * @LastEditTime: 2023-01-29 14:48:16
 -->
 <template>
 
@@ -74,6 +74,7 @@
       await getDatabase(e)
     }
     const  getDatabase = async (e) => {
+      await getUserinfo()
       let {list, count} = await API.operateHistory.get({user_id: userInfoStore.self.userid , token: userInfoStore.self.userToken,page: e, limit: 10})
       historyTable.self = list
       if (e == 1) { totalCount.value = count }
@@ -86,7 +87,7 @@
     }
 
    onMounted(async() =>{
-      await getUserinfo()
+      // await getUserinfo()
       await getDatabase(1)
 
     //------------当监听到登录事件后--------重新获取用户信息--------------

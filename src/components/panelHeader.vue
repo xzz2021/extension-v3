@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-12-08 17:05:04
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-14 17:19:03
+ * @LastEditTime: 2023-01-29 15:49:14
 -->
 <template>
 <header class="headerbox">
@@ -10,6 +10,7 @@
               <div class="one">谋臣界-电商工具箱</div>
               <div class="two">MOUCHENJIE</div>
             </div>
+            <div class="tipBox">
             <el-tooltip :disabled="tooldisabled" class="item" effect="dark" placement="top">
               <template class="topTip" #content>
                 <div>此区域按住鼠标左键可以自由拖动面板</div>
@@ -18,7 +19,10 @@
                 <use xlink:href="#xzzicon3-tishi"></use>
               </svg>
             </el-tooltip>
+
+            </div>
           </div>
+          <div class="handleBox"></div>
     </header>
 </template>
 <script setup>
@@ -28,6 +32,7 @@
 <style  lang='scss' scoped>
 
     .headerbox {
+      position: relative;
       box-sizing: border-box;
       padding: 13px 9px;
       border-radius: 4px 4px 0 0;
@@ -75,6 +80,17 @@
     cursor: help;
     font-size: 16px;
         }
+
+        .tipBox{
+          z-index: 3;
+        }
+      }
+      .handleBox{
+        position: absolute;
+        width: 180px;
+        height: 60px;
+        top: 0;
+        left: 0;
       }
     }
 
