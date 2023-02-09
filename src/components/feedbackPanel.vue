@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-11-12 09:56:46
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-13 14:47:54
+ * @LastEditTime: 2023-02-01 14:46:48
 -->
 <template>
 <div>
@@ -151,7 +151,6 @@ import {uploadOss} from './upload_oss'
       const uploadImg = async () => {
           // forEach会异步执行-------故而需要使用for循环,不然上传未结束就会直接提交
           let ll = fileList.self
-          if(ll.length == 0) return ElMessage({message: '请添加反馈图片后再提交',type: 'error',offset: 70,duration: 2000,})
           if(ll.length == 0) return ElMessage({message: '请添加反馈图片后再提交',type: 'error',offset: 70,duration: 2000,})
           let resofkey = await  API.sendMessage({type: 'myfetch',config: { url: 'http://pddzd.junchenlun.com/?s=Home.Aliapi.aliossUpload'}})
           for(let i=0;i<ll.length; i++){

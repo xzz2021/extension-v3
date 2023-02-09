@@ -96,7 +96,7 @@ const sortBy = (arr, k) => arr.concat().sort((a, b) => (a[k] > b[k] ? 1 : a[k] <
 
 //提取数组内对象的指定键key返回对应的value生成新数组
 //参数为数组....指定属性键...
-const getAttrs = (array,attr) => { arr = array.map((item)=> item[attr])}
+const getAttrs = (array,attr) =>  array.map((item)=> item[attr])
 
 
 //暂时想不到应用场景,以指定key返回相同value的集合
