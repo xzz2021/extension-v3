@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-11-02 14:49:31
  * @LastEditors: xzz2021
- * @LastEditTime: 2022-11-16 15:20:53
+ * @LastEditTime: 2023-02-11 14:46:36
  */
 
 
@@ -32,6 +32,8 @@ const countOccurrences = (arr) => arr.reduce((prev, curr) => ((prev[curr] = ++pr
 const arrSum = (arr) => arr.reduce((a, b) => a + b, 0)
 // 纯数字数组 统计平均数
 const average = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
+
+// 数组最小值  Math.min(...array)
 
 //获取数组内所有指定倍数项的value,返回新数组
 // getNthItems([1, 2, 3, 4, 5, 6, 7, 8, 9], 3); // [3, 6, 9]

@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-11-05 15:11:47
  * @LastEditors: xzz2021
- * @LastEditTime: 2022-11-10 17:47:52
+ * @LastEditTime: 2023-02-11 12:02:10
  */
 
 
@@ -62,3 +62,7 @@ const removeNullUndefined = (obj) => Object.entries(obj).reduce((a, [k, v]) => (
 //未知场景
 const toObj = (arr) => Object.fromEntries(arr)
 // toObj([ ['a', 1], ['b', 2], ['c', 3], ]); // { a: 1, b: 2, c: 3 }
+const objToArr = (obj) =>  Object.values(obj)
+
+// 计算数组某个元素出现次数
+const eleTimes = (arr, val) => arr.filter(x => x === val).length
