@@ -4,6 +4,9 @@
  * @LastEditTime: 2023-01-12 16:40:09
 -->
 <template>
+  <div v-if="show">
+
+
 <el-dropdown placement="right-start"  @command="accountManagement">
             <span class="entranceBox">
               <div class="xzzone">
@@ -22,9 +25,10 @@
             </el-dropdown-menu>
             </template>
           </el-dropdown>
-
+        </div>
 </template>
 <script setup>
+const props = defineProps(['show'])
 
 const userPhone = ref('')
 

@@ -12,8 +12,13 @@ const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 //-----------------------------------
 
+
+
+
+
 // //---------------引入所有API挂载到全局----------
 import{ contentApi as API} from './src/api/contentApi/index'
+// console.log("🚀 ~ file: content.js:23 ~ API:", API)
 window.API = API
 
 import './src/api/contentApi/websocket'
@@ -57,7 +62,7 @@ import './src/css/style'
 
 //-------------------各平台实例引入----------------
 import app1688 from './src/pages/alibaba/app.vue'
-import apptmall from './src/pages/tmall/app.vue'
+// import apptmall from './src/pages/tmall/app.vue'
 import apptb from './src/pages/tb/app.vue'
 import appjd from './src/pages/jd/app.vue'
 
@@ -100,8 +105,8 @@ switch (checkedUrl) {
     break;
   case '1688': createEntry(app1688, 'market1688')
     break;
-  case 'tmall': createEntry(apptmall, 'markettmall')
-    break;
+  // case 'tmall': createEntry(apptmall, 'markettmall')
+  //   break;
   case 'taobao': createEntry(apptb, 'markettb')
   break;
   // case 'localhost': createApp(popup).mount('#pop')

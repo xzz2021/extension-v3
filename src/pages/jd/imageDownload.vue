@@ -9,9 +9,6 @@ import {comStore} from '../../components/comStore'
 const store = comStore() 
 const { openImg, percentage, mainImg, detailImg, skuImg, zipname, LinkData } = storeToRefs(store)
 
-
-
-
     const startDownload = async (platform) =>{
             openImg.value = true
             percentage.value = 10
@@ -288,10 +285,13 @@ const { openImg, percentage, mainImg, detailImg, skuImg, zipname, LinkData } = s
         saveAs(dataSave, zipname)
         API.emitter.emit('addTask',{filetype: 'zip',taskname: `${zipname}.zip`,size: dataSave.size,  progress: 100})
     }
-    onMounted(() => {
-    })
+    onMounted(()=> {
+        API.emitter.on('imageDownload', async platform => {
+            await startDownload(platform)
+        })
+     })
 //setup内部的实例对象默认只在内部,外部调用需要手动暴露出去
-    defineExpose({ startDownload })
+    // defineExpose({ startDownload })
 </script>
 <style lang='scss' scoped>
 </style>

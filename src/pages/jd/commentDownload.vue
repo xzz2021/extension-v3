@@ -49,7 +49,7 @@ const commodityId = ref(null)
             // this.withPic = '有图评价'
             }else{
                 let resultArr = []
-                dataNoPicTemp.self.map(item => resultArr.value.push({time: item['time'], content: item['content']}))
+                dataNoPicTemp.self.map(item => resultArr.push({time: item['time'], content: item['content']}))
                 dataNoPic.value = resultArr
             }
     }
@@ -182,10 +182,13 @@ const commodityId = ref(null)
     return sumData
     }
 
+    onMounted(()=> {
+        API.emitter.on('commentDownload', async num => {
+            await startDownload(num)
+        })
+     })
 
-    onMounted(()=> { })
-
-defineExpose({ startDownload })
+// defineExpose({ startDownload })
 </script>
 <style lang='scss' scoped>
 

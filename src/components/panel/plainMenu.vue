@@ -5,6 +5,9 @@
 -->
 <template>
 <!-- 此组件定义没有下拉的纯净菜单项 -->
+<div v-if="show">
+
+
 <span :class="`addOperateRecord ${title} entranceBox`" @click="openTool">
             <div class="xzzone">
                 <svg class="xzzsymbol xzzsvg"  aria-hidden="true">  <use :xlink:href="`#xzzicon3-${logoName}`"></use> </svg>
@@ -12,9 +15,11 @@
             </div>
             <svg class="xzzsymbol xzzsvgyjt"   aria-hidden="true">  <use xlink:href="#xzzicon3-"></use>  </svg>
           </span>
+
+        </div>
 </template>
 <script setup>
-const props = defineProps(['title','logoName', 'openKey'])
+const props = defineProps(['title','logoName', 'openKey', 'show'])
 
 const openTool = () => {
   if(props.openKey == undefined) return ElMessage.error({message: '请给组件传props值openKey', duration: 2000})

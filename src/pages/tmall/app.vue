@@ -14,10 +14,10 @@
             <el-dropdown placement="right-start" ref="subDropdown2">
               <span class="entranceBox">
                 <div class="one">
-                    <xzzLogo name="zdgj" />
+                    <panelXzzLogo name="zdgj" />
                     <div class="title" >诊断工具</div>
                 </div>
-                <xzzLogoyjt />
+                <panelXzzLogoyjt />
               </span>
 
                <template #dropdown>
@@ -27,7 +27,7 @@
                           <el-dropdown   placement="right-start" @command="commodityDiagnosis" >
                                 <span class="el-dropdown-link2">
                                   <div class="title2">商品诊断</div>
-                                  <xzzLogoyjt type="true"/>
+                                  <panelXzzLogoyjt type="true"/>
                                 </span>
                             <template #dropdown>
                               <el-dropdown-menu  @mouseenter.enter="() => { $refs.subDropdown2.handleOpen() }"
@@ -56,10 +56,10 @@
             <el-dropdown placement="right-start" ref="subDropdown1" >
               <span class="entranceBox">
                 <div class="one">
-                    <xzzLogo name="xzgj" />
+                    <panelXzzLogo name="xzgj" />
                     <div class="title" >下载工具</div>
                 </div>
-                <xzzLogoyjt />
+                <panelXzzLogoyjt />
               </span>
 
               <template #dropdown>
@@ -69,7 +69,7 @@
                 <el-dropdown   placement="right-start" @command="imgDownload" >
                       <span class="el-dropdown-link2">
                         <div class="title2">图片下载</div>
-                        <xzzLogoyjt type="true"/>
+                        <panelXzzLogoyjt type="true"/>
                       </span>
                   <template #dropdown>
                     <el-dropdown-menu  @mouseenter.enter="() => { $refs.subDropdown1.handleOpen() }"
@@ -90,7 +90,7 @@
                       <!-- <div class="title2">有图评价下载</div> -->
                       <span class="el-dropdown-link2">
                         <div class="title2">评价下载</div>
-                        <xzzLogoyjt type="true"/>
+                        <panelXzzLogoyjt type="true"/>
                       </span>
                   <template #dropdown>
                     <el-dropdown-menu  @mouseenter.enter="() => { $refs.subDropdown1.handleOpen() }"
@@ -122,10 +122,10 @@
           <el-dropdown placement="right-start" >
             <span class="entranceBox">
               <div class="one">
-                <xzzLogo name="btgj" />
+                <panelXzzLogo name="btgj" />
                 <div class="title" >标题工具</div>
             </div>
-            <xzzLogoyjt />
+            <panelXzzLogoyjt />
             </span>
             <template #dropdown>
             <el-dropdown-menu>
@@ -157,7 +157,7 @@
     </Transition>
 
     <footer @click="showMain = !showMain">
-      <div class="shrink"> <xzzLogo :name="showMain? 'shrink2': 'shrink'" /> </div>
+      <div class="shrink"> <panelXzzLogo :name="showMain? 'shrink2': 'shrink'" /> </div>
       <!-- <div>{{count}}</div> -->
     </footer>
 

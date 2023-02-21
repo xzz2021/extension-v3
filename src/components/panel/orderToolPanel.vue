@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-01-09 14:07:13
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-14 16:37:24
+ * @LastEditTime: 2023-02-21 16:51:27
 -->
 <template>
     <div>
@@ -34,7 +34,7 @@ const fnList = ['orderRemark', 'createOrderplan', 'newAddOrder', 'keywordRanking
 
 const openOrdertool = (arg) => {
   let banList = []
-  Array.from(props.banId).forEach(num => banList.push(fnList[num] || '索引过大,请检查传参'))
+  Array.from(props.banId).forEach(num => banList.push(fnList[num-1] || '索引过大,请检查传参'))
   if(banList.includes(arg)) return  ElMessage.error({ message: `功能等待开发中`, duration: 3000, showClose: true,grouping: true }) 
   // console.log('arg: ', arg)
     // API.emitter.emit('open', arg)

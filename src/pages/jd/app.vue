@@ -7,60 +7,20 @@
     <div class="dragbox">
         <panelHeader />
       <Transition name="fade">
-
     <main class="jclmain" v-show="showMain">
 
       <!-- 诊断工具 -->
-      <div>   
-            <el-dropdown placement="right-start" ref="subDropdown2">
-              <span class="entranceBox">
-                <div class="one">
-                    <xzzLogo name="zdgj" />
-                    <div class="title" >诊断工具</div>
-                </div>
-                <xzzLogoyjt />
-              </span>
-
-               <template #dropdown>
-                    <el-dropdown-menu class="el-dropdown-menu2">
-                    <!-- 二级菜单开始 -->
-                      <el-dropdown-item class="el-dropdown-item2">
-                          <el-dropdown   placement="right-start" @command="commodityDiagnosis" >
-                                <span class="el-dropdown-link2">
-                                  <div class="title2">商品诊断</div>
-                                  <xzzLogoyjt type="true"/>
-                                </span>
-                            <template #dropdown>
-                              <el-dropdown-menu  @mouseenter.enter="() => { $refs.subDropdown2.handleOpen() }"
-                                  @mouseleave.enter="() => { $refs.subDropdown2.handleClose() }">
-                              <el-dropdown-item :class="`addOperateRecord 诊断工具-商品诊断-销售前${item.name}商品`"
-                              :command="item.value" v-for="item in diagnosisOption" :key="item.name">
-                                  销售前{{ item.value }}商品 </el-dropdown-item>
-                              <el-dropdown-item command="scan">浏览记录</el-dropdown-item>
-                              </el-dropdown-menu>
-                            </template>
-                          </el-dropdown>
-                      </el-dropdown-item>
-
-                        <el-dropdown-item  class="addOperateRecord 诊断工具-店铺诊断 el-dropdown-item2" >
-                          <span class="el-dropdown-link2">
-                            <div class="title2" >店铺诊断</div>
-                          </span>
-                        </el-dropdown-item>
-                    </el-dropdown-menu>
-               </template>
-            </el-dropdown>
-      </div>
+        <!-- <panelDiagnosisTool /> -->
 
       <!-- 下载工具 -->
         <div>
             <el-dropdown placement="right-start" ref="subDropdown1" >
               <span class="entranceBox">
                 <div class="one">
-                    <xzzLogo name="xzgj" />
+                    <panelXzzLogo name="xzgj" />
                     <div class="title" >下载工具</div>
                 </div>
-                <xzzLogoyjt />
+                <panelXzzLogoyjt />
               </span>
 
               <template #dropdown>
@@ -70,7 +30,7 @@
                 <el-dropdown   placement="right-start" @command="imgDownload" >
                       <span class="el-dropdown-link2">
                         <div class="title2">图片下载</div>
-                        <xzzLogoyjt type="true"/>
+                        <panelXzzLogoyjt type="true"/>
                       </span>
                   <template #dropdown>
                     <el-dropdown-menu  @mouseenter.enter="() => { $refs.subDropdown1.handleOpen() }"
@@ -91,7 +51,7 @@
                       <!-- <div class="title2">有图评价下载</div> -->
                       <span class="el-dropdown-link2">
                         <div class="title2">评价下载</div>
-                        <xzzLogoyjt type="true"/>
+                        <panelXzzLogoyjt type="true"/>
                       </span>
                   <template #dropdown>
                     <el-dropdown-menu  @mouseenter.enter="() => { $refs.subDropdown1.handleOpen() }"
@@ -105,7 +65,7 @@
               </el-dropdown-item>
                 <!-- 二级菜单结束 -->
 
-              <el-dropdown-item  class="addOperateRecord 下载工具-视频下载 el-dropdown-item2" @click.enter="downLoadJDVideoVue">
+              <el-dropdown-item  class="addOperateRecord 下载工具-视频下载 el-dropdown-item2" @click.enter="videoDownload">
                 <span class="el-dropdown-link2">
                   <div class="title2" >主图视频下载</div>
                 </span>
@@ -116,17 +76,17 @@
       </div>
 
       <!-- 补单工具 -->
-          <orderToolPanel  banId='146'/>
+          <panelOrderToolPanel  banId='134'/>
 
         <!-- 标题工具 -->
       <div >
           <el-dropdown placement="right-start" >
             <span class="entranceBox">
               <div class="one">
-                <xzzLogo name="btgj" />
+                <panelXzzLogo name="btgj" />
                 <div class="title" >标题工具</div>
             </div>
-            <xzzLogoyjt />
+            <panelXzzLogoyjt />
             </span>
             <template #dropdown>
             <el-dropdown-menu>
@@ -137,20 +97,15 @@
           </el-dropdown>
         </div>
 
-         <div>
-          <plainMenu logoName="home" title="回到首页" openKey='https://www.jd.com/'/>
-        </div>
+          <panelPlainMenu logoName="home" title="回到首页" openKey='https://www.jd.com/' :show="true"/>
 
-        <div v-if="userid">
-          <plainMenu logoName="jyfk" title="我的建议/反馈"  openKey="feedback"/>
-        </div>
+
+          <panelPlainMenu logoName="jyfk" title="我的建议/反馈"  openKey="feedback" :show="userid"/>
+
         <!-- 账号管理个人中心 -->
-        <div v-if="userid">
-          <accountMange  />
-        </div>
-        <div  v-else>
-          <plainMenu logoName="login" title="账号登录" openKey="login" />
-        </div>
+          <panelAccountMange :show="userid" />
+
+          <plainMenu logoName="login" title="账号登录" openKey="login" :show="!userid" />
 
         <div  class="version">版本:{{ version }} </div>
 
@@ -158,12 +113,12 @@
     </Transition>
 
     <footer class="footer" @click="showMain = !showMain">
-      <div class="shrink"> <xzzLogo :name="showMain? 'shrink2': 'shrink'" /> </div>
+      <div class="shrink"> <panelXzzLogo :name="showMain? 'shrink2': 'shrink'" /> </div>
       <!-- <div>{{count}}</div> -->
     </footer>
 
       <!-- 广告面板挂载 -->
-        <advertisingPanel :openAd="showMain" />
+        <panelAdvertisingPanel :openAd="showMain" />
 
     </div>
     </VueDragResize>
@@ -179,12 +134,12 @@
     <!-- <jdScanRecord ref="ScanRecordRef"/> -->
     <!-- <jdShopDiagnosis ref="shopDiagnosisRef" /> -->
     
-    <jdImageDownload ref="imageDownloadRef" />
-    <jdCommentDownload ref="commentDownloadRef"/>
+    <jdImageDownload />
+    <jdCommentDownload />
      <!--<keywordRanking ref="zrss" /> -->
     <!-- <div class="test">
       <div class="test1" >
-      <el-button type="primary" @click="test1">test1</el-button>
+      <el-button type="primary" @click="testBus">test1</el-button>
       </div>
       <el-button type="primary" @click="test2">test2</el-button>
     </div> -->
@@ -197,6 +152,13 @@
 <script setup>
 
 import { getOrderList, setOrderList } from './js/JDorderTag.js'
+
+
+//导入主图视频下载功能
+import {videoDownload} from './videoDownload.js'
+  // console.log("🚀 ~ file: app.vue:203 ~ videoDownLoad:", videoDownLoad)
+
+  import { testBus } from './aaa.js'
 
 //各平台持久化的store数据
 // const userstore = userStore()
@@ -222,15 +184,14 @@ const { urlCheck, info_id, scanData, scanShow, currentHref ,panelLocation } = st
 //-----ref定义的数据：操作数据需要.value，读取数据时模板中直接读取不需要
 
 
-let curCookies  = ref('')
 let showMain  = ref(true)
 const version = VERSION
 const userid = ref('')
 
-const try33 = async () => {
-  // await API.wait(2)
-  console.log('--------我执行了-----77777777777------------')
-}
+// const try33 = async () => {
+//   await API2.wait(2)
+//   console.log('--------我执行了-----77777777777------------')
+// }
     let arg = 3
 const test1 = () => {
   API.emitter.emit('openPro', arg)
@@ -253,68 +214,63 @@ const test2 = () => {
 
 //----------------------图片下载------------start----------------------------------
   const pictureOption  = [ {name: 'PC端_图片下载',  platform: 'pc'}, {name: '移动端_图片下载', platform: 'mobile'}]
-  const imageDownloadRef = ref(null)
   const imgDownload = (platform) => {
     if (urlCheck.value) return ElMessage.error({message: '请进入商品页面,再点击下载', duration: 2000})
-      // API.emitter.emit('openPro')  //调用打开蒙版进度条
-      imageDownloadRef.value.startDownload(platform);
+      API.emitter.emit('imageDownload', platform)
   }
 //-------------------图片下载------------end-------------------------------------------
 
 
 
 //----------------------评价下载------------start----------------------------------
-const commentNum = ref(null)
   const commentOptions  = [ {value: 20}, {value: 50}, {value: 100}, {value: 200}, {value: 300}]
-  const commentDownloadRef = ref(null)
   const commentDownload = (num) => {
-    // commentNum.value = num
     if (urlCheck.value) return ElMessage.error({message: '请进入商品页面,再点击下载', duration: 2000})
-
-          commentDownloadRef.value.startDownload(num);
-
+        API.emitter.emit('commentDownload', num)
   }
 //-------------------评价下载------------end-------------------------------------------
 
 
 
 //---------------店铺诊断及历史记录----start-----------------
-const scanRecordRef = ref(null)
-const shopDiagnosisRef = ref(null)
-const diagnosisOption = reactive([{value: 2}, {value: 5}, {value: 10}, {value: 20}, {value: 50}])
-const commodityDiagnosis = async(num) =>{
-  if(num =='scan') return scanRecordRef.value.getScanData(num)  //调用历史记录模块
-  // shopDiagnosisRef.value.startDiagnosis(num)
-}
+// const scanRecordRef = ref(null)
+// const shopDiagnosisRef = ref(null)
+// const diagnosisOption = reactive([{value: 2}, {value: 5}, {value: 10}, {value: 20}, {value: 50}])
+// const commodityDiagnosis = async(num) =>{
+//   if(num =='scan') return scanRecordRef.value.getScanData(num)  //调用历史记录模块
+//   // shopDiagnosisRef.value.startDiagnosis(num)
+// }
 //---------------店铺诊断及历史记录----end-----------------
 
 
+  
 // ---------------------视频下载 start--------------
-const downLoadJDVideoVue = async () => {
-      if (urlCheck.value) return ElMessage.error({message: '请进入商品页面,再点击下载', duration: 2000})
-      API.emitter.emit('openPro',2)  //调用打开蒙版进度条
-      let regs = currentHref.value.match(/item.jd.com.*?(\d+)/);
-        let skuId = regs.length >= 2 ? regs[1] : undefined;
-        $('.video-icon').click()
-        let url = $('video source').attr('src')
-        if(url == undefined) return  ElMessage.error({ message: '当前商品没有视频',  duration: 1500,})
-        let name = new API.dayjs().format('YYYYMMDD') + '_' + skuId + '_商品视频.mp4'
-      let size = await  API.sendMessage({type: 'downloads', url, name}) 
-      // console.log('size: ', size);
-      size && ElMessage.success({ message: `视频下载完成`, duration: 2500,})
-      API.emitter.emit('addTask',{filetype: 'video',taskname: name, size,  progress: 100})
-}
+// const downLoadJDVideoVue = async () => {
+//       if (urlCheck.value) return ElMessage.error({message: '请进入商品页面,再点击下载', duration: 2000})
+//       API.emitter.emit('openPro',2)  //调用打开蒙版进度条
+//       let regs = currentHref.value.match(/item.jd.com.*?(\d+)/);
+//         let skuId = regs.length >= 2 ? regs[1] : undefined;
+//         $('.video-icon').click()
+//         let url = $('video source').attr('src')
+//         if(url == undefined) return  ElMessage.error({ message: '当前商品没有视频',  duration: 1500,})
+//         let name = new API.dayjs().format('YYYYMMDD') + '_' + skuId + '_商品视频.mp4'
+//       let size = await  API.sendMessage({type: 'downloads', url, name}) 
+//       // console.log('size: ', size);
+//       size && ElMessage.success({ message: `视频下载完成`, duration: 2500,})
+//       API.emitter.emit('addTask',{filetype: 'video',taskname: name, size,  progress: 100})
+// }
 // --------------------------视频下载 end-------------------
 
 
 
 // 订单备注 start
 // 获取订单备注信息
+
 const getOrderTagJDVue = async () => {
     ElMessage.success({ message:"开始获取订单备注信息"});
     let odList = [251720707226, "jd_75b39cc757d30"]
     let ua = navigator.userAgent;
-    let data = await getOrderList(curCookies.value, ua, odList)
+    let data = await getOrderList(document.cookie, ua, odList)
     console.log("data" , data)
 }
 
@@ -324,7 +280,7 @@ const setOrderTagJDVue = async () =>{
     const odList = [251720707226,251506941780]
     let ua = navigator.userAgent;
     //let data = await setOrderList(curCookies.value, ua, odList, "js_test", 4, 2);
-    let data = await setOrderList(curCookies.value, ua, odList, "", 0, 2);
+    let data = await setOrderList(document.cookie, ua, odList, "", 0, 2);
     console.log("data" , data)
 }
 // 订单备注 end
@@ -371,7 +327,7 @@ const onDragstop = async (e) => {
 
 
 //---------退出登录------start----------------
-const logout = () => { API.emitter.emit('open','logout') }
+// const logout = () => { API.emitter.emit('open','logout') }
 //---------退出登录------end----------------
 
 
@@ -399,17 +355,14 @@ let userInfoStore  =  await  API.getUserinfo()
     })
     userid.value = userInfoStore.userid
 }
-//------账号管理菜单函数-----------
-//  const accountManagement = async (arg) => {
-//       API.emitter.emit('open', arg)
-//     }
 
-  const  developing = async () => {
-      ElMessage.error({ message: `功能等待开发中`, duration: 3000, showClose: true,grouping: true, });
-    }
+
+  // const  developing = async () => {
+  //     ElMessage.error({ message: `功能等待开发中`, duration: 3000, showClose: true,grouping: true, });
+  //   }
 
 onMounted(async () => {
-curCookies.value = document.cookie
+
 })
 
 onBeforeMount(async () => {

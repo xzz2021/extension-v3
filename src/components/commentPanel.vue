@@ -156,6 +156,7 @@ const { openCom, percentage, dataWithPic, dataNoPic, withPic, docName } = storeT
     const clearData = () => {
     store.$reset()
     }
+
 </script>
 <style lang='scss' scoped>
 

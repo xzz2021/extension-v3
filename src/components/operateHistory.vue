@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-10-31 14:36:13
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-29 14:48:16
+ * @LastEditTime: 2023-02-21 16:02:42
 -->
 <template>
 
@@ -88,7 +88,7 @@
 
    onMounted(async() =>{
       // await getUserinfo()
-      await getDatabase(1)
+      
 
     //------------当监听到登录事件后--------重新获取用户信息--------------
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -97,6 +97,8 @@
       })
     //---------------当未登录时拦截操作记录-----------------
     if(userInfoStore.self.userid == undefined ) return
+
+    await getDatabase(1)
 
     //-------------------或者通过userid----??????????---不渲染-----------
 
