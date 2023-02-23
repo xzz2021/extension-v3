@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-12-08 15:11:25
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-12 11:26:52
+ * @LastEditTime: 2023-02-22 11:57:30
 -->
 <template>
 <!-- 此组件定义没有下拉的纯净菜单项 -->
@@ -22,7 +22,8 @@
 const props = defineProps(['title','logoName', 'openKey', 'show'])
 
 const openTool = () => {
-  if(props.openKey == undefined) return ElMessage.error({message: '请给组件传props值openKey', duration: 2000})
+  if(props.openKey == undefined) return 
+  // ElMessage.error({message: '请给组件传props值openKey', duration: 2000})
   if(props.openKey.includes('https')){
     window.open(props.openKey)
   }else{

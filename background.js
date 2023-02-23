@@ -37,7 +37,7 @@ chrome.API = API // 挂载到全局,从而让api内部也能拿到所有函数
 //------☆☆☆☆------通过监听storage的变化----------监听登录状态的改变-----☆☆☆☆-----------如果改变发送事件----------
 let matches = ["https://*.1688.com/*", "https://*.tmall.com/*", "https://*.jd.com/*",
   "https://*.taobao.com/*", "https://*.alibaba.com/*", "https://*.yangkeduo.com/*",
-  "https://*.pingduoduo.com/*"]
+  "https://*.pingduoduo.com/*", "https://*.amazon.com/*", "https://*.amazon.cn/*"]
 //let matches = '<all_urls>'
 chrome.storage.onChanged.addListener(function (changes, namespace) {
   for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
@@ -61,8 +61,6 @@ chrome.runtime.onMessage.addListener(
   (message, sender, sendResponse) => {
     // console.log('----------------message: ----------------', message)
     switch (message.type) {
-
-
       // fatosy API start 
 
       case 'ztab': {
@@ -196,12 +194,11 @@ chrome.runtime.onMessage.addListener(
         //       sendResponse('cookies set success')
       }
         break;
-      case 'downloads': {
-        (async () => {
-        let size = await API.chromeApi.download({ url: message.url, filename: message.name })
-        sendResponse(size)})()
-        return true
-      }
+      case 'downloads': { (async () => {
+                          let size = await API.urlDownload({ url: message.url, filename: message.name })
+                          sendResponse(size)})()
+                          return true
+                        }
         break;
       case 'tabQuery': {
         (async () => {
@@ -216,18 +213,7 @@ chrome.runtime.onMessage.addListener(
         sendResponse('tab关闭成功')
       }
         break;
-      case 'complier': {
-
-        chrome.tabs.query({ active: true }, ([tab]) => {
-          sendResponse('下载完成')
-          if (tab.url.match(/tmall|taobao|1688|yangkeduo|pinduoduo|alibaba|jd/)) {
-            chrome.runtime.reload()
-            chrome.tabs.reload()
-          } else {
-            chrome.runtime.reload()
-          }
-        })
-      }
+      case 'complier':  API.autoReloadTab()   //此处定义开发时的编译后页面自动刷新
       default: ''
         break;
     }

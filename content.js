@@ -65,6 +65,7 @@ import app1688 from './src/pages/alibaba/app.vue'
 // import apptmall from './src/pages/tmall/app.vue'
 import apptb from './src/pages/tb/app.vue'
 import appjd from './src/pages/jd/app.vue'
+import appamazon from './src/pages/amazon/app.vue'
 
 //---------------------------------------------------------
 
@@ -95,7 +96,7 @@ function createEntry(myapp,id){
 
 //-------------------版本2.0----------------------
 let loginUrl = location.host.match(/login|mms|passport/) != null
-let checkedUrl = location.host.match(/tmall|taobao|1688|yangkeduo|pinduoduo|alibaba|jd|lemak/)
+let checkedUrl = location.host.match(/tmall|taobao|1688|yangkeduo|pinduoduo|alibaba|jd|amazon|lemak/)
 loginUrl? checkedUrl = '': checkedUrl = checkedUrl ? checkedUrl[0] : ''
 //------------------------------------------------
 
@@ -108,7 +109,9 @@ switch (checkedUrl) {
   // case 'tmall': createEntry(apptmall, 'markettmall')
   //   break;
   case 'taobao': createEntry(apptb, 'markettb')
-  break;
+    break;
+  case 'amazon': createEntry(appamazon, 'marketamazon')
+    break;
   // case 'localhost': createApp(popup).mount('#pop')
   //   break;
   default: ''
