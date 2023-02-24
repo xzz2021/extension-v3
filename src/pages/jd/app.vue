@@ -11,7 +11,6 @@
 
       <!-- 诊断工具 -->
         <!-- <panelDiagnosisTool /> -->
-
       <!-- 下载工具 -->
         <div>
             <el-dropdown placement="right-start" ref="subDropdown1" >
@@ -77,7 +76,6 @@
 
       <!-- 补单工具 -->
           <panelOrderToolPanel  banId='134'/>
-
         <!-- 标题工具 -->
       <div >
           <el-dropdown placement="right-start" >
@@ -99,13 +97,12 @@
 
           <panelPlainMenu logoName="home" title="回到首页" openKey='https://www.jd.com/' :show="true"/>
 
-
           <panelPlainMenu logoName="jyfk" title="我的建议/反馈"  openKey="feedback" :show="userid"/>
 
         <!-- 账号管理个人中心 -->
           <panelAccountMange :show="userid" />
 
-          <plainMenu logoName="login" title="账号登录" openKey="login" :show="!userid" />
+          <panelPlainMenu logoName="login" title="账号登录" openKey="login" :show="!userid" />
 
         <div  class="version">版本:{{ version }} </div>
 
@@ -124,9 +121,8 @@
     </VueDragResize>
     </div>
 
-
       <!-- 全平台公共组件挂载的总入口 -->
-            <communalApp />
+            <!-- <communalApp /> -->
 
 
       <!-- 各平台自己的子组件挂载 -->
@@ -137,12 +133,12 @@
     <jdImageDownload />
     <jdCommentDownload />
      <!--<keywordRanking ref="zrss" /> -->
-    <!-- <div class="test">
+    <div class="test">
       <div class="test1" >
-      <el-button type="primary" @click="testBus">test1</el-button>
+      <el-button type="primary" @click="test1">test1</el-button>
       </div>
       <el-button type="primary" @click="test2">test2</el-button>
-    </div> -->
+    </div>
     <!-- <jdChildComponent /> -->
     <!-- 通过将props动态值绑定到pinia上,可以全局实时更改调用,且不需要公共组件的pinia引入 不再需要$ref的定义及调用-->
     <!-- <progressBar :percentage="proBar.percentage"/> -->
@@ -156,10 +152,13 @@ import { getOrderList, setOrderList } from './js/JDorderTag.js'
 
 //导入主图视频下载功能
 import {videoDownload} from './videoDownload.js'
-  // console.log("🚀 ~ file: app.vue:203 ~ videoDownLoad:", videoDownLoad)
+// console.log("🚀 ~ file: app.vue:203 ~ videoDownLoad:", videoDownLoad)
 
-  import { testBus } from './aaa.js'
+import { testBus } from './aaa.js'
 
+
+// console.log("🚀 ~ file: app.vue:161 ~ window:", window)
+// console.log("🚀 ~ file: app.vue:153 ~ chrome:", chrome)
 //各平台持久化的store数据
 // const userstore = userStore()
 // const { panelLocation } = storeToRefs(userstore)
@@ -183,7 +182,6 @@ const { urlCheck, info_id, scanData, scanShow, currentHref ,panelLocation } = st
 //---------------单纯字符串变量不可使用reactive---------
 //-----ref定义的数据：操作数据需要.value，读取数据时模板中直接读取不需要
 
-
 let showMain  = ref(true)
 const version = VERSION
 const userid = ref('')
@@ -192,11 +190,26 @@ const userid = ref('')
 //   await API2.wait(2)
 //   console.log('--------我执行了-----77777777777------------')
 // }
-    let arg = 3
-const test1 = () => {
-  API.emitter.emit('openPro', arg)
-  arg += 10
-  console.log('-------我是新增事件--------------')
+const test1 = async() => {
+  // window.aaa
+  // console.log("🚀 ~ file: app.vue:199 ~ fn ~ window.aaa:", window.aaa)
+  // console.log("🚀 ~ file: content.js:21 ~ API2:", window.pageConfig)
+
+  // window.removeEventListener('xzz')
+
+  function ff(){
+    return  window.pageConfig.product.imageList
+  }
+  let res =  await API.injectFn(ff)
+  console.log("🚀 ~ file: app.vue:206 ~ test1 ~ res:", res)
+
+  // 失败
+//  let fn = `() =>{
+//     return window.pageConfig
+//   }`
+  // let res = await API.sendMessage({type: 'injectFn', fn})
+
+  // console.log('-------我是新增事件--------------')
 }
 const test2 = () => {
   // API.scroll.goToBottomEase()

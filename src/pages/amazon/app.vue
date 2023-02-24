@@ -20,7 +20,6 @@
 
         <!-- 标题工具 -->
       
-
           <panelPlainMenu logoName="home" title="回到首页" openKey='https://www.amazon.com/' :show="true"/>
 
           <panelPlainMenu logoName="jyfk" title="我的建议/反馈"  openKey="feedback" :show="userid"/>
@@ -47,9 +46,8 @@
     </VueDragResize>
     </div>
 
-
-            <communalApp />
-
+    
+            <!-- <communalApp /> -->
 
 </template>
 

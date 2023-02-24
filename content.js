@@ -28,6 +28,7 @@ import './src/api/contentApi/websocket'
 import 'xe-utils'
 import VXETable from 'vxe-table'
 import 'vxe-table/lib/style.css'
+
 //---------开发体积2m----打包体积550k-----
 //-------------结合babel-loader配置按需加载后----打包体积只有100k
 //-------所以可以全局引入------jq(打包90k)+vue+ele+pinia---------
@@ -67,6 +68,10 @@ import apptb from './src/pages/tb/app.vue'
 import appjd from './src/pages/jd/app.vue'
 import appamazon from './src/pages/amazon/app.vue'
 
+//-------------------公共模块实例引入----------------
+
+import App from './src/components/communalApp.vue'
+
 //---------------------------------------------------------
 
 //------------vue实例-----挂载入口---------------------
@@ -99,7 +104,10 @@ let loginUrl = location.host.match(/login|mms|passport/) != null
 let checkedUrl = location.host.match(/tmall|taobao|1688|yangkeduo|pinduoduo|alibaba|jd|amazon|lemak/)
 loginUrl? checkedUrl = '': checkedUrl = checkedUrl ? checkedUrl[0] : ''
 //------------------------------------------------
+if(!loginUrl && checkedUrl){
+  createEntry(App, 'communalComponents')
 
+}
 
 switch (checkedUrl) {
   case 'jd': createEntry(appjd, 'marketjd')

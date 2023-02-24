@@ -213,7 +213,24 @@ chrome.runtime.onMessage.addListener(
         sendResponse('tab关闭成功')
       }
         break;
-      case 'complier':  API.autoReloadTab()   //此处定义开发时的编译后页面自动刷新
+      case 'complier':    API.autoReloadTab(); sendResponse('刷新完成')  //此处定义开发时的编译后页面自动刷新
+            //  {(async () => {await API.autoReloadTab();sendResponse('刷新完成')})(); return true} 
+        break;
+      case 'injectFn' : {
+        (async () => {
+          // function fn() {
+          //    window.name = '999'
+          // }
+          let resData = await API.injectFn(message.fn)
+          // console.log("🚀 ~ file: background.js:225 ~ zhixigh:")
+          // resData = resData ? resData: '失败'
+          sendResponse(resData)
+        })()
+        return true
+      }
+      
+      
+        break;
       default: ''
         break;
     }

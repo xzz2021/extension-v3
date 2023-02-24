@@ -21,7 +21,7 @@
     "pinia": "^2.0.20",
     "pinia-plugin-persistedstate": "^2.3.0",
     "vue": "^3.2.13",
-    "vxe-table": "^4.3.6",
+    "vxe-table": "^4.3.10",
     "xe-utils": "^3.5.7"
   },
   "devDependencies": {

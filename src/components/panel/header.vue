@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-12-08 17:05:04
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-29 15:49:14
+ * @LastEditTime: 2023-02-23 10:33:37
 -->
 <template>
 <header class="headerbox">
@@ -11,12 +11,12 @@
               <div class="two">MOUCHENJIE</div>
             </div>
             <div class="tipBox">
-            <el-tooltip :disabled="tooldisabled" class="item" effect="dark" placement="top">
+            <el-tooltip  class="item" effect="dark" placement="top">
               <template class="topTip" #content>
-                <div>此区域按住鼠标左键可以自由拖动面板</div>
+                <div>1.此区域按住鼠标左键可以自由拖动面板</div>
+                <div>2.单击此区域可直接访问“谋臣界”官网</div>
               </template>
-              <svg @mousedown="tooldisabled = true" @mouseup="tooldisabled = false" class="xzzsymbol" aria-hidden="true">
-                <use xlink:href="#xzzicon3-tishi"></use>
+              <svg @click="oopen" class="xzzsymbol" aria-hidden="true"> <use xlink:href="#xzzicon3-tishi"></use>
               </svg>
             </el-tooltip>
 
@@ -26,8 +26,10 @@
     </header>
 </template>
 <script setup>
-    const tooldisabled = ref(false)
-
+    // const tooldisabled = ref(false)
+  const oopen = () => {
+    window.open('http://pddzd.junchenlun.com/plugs/index.html#/')
+  }
 </script>
 <style  lang='scss' scoped>
 
