@@ -70,7 +70,7 @@ import appamazon from './src/pages/amazon/app.vue'
 
 //-------------------公共模块实例引入----------------
 
-import App from './src/components/communalApp.vue'
+// import App from './src/components/communalApp.vue'
 
 //---------------------------------------------------------
 
@@ -104,10 +104,10 @@ let loginUrl = location.host.match(/login|mms|passport/) != null
 let checkedUrl = location.host.match(/tmall|taobao|1688|yangkeduo|pinduoduo|alibaba|jd|amazon|lemak/)
 loginUrl? checkedUrl = '': checkedUrl = checkedUrl ? checkedUrl[0] : ''
 //------------------------------------------------
-if(!loginUrl && checkedUrl){
-  createEntry(App, 'communalComponents')
+// if(!loginUrl && checkedUrl){
+//   createEntry(App, 'communalComponents')
 
-}
+// }
 
 switch (checkedUrl) {
   case 'jd': createEntry(appjd, 'marketjd')

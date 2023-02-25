@@ -1,5 +1,5 @@
 {
-  "name": "【VV3】君臣论-电商插件",
+  "name": "【xzz】君臣论-电商插件",
   "description": "",
   "version": "1.0.0",
   "manifest_version": 3,
@@ -23,13 +23,14 @@
     {
       "matches": ["https://*.1688.com/*", "https://*.tmall.com/*", "https://*.jd.com/*", 
       "https://*.taobao.com/*", "https://*.alibaba.com/*", "https://*.yangkeduo.com/*",
+      "https://*.pingduoduo.com/*", "https://*.amazon.com/*", "https://*.amazon.cn/*", 
       "https://*.pingduoduo.com/*"],
       "js": ["/js/content.js"],
       "css": ["/css/content.css"]
     }
   ],
   "web_accessible_resources": [{
-    "resources": ["/js/inject.js","/js/content.js", "/js/content.js.map", "/js/inject.js.map"],
+    "resources": ["/js/inject.js"],
     "matches": ["<all_urls>"]
   }]
 }

@@ -27,7 +27,7 @@
         <!-- 账号管理个人中心 -->
           <panelAccountMange :show="userid" />
 
-          <plainMenu logoName="login" title="账号登录" openKey="login" :show="!userid" />
+          <panelPlainMenu logoName="login" title="账号登录" openKey="login" :show="!userid" />
 
         <div  class="version">版本:{{ version }} </div>
 

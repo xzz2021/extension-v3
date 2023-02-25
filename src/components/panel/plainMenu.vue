@@ -1,11 +1,11 @@
 <!--
  * @Date: 2022-12-08 15:11:25
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-02-22 11:57:30
+ * @LastEditTime: 2023-02-25 10:18:03
 -->
 <template>
 <!-- 此组件定义没有下拉的纯净菜单项 -->
-<div v-if="show">
+<div v-if="show" @click="$emit('startDwn')">     <!-- 发散父组件绑定的原生事件 -->
 
 
 <span :class="`addOperateRecord ${title} entranceBox`" @click="openTool">

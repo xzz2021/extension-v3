@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-02-21 17:00:05
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-02-22 17:52:00
+ * @LastEditTime: 2023-02-24 17:43:25
  */
 
 
@@ -11,10 +11,8 @@
 
  const videoDownload2 = async () => {
   let curHref = window.location.href
-  let shopId = curHref.match(/\/dp\/(.*?)\//)[1]
-  // console.log("🚀 ~ file: app.vue:358 ~ test111 ~ shopId:", shopId) 
-  // return
   if(curHref.indexOf('/dp/') == -1) return ElMessage.error({ message: `请进入商品详情页面使用`, duration: 3000, showClose: false})
+        let shopId = curHref.match(/\/dp\/(.*?)\W/)[1]
         const htmlData = $('#imageBlockVariations_feature_div script').text()
         // console.log("🚀 ~ file: videoDownload2.js:19 ~ videoDownload2 ~ htmlData:", htmlData)
         let rawData = htmlData.match(/parseJSON\(\'(.*?)\'\)\;/)[1]

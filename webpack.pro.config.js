@@ -28,7 +28,7 @@ const proconfig = {
             extractComments: false,      //  不生成LICENSE文件(提取注释)
             terserOptions: {
                 format: {
-                  comments: false,//删除所有注释
+                  comments: true,//删除所有注释
                 },
                 compress: {
                   drop_console: true, // 移除所有console.log
@@ -66,6 +66,7 @@ const proconfig = {
         new ZipWebpackPlugin(  //打包文件夹自动输出压缩包文件
            {
             filename: 'xzz.zip',
+            pathPrefix: 'xzz2023/'
             // extension: 'zip',
             // fileOptions: {
             //     mtime: new Date(),

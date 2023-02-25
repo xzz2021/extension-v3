@@ -4,8 +4,9 @@
  * @LastEditTime: 2023-02-23 08:50:37
  */
 
-
+///////////pageConfig.product.videoData.playUrl
  const videoDownload = async () => {
+
     if (window.location.href.indexOf('item.jd') == -1) return ElMessage.error({message: '请进入商品页面,再点击下载', duration: 2000})
     API.emitter.emit('openPro',2)  //调用打开蒙版进度条
     let regs = window.location.href.match(/item.jd.com.*?(\d+)/);

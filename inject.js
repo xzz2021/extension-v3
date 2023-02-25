@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-10-29 16:39:29
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-02-24 08:43:55
+ * @LastEditTime: 2023-02-24 11:38:18
  */
 //------------注入函数到浏览器window---------------
 // window._ = _
@@ -24,6 +24,10 @@
 
 window.addEventListener('xzz', (params)=> {
     try {
+         /* 此处也可以直接传函数的执行体,以及形参,通过构造函数进行执行
+         let fn = new Function('dd', "return dd")
+         let res = fn('kjhibuu') */
+
         let res =  eval(params.detail)
         window.postMessage(res, "*")
     } catch (error) {

@@ -3,6 +3,10 @@
 </template>
 <script setup>
 
+//通过暴露的变量pageConfig.product,,直接提取页面所有所需数据
+
+// 主图 pageConfig.product.imageList  //目前没找到详情及sku数据
+
 
 //公共的store数据 
 import {comStore} from '../../components/comStore' 
