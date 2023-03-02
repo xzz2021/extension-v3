@@ -12,18 +12,18 @@ export const piniaStore = defineStore('selfInfo', {
     state: () => {
       return {
         // panelLocation: { lx: 60, ly: 120 },
+        showMain2: true,  // 是否显示主面板  //这里定义在app里无法拿到,估计是template编译时没有对pinia的.value进行转换
         panelLocation: JSON.parse(localStorage.getItem('panelLocation')) || { lx: 60, ly: 120 },
-        count: 0,
-        info_id: 0,
+
         // sitePlatform: '京东',
-        urlCheck: window.location.href.indexOf('item.jd') == -1, //检查当前页是否是商品页,true则return弹出提示
-        diagnosisStore:{
-          show: false,
-          percentage: 70,
-          info_id: 0,
-          diagnosisData: {},
-        },
-        currentHref:  window.location.href,
+        // urlCheck: window.location.href.indexOf('item.jd') == -1, //检查当前页是否是商品页,true则return弹出提示
+        // diagnosisStore:{
+        //   show: false,
+        //   percentage: 70,
+        //   info_id: 0,
+        //   diagnosisData: {},
+        // },
+        // currentHref:  window.location.href,
         userInfo: {
           userid: '',
           userToken: '',
@@ -52,7 +52,10 @@ export const piniaStore = defineStore('selfInfo', {
         storeLoc(loc){
           this.panelLocation = loc
           localStorage.setItem('panelLocation', JSON.stringify(loc))
-          }
+          },
+        toggleShow(){
+          this.showMain2 = !this.showMain2
+        }
         // async storingLoc(val){
         //   this.panelLocation = val
             

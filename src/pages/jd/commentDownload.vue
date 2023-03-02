@@ -19,6 +19,7 @@ const commodityId = ref(null)
 
     const  startDownload = async (num) =>{
         let skuUrl = window.location.href
+        if(skuUrl.indexOf('item.jd') == -1) return ElMessage.error({message: '请进入商品页面,再点击下载', duration: 2000})
         let regs = skuUrl.match(/item.jd.com.*?(\d+)/)
         if(regs == null) return ElMessage.error({ message: '当前链接不是商品页面', showClose: true, duration: 46000 })
         commodityId.value = regs[1]

@@ -479,9 +479,23 @@ const onDragstop = (e) => {
       let b = a.substring(3,7)
       userPhone.value = a.replace(b, '****')
   }
-  onMounted(() => {
+  onMounted(async () => {
     currentHref = window.location.href
     curCookies.value = "{'" + document.cookie + "'}"
+
+setTimeout(async () => {
+  
+  function ff(){
+  console.log("🚀 ~ file: app.vue:487 ~ 222222222setTimeout ~ async:")
+
+  window.xzz$ = $
+  return  55
+}
+
+let res =  await API.injectFn(ff)
+console.log("🚀 ~ file: app.vue:206 ~ test1 ~ res:", res)
+  
+}, 2000);
   })
    onBeforeMount(async () => {
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {

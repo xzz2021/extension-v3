@@ -13,12 +13,8 @@ pinia.use(piniaPluginPersistedstate)
 //-----------------------------------
 
 
-
-
-
 // //---------------引入所有API挂载到全局----------
 import{ contentApi as API} from './src/api/contentApi/index'
-// console.log("🚀 ~ file: content.js:23 ~ API:", API)
 window.API = API
 
 import './src/api/contentApi/websocket'
@@ -87,18 +83,6 @@ function createEntry(myapp,id){
 
 
 
-//-----popup页面----------
-// import popup from './src/popup/app.vue'
-// document.getElementById('pop') ? createApp(popup).use(pinia).mount('#pop'): ''
-// $('#pop')[0] ? createApp(popup).use(pinia).mount('#pop'): ''
-//-------------------------------------------------
-//-------------------版本1.0----------------------
-// let devUrl = (url == 'lemakflpnefnpaegkhgpmjknjkafpnif' || url == 'localhost:8888')
-// let loginUrl = url.match(/login|mms|passport/)  == null
-// let checkedUrl = url.match(/tmall|taobao|1688|yangkeduo|pinduoduo|alibaba|jd/) 
-// checkedUrl =  devUrl && 'iamdev' || (loginUrl && checkedUrl  ? checkedUrl[0] : '')
-//----------------------------------------------------------------------------------
-
 //-------------------版本2.0----------------------
 let loginUrl = location.host.match(/login|mms|passport/) != null
 let checkedUrl = location.host.match(/tmall|taobao|1688|yangkeduo|pinduoduo|alibaba|jd|amazon|lemak/)
@@ -106,7 +90,6 @@ loginUrl? checkedUrl = '': checkedUrl = checkedUrl ? checkedUrl[0] : ''
 //------------------------------------------------
 // if(!loginUrl && checkedUrl){
 //   createEntry(App, 'communalComponents')
-
 // }
 
 switch (checkedUrl) {
@@ -131,12 +114,12 @@ switch (checkedUrl) {
 
 //----参考------https://stackoverflow.com/questions/9515704/use-a-content-script-to-access-the-page-context-variables-and-functions/9517879#9517879
 const s = document.createElement('script')
-// eslint-disable-next-line no-undef
 s.src = chrome.runtime.getURL('js/inject.js')
 s.onload = function() {
     this.remove()
 };//--<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<-------此处分号不可去掉--------应该是立即执行函数必须以分号分隔------
 (document.head || document.documentElement).appendChild(s) // ------document.documentElement----指向html标签
+
 
 //-----脚本动态参数注入仅限于bgc----------如果动态注入可能需要配置mainfest.json----------
   /* "content_security_policy": {
@@ -144,33 +127,8 @@ s.onload = function() {
   }, */
 
   
-
   //---------------------导入调试的全局变量,生产模式会自动false-----------------------
 // import {getShow} from'./show'
 // let aa = getShow(DEBUG)
 // console.log('aa: ', aa);
-
-
-
-
-
-
-
-//class 的引入
-
-/* class app {
-  constructor(name){
-      this.name = name
-  }
-  speak(){
-      return 'my name is ' + this.name
-  }
-}
-
-export default app */
-
-// import app from './class'
-// let a = new app('xzz66666')
-// let ccc = a.speak()
-// console.log('ccc: ', ccc)
 

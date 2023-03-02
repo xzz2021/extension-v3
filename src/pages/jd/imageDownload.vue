@@ -14,9 +14,10 @@ const store = comStore()
 const { openImg, percentage, mainImg, detailImg, skuImg, zipname, LinkData } = storeToRefs(store)
 
     const startDownload = async (platform) =>{
+        let url = window.location.href
+        if(url.indexOf('item.jd') == -1) return ElMessage.error({message: '请进入商品页面,再点击下载', duration: 2000})
             openImg.value = true
             percentage.value = 10
-            let url = location.href
             LinkData.value = url
             let plattitle = platform == 'pc' ? '电脑端' : '移动端'
             let shopId = url.match(/com\/(\d*)/g)[0].slice(4)
