@@ -159,6 +159,7 @@ let userInfoStore  =  await  API.getUserinfo()
     }else{
       API.checkLogin.removeEvent()  //移除全局登录拦截
     }
+    API.emitter.emit('getUserPhone')
   busStore.$patch((state)=>{
       state.userInfo = userInfoStore
     })

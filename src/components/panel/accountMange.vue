@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-01-09 14:07:13
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-12 16:40:09
+ * @LastEditTime: 2023-03-01 09:24:25
 -->
 <template>
   <div v-if="show">
@@ -49,12 +49,16 @@ const accountManagement = (arg) => {
       }
 }
 
-onBeforeMount(async () => {
-    let userInfoStore  =  await  API.getUserinfo()
+
+const getUserPhone = async () => {
+  let userInfoStore  =  await  API.getUserinfo()
     let a  = userInfoStore.userPhone + ''
   let b = a.substring(3,7)
   userPhone.value = a.replace(b, '****')
+}
 
+onBeforeMount(async () => {
+  API.emitter.on('getUserPhone', getUserPhone)
 })
 
 

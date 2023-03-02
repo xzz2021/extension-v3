@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-09-15 11:21:04
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-14 16:30:12
+ * @LastEditTime: 2023-03-02 16:48:25
  */
 
 import { defineStore } from 'pinia'
@@ -30,6 +30,7 @@ export const piniaStore = defineStore('selfInfo', {
           userPhone: '',
           timeStamp: ''
         },
+        version: VERSION
         // proBar: {
         //   show: false,
         //   percentage: 0

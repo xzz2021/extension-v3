@@ -91,7 +91,6 @@
 
 <script setup>
 
-
 //公共的store数据 
 import {comStore} from './comStore' 
 const store = comStore() 

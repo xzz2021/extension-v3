@@ -131,7 +131,8 @@ let loginForm = reactive({ phone: null, code: '', keep: ['记住用户名'] })
         await API.storeUserlist()   // 更新用户列表
         if(loginForm.keep[0] != '记住用户名'){ API.updateUserlist(curUserInfo.userid) }
         getUserInfo() //获取更新后的信息
-        loginShow.value = false
+        // loginShow.value = false
+        loginClose()
     }
     const deletePhone = async (userid) => {
       await API.updateUserlist(userid)
@@ -184,5 +185,23 @@ defineExpose({
 
 <style lang="scss" scoped>
 @import '../css/sass/loginpanel.scss';
+
+//消除亚马逊input通配css影响
+:deep(.el-input__inner){
+  height: 40px !important;
+  border: none;
+  box-shadow: none;
+  &:focus {
+      border: none;
+      box-shadow: none;
+      // border: 1px solid #DCDFE6;
+      background-color: #FFFFFF;
+    };
+}
+
+//消除亚马逊label通配css影响
+:deep(.checkList label){
+  padding: 0;
+}
 
 </style>

@@ -1,3 +1,8 @@
+<!--
+ * @Date: 2022-12-06 17:13:35
+ * @LastEditors: xzz2021
+ * @LastEditTime: 2023-03-02 16:47:29
+-->
 <template>
 <div class="jclpanel" >
   
@@ -149,12 +154,9 @@
 
 import { getOrderList, setOrderList } from './js/JDorderTag.js'
 
-
 //导入主图视频下载功能
 import {videoDownload} from './videoDownload.js'
 // console.log("🚀 ~ file: app.vue:203 ~ videoDownLoad:", videoDownLoad)
-
-import { testBus } from './aaa.js'
 
 
 // console.log("🚀 ~ file: app.vue:161 ~ window:", window)
@@ -166,9 +168,7 @@ import { testBus } from './aaa.js'
 //平台状态store
 const busStore = piniaStore()
 //storeToRefs增加响应性,使用了proxy,所以需要用.value拿到值
-const { urlCheck, info_id, scanData, scanShow, currentHref ,panelLocation } = storeToRefs(busStore) 
-
-
+const { urlCheck, info_id, scanData, scanShow, currentHref ,panelLocation, version } = storeToRefs(busStore) 
 
 
 // 深层注入props//--------蒙版进度条使用注入后,则所有方法要把域名判断写到app方法中---才能调用打开app的子组件进度条
@@ -183,19 +183,11 @@ const { urlCheck, info_id, scanData, scanShow, currentHref ,panelLocation } = st
 //-----ref定义的数据：操作数据需要.value，读取数据时模板中直接读取不需要
 
 let showMain  = ref(true)
-const version = VERSION
+// const version = VERSION
 const userid = ref('')
 
-// const try33 = async () => {
-//   await API2.wait(2)
-//   console.log('--------我执行了-----77777777777------------')
-// }
-const test1 = async() => {
-  // window.aaa
-  // console.log("🚀 ~ file: app.vue:199 ~ fn ~ window.aaa:", window.aaa)
-  // console.log("🚀 ~ file: content.js:21 ~ API2:", window.pageConfig)
 
-  // window.removeEventListener('xzz')
+const test1 = async() => {
 
   function ff(){
     return  window.pageConfig.product.imageList
@@ -203,13 +195,6 @@ const test1 = async() => {
   let res =  await API.injectFn(ff)
   console.log("🚀 ~ file: app.vue:206 ~ test1 ~ res:", res)
 
-  // 失败
-//  let fn = `() =>{
-//     return window.pageConfig
-//   }`
-  // let res = await API.sendMessage({type: 'injectFn', fn})
-
-  // console.log('-------我是新增事件--------------')
 }
 const test2 = () => {
   // API.scroll.goToBottomEase()
@@ -218,11 +203,6 @@ const test2 = () => {
 
 //实时响应式获得数据需要直接绑定state的值,解构无法实时获得最新值,虽然可以用来操作,但最好使用$patch方式
 // let {lx, ly} = location.value
-
-
-
-
-
 
 
 //----------------------图片下载------------start----------------------------------
@@ -245,58 +225,6 @@ const test2 = () => {
 
 
 
-//---------------店铺诊断及历史记录----start-----------------
-// const scanRecordRef = ref(null)
-// const shopDiagnosisRef = ref(null)
-// const diagnosisOption = reactive([{value: 2}, {value: 5}, {value: 10}, {value: 20}, {value: 50}])
-// const commodityDiagnosis = async(num) =>{
-//   if(num =='scan') return scanRecordRef.value.getScanData(num)  //调用历史记录模块
-//   // shopDiagnosisRef.value.startDiagnosis(num)
-// }
-//---------------店铺诊断及历史记录----end-----------------
-
-
-  
-// ---------------------视频下载 start--------------
-// const downLoadJDVideoVue = async () => {
-//       if (urlCheck.value) return ElMessage.error({message: '请进入商品页面,再点击下载', duration: 2000})
-//       API.emitter.emit('openPro',2)  //调用打开蒙版进度条
-//       let regs = currentHref.value.match(/item.jd.com.*?(\d+)/);
-//         let skuId = regs.length >= 2 ? regs[1] : undefined;
-//         $('.video-icon').click()
-//         let url = $('video source').attr('src')
-//         if(url == undefined) return  ElMessage.error({ message: '当前商品没有视频',  duration: 1500,})
-//         let name = new API.dayjs().format('YYYYMMDD') + '_' + skuId + '_商品视频.mp4'
-//       let size = await  API.sendMessage({type: 'downloads', url, name}) 
-//       // console.log('size: ', size);
-//       size && ElMessage.success({ message: `视频下载完成`, duration: 2500,})
-//       API.emitter.emit('addTask',{filetype: 'video',taskname: name, size,  progress: 100})
-// }
-// --------------------------视频下载 end-------------------
-
-
-
-// 订单备注 start
-// 获取订单备注信息
-
-const getOrderTagJDVue = async () => {
-    ElMessage.success({ message:"开始获取订单备注信息"});
-    let odList = [251720707226, "jd_75b39cc757d30"]
-    let ua = navigator.userAgent;
-    let data = await getOrderList(document.cookie, ua, odList)
-    console.log("data" , data)
-}
-
-// 设置订单备注信息
-const setOrderTagJDVue = async () =>{
-    ElMessage.success({ message:"开始设置订单备注信息"});
-    const odList = [251720707226,251506941780]
-    let ua = navigator.userAgent;
-    //let data = await setOrderList(curCookies.value, ua, odList, "js_test", 4, 2);
-    let data = await setOrderList(document.cookie, ua, odList, "", 0, 2);
-    console.log("data" , data)
-}
-// 订单备注 end
 
 
 
@@ -363,23 +291,20 @@ let userInfoStore  =  await  API.getUserinfo()
     }else{
       API.checkLogin.removeEvent()  //移除全局登录拦截
     }
+    //通知账号管理组件更新手机号
+    API.emitter.emit('getUserPhone')
+
   busStore.$patch((state)=>{
       state.userInfo = userInfoStore
     })
     userid.value = userInfoStore.userid
 }
 
-
-  // const  developing = async () => {
-  //     ElMessage.error({ message: `功能等待开发中`, duration: 3000, showClose: true,grouping: true, });
-  //   }
-
 onMounted(async () => {
 
 })
 
 onBeforeMount(async () => {
-   
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   message == 'loginEvent'? getUserInfo() : ''
   sendResponse({status: true})
