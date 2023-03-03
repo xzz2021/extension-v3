@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-12-13 16:22:15
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-02-21 16:00:21
+ * @LastEditTime: 2023-03-03 11:25:08
 -->
 <template>
 
@@ -12,7 +12,7 @@
     <feedbackPanel  ref="feedbackPanelRef" />
     <commentPanel  />
     <imagePanel  />
-    <!-- <progressBar /> -->
+    <progressBar />
 
 </template>
 <script setup>

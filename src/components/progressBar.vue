@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-10-22 10:23:59
  * @LastEditors: xzz2021
- * @LastEditTime: 2022-12-14 16:53:00
+ * @LastEditTime: 2023-03-03 11:23:55
 -->
 <template>
   <el-dialog  title="" :modal="true" width="400px" v-model="visible" :show-close="false" :close-on-click-modal="false" top="40vh">
@@ -28,20 +28,22 @@ const visible = ref(false)
 //       if(newV == 100) visible.value = false
 // })
 
-const openPro = (time = 3) => {
+const openPro = (time = 4) => {
       visible.value = true
       const myInt = setInterval(() => {
             percentage.value += 20
             if(percentage.value == 100){
               clearInterval(myInt)
-              visible.value = false
-              percentage.value = 0
+              setTimeout(() => {
+                visible.value = false
+                percentage.value = 0
+              }, 1000);
             }
         }, time * 200);
     }
 
 onMounted(() => {
-  API.emitter.on('openPro', (msg) => openPro(msg))
+  API.emitter.on('openPro', (time) => openPro(time))
 })
 </script>
 

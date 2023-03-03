@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-10-29 16:39:29
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-02 17:29:09
+ * @LastEditTime: 2023-03-03 10:42:56
  */
 //------------注入函数到浏览器window---------------
 // window._ = _
@@ -30,7 +30,7 @@ window.addEventListener('xzz', (params)=> {
          let res = fn('kjhibuu') */
 
         let res =  eval(params.detail.fn)
-        console.log("🚀 ~ file: inject.js:34 ~ window.addEventListener ~ res:", res)
+        // console.log("🚀 ~ file: inject.js:34 ~ window.addEventListener ~ res:", res)
         window.postMessage(res, "*")
     } catch (error) {
     }

@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-09-30 16:00:59
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-10 17:52:03
+ * @LastEditTime: 2023-03-03 14:05:19
  */
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -9,6 +9,7 @@ const wsAutoReloadPlugin = require('./myPlugin')
 const webpack = require('webpack')
 
 const watchconfig = {
+    mode: 'development',
     devtool: 'cheap-module-source-map',
     plugins: [
       new wsAutoReloadPlugin(),

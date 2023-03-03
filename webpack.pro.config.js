@@ -19,38 +19,46 @@ const ZipWebpackPlugin = require('zip-webpack-plugin')
 
 
 const proconfig = {
+    mode: 'production',
     optimization: {  // 优化配置项  实现前提是 ES Modules-------------需修改babel-loader---------
-        // usedExports: true,  //开启 Tree Shaking 功能  过滤未引用的模块  标记未引用的块
     //     concatenateModules: true,    // 尽可能合并每一个模块到一个函数中  减少体积和运行效率
         minimize: true,
         minimizer: [   //  把未引用的块剔除掉     压缩
         new TerserWebpackPlugin({//--------------详细配置----------https://github.com/terser/terser
             extractComments: false,      //  不生成LICENSE文件(提取注释)
+            // minify: TerserWebpackPlugin.uglifyJsMinify,   //集 JavaScript 解析器，压缩器，美化器于一身
             terserOptions: {
+                // minify: {
+
+                // },
                 format: {
-                  comments: true,//删除所有注释
+                  comments: false,//删除所有注释
+                //   ecma: 6,   //期待输出的es版本
+
                 },
                 compress: {
                   drop_console: true, // 移除所有console.log
-                }
+                },
+                // mangle: {
+                //     eval: true, //是否允许使用eval
+                // }
               },
         }),  ///3333所以要再次引用一次内置的JS压缩插件
-        new CssMinimizerPlugin(
-            {
-                // parallel: 4,///启用多进程
-                // minimizerOptions: {
-                //     preset: [
-                //       "default",
-                //       {
-                //         discardComments: { removeAll: true },//移除所有注释
-                //       },
-                //     ],
-                //   },
-            }
-        )// 压缩后由90k变为84k
+        // new CssMinimizerPlugin(
+        //     {
+        //         // parallel: 4,///启用多进程
+        //         // minimizerOptions: {
+        //         //     preset: [
+        //         //       "default",
+        //         //       {
+        //         //         discardComments: { removeAll: true },//移除所有注释
+        //         //       },
+        //         //     ],
+        //         //   },
+        //     }
+        // )// 压缩后由90k变为84k
         ]     
     },
-    // devtool: 'none',//无需定义,默认值就是none
     //------此处定义可以结合merge整合,避免相同键覆写-------
     plugins: [
         new CleanWebpackPlugin(),   // 自动清除之前的打包目录  插件
@@ -59,7 +67,6 @@ const proconfig = {
             {from: 'public/logo.png', to: './logo.png'},
             {from: 'public/manifestPro.json', to: './manifest.json'}
         ]}),
-        // new MiniCssExtractPlugin(),    // 实现css文件打包
         // new OptimizeCssAssetsWebpackPlugin()
         // new RemoveConsolePlugin()
         // new CompressionWebpackPlugin() //压缩指定文件生成压缩包
@@ -97,12 +104,14 @@ const proconfig = {
                     {// **目前是style标签分别注入,且未压缩,需优化压缩整合到同一标签下,若整体css大于150K需再调整成link方式按需引入
                         test: /\.css$/i,
                         use: [MiniCssExtractPlugin.loader,'css-loader'],  //实现样式代码整合在单独一个文件里, 可以取代style-loader
+                        // sideEffects: true
                         // use: ["style-loader", 'css-loader'],  
                     },
                     //此处可以引入移动端自适应px2rem-loader
                     {
                         test: /\.s[ac]ss$/i,
                         use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],  //实现样式代码整合在单独一个文件里, 可以取代style-loader
+                        // sideEffects: true
                         // use: ["style-loader", 'css-loader','sass-loader'], 
                     }
                 ]

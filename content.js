@@ -3,13 +3,8 @@ import { createApp } from 'vue'
 //-------pinia----打包60k---------
 import { createPinia } from 'pinia'
 
-
-// import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
-
 const pinia = createPinia()
 
-// https://github.com/prazdevs/pinia-plugin-persistedstate  //  pinia数据持久化,自动存取localstorage
-// pinia.use(piniaPluginPersistedstate)
 //-----------------------------------
 // pinia插件  ,提供全局属性
 pinia.use(()=> ({version: '1.0.1'}))
@@ -25,15 +20,8 @@ import './src/api/contentApi/websocket'
 //---------全局引入vxe-table----------------
 import 'xe-utils'
 import VXETable from 'vxe-table'
+// import { Table, Modal } from 'vxe-table'
 import 'vxe-table/lib/style.css'
-
-//---------开发体积2m----打包体积550k-----
-//-------------结合babel-loader配置按需加载后----打包体积只有100k
-//-------所以可以全局引入------jq(打包90k)+vue+ele+pinia---------
-
-
-//ElementPlus组件与样式分离,config里importStyle设为false,然后单独引入带变量的css与之合并
-// import ElementPlus from 'element-plus'
 
 //引入自定义的所有css入口文件
 import './src/css/style'
@@ -66,11 +54,6 @@ import apptb from './src/pages/tb/app.vue'
 import appjd from './src/pages/jd/app.vue'
 import appamazon from './src/pages/amazon/app.vue'
 
-//-------------------公共模块实例引入----------------
-
-// import App from './src/components/communalApp.vue'
-
-//---------------------------------------------------------
 
 //------------vue实例-----挂载入口---------------------
 function createEntry(myapp,id){
@@ -80,10 +63,9 @@ function createEntry(myapp,id){
     // 必须嵌入body内部,不然面板无法固定
       el.insertAdjacentHTML('afterbegin',`<div id="${id}"></div>`)
       createApp(myapp).use(pinia).use(VXETable).mount(`#${id}`)
+      // createApp(myapp).use(pinia).use(Table).use(Modal).mount(`#${id}`)
     }
 }
-
-
 
 //-------------------版本2.0----------------------
 let loginUrl = location.host.match(/login|mms|passport/) != null
@@ -95,7 +77,7 @@ loginUrl? checkedUrl = '': checkedUrl = checkedUrl ? checkedUrl[0] : ''
 // }
 
 switch (checkedUrl) {
-  case 'jd': createEntry(appjd, 'marketjd')
+  case 'jd': API.repairCss(checkedUrl); createEntry(appjd, 'marketjd')
     break;
   case '1688': createEntry(app1688, 'market1688')
     break;
