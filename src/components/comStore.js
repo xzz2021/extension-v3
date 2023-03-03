@@ -1,13 +1,13 @@
 /*
  * @Date: 2022-09-15 11:21:04
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-01-13 15:01:22
+ * @LastEditTime: 2023-03-03 10:01:10
  */
 
 import { defineStore } from 'pinia'
 
 //------------此处可放置任意vue实例变量-------------------------
-export const comStore = defineStore('comInfo', {
+export const commentStore = defineStore('commentStore', {
     // arrow function recommended for full type inference
     state: () => {
       return {
@@ -18,9 +18,22 @@ export const comStore = defineStore('comInfo', {
         dataNoPic: [],
         docName: '',
         withPic: '有图评价',
+      }
+    },
+      actions: {  //支持异步
+    },
+    getters: {
+    }
+  })
+
+
+  export const imageStore = defineStore('imageStore', {
+    // arrow function recommended for full type inference
+    state: () => {
+      return {
         // 图片下载数据
         openImg: false,
-        // percentage: 0,
+        percentage: 0,
         mainImg: [],
         detailImg: [],
         skuImg: [],
@@ -28,18 +41,10 @@ export const comStore = defineStore('comInfo', {
         LinkData: '',
       }
     },
-    // persist: true, //持久化
       actions: {  //支持异步
-        increment() {
-          this.count++
-        },
     },
     getters: {
-      // diagnosisData2: (state) => {
-      //   return API.isExpired(state.diagnosisData.timeTamp, 5) ? diagnosisData : {}
-      // }
     }
-  
   })
 
 

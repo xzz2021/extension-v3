@@ -7,8 +7,8 @@
 
 
 //公共的store数据 
-import {comStore} from '../../components/comStore' 
-const store = comStore() 
+import {commentStore} from '../../components/comStore' 
+const store = commentStore() 
 const { openCom, percentage, dataWithPic, dataNoPic, docName, withPic } = storeToRefs(store)
 
 

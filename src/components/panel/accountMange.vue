@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-01-09 14:07:13
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-01 09:24:25
+ * @LastEditTime: 2023-03-03 08:55:44
 -->
 <template>
   <div v-if="show">
@@ -28,9 +28,9 @@
         </div>
 </template>
 <script setup>
-const props = defineProps(['show'])
+const props = defineProps(['show', 'userPhone'])
 
-const userPhone = ref('')
+// const userPhone = ref('')
 
 const accountManagement = (arg) => {
     switch (arg) {
@@ -50,16 +50,16 @@ const accountManagement = (arg) => {
 }
 
 
-const getUserPhone = async () => {
-  let userInfoStore  =  await  API.getUserinfo()
-    let a  = userInfoStore.userPhone + ''
-  let b = a.substring(3,7)
-  userPhone.value = a.replace(b, '****')
-}
+// const getUserPhone = async () => {
+//   let userInfoStore  =  await  API.getUserinfo()
+//     let a  = userInfoStore.userPhone + ''
+//   let b = a.substring(3,7)
+//   userPhone.value = a.replace(b, '****')
+// }
 
-onBeforeMount(async () => {
-  API.emitter.on('getUserPhone', getUserPhone)
-})
+// onBeforeMount(async () => {
+//   API.emitter.on('getUserPhone', getUserPhone)
+// })
 
 
 </script>

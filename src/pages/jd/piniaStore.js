@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-09-15 11:21:04
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-02 16:48:25
+ * @LastEditTime: 2023-03-03 09:39:31
  */
 
 import { defineStore } from 'pinia'
@@ -11,37 +11,36 @@ export const piniaStore = defineStore('selfInfo', {
     // arrow function recommended for full type inference
     state: () => {
       return {
-        // panelLocation: { lx: 60, ly: 120 },
         showMain2: true,  // 是否显示主面板  //这里定义在app里无法拿到,估计是template编译时没有对pinia的.value进行转换
         panelLocation: JSON.parse(localStorage.getItem('panelLocation')) || { lx: 60, ly: 120 },
-
         // sitePlatform: '京东',
         // urlCheck: window.location.href.indexOf('item.jd') == -1, //检查当前页是否是商品页,true则return弹出提示
-        // diagnosisStore:{
-        //   show: false,
-        //   percentage: 70,
-        //   info_id: 0,
-        //   diagnosisData: {},
-        // },
-        // currentHref:  window.location.href,
+
         userInfo: {
           userid: '',
           userToken: '',
           userPhone: '',
           timeStamp: ''
         },
-        version: VERSION
-        // proBar: {
-        //   show: false,
-        //   percentage: 0
-        // }
-        // userList: [{
-        //   userid: '',
-        //   userToken: '',
-        //   userPhone: '',
-        //   timeStamp: ''
-        // }],
+
       }
+    },
+    getters: {
+      // panelLocation: (state) => {
+      //   let aa = localStorage.getItem('panelLocation')
+      //   return  aa ? JSON.parse(aa)  : { lx: 60, ly: 120 }
+      // },
+      userPhone: (state) => {
+        if(state.userInfo.userPhone == '') return ''
+        let a = state.userInfo.userPhone + ''
+        let b = a.substring(3,7)
+        return  a.replace(b, '****')
+      },
+      userid: (state) => {
+        return state.userInfo.userid
+      }
+
+
     },
     // persist: true, //持久化
       actions: {  //支持异步
@@ -77,35 +76,16 @@ export const piniaStore = defineStore('selfInfo', {
         //   console.log('aaa: ', aaa == '');
         // }
     },
-    getters: {
-      // panelLocation: (state) => {
-      //   let aa = localStorage.getItem('panelLocation')
-      //   return  aa ? JSON.parse(aa)  : { lx: 60, ly: 120 }
-      // }
-    }
+   
   })
 
 export const userStore = defineStore('userInfo', {
   // arrow function recommended for full type inference
   state: () => {
     return {
-      panelLocation: { lx: 60, ly: 120 },
-      // userInfo: {
-      //   userid: '',
-      //   userToken: '',
-      //   userPhone: '',
-      //   timeStamp: ''
-      // },
-      // userList: [{
-      //   userid: '',
-      //   userToken: '',
-      //   userPhone: '',
-      //   timeStamp: ''
-      // }],
     }
   },
-  persist: true, //持久化
-  actions: {  //支持异步
+  actions: { 
   },
   getters: {
   }

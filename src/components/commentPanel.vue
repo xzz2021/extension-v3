@@ -99,8 +99,8 @@
 <script setup>
 
 //公共的store数据 
-import {comStore} from './comStore' 
-const store = comStore() 
+import {commentStore} from './comStore' 
+const store = commentStore() 
 const { openCom, percentage, dataWithPic, dataNoPic, withPic, docName } = storeToRefs(store)
 
 

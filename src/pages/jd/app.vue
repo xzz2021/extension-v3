@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-02 17:57:14
+ * @LastEditTime: 2023-03-03 09:12:21
 -->
 <template>
 <div class="jclpanel" >
@@ -37,8 +37,8 @@
                         <panelXzzLogoyjt type="true"/>
                       </span>
                   <template #dropdown>
-                    <el-dropdown-menu  @mouseenter.enter="() => { $refs.subDropdown1.handleOpen() }"
-                        @mouseleave.enter="() => { $refs.subDropdown1.handleClose() }">
+                    <el-dropdown-menu  @mouseenter.enter="openOrClose('open')"
+                        @mouseleave.enter="openOrClose()">
                     <el-dropdown-item :class="`addOperateRecord 图片下载-${item.name}`"
                     :command="item.platform" v-for="item in pictureOption" :key="item.name">
                         {{ item.name }}
@@ -58,8 +58,8 @@
                         <panelXzzLogoyjt type="true"/>
                       </span>
                   <template #dropdown>
-                    <el-dropdown-menu  @mouseenter.enter="() => { $refs.subDropdown1.handleOpen() }"
-                        @mouseleave.enter="() => { $refs.subDropdown1.handleClose() }">
+                    <el-dropdown-menu  @mouseenter.enter="openOrClose('open')"
+                        @mouseleave.enter="openOrClose()">
                         <!-- <el-dropdown-menu  > -->
                     <el-dropdown-item :command="item.value" v-for="item in commentOptions"
                     :key="item.value">评价前{{ item.value }}</el-dropdown-item>
@@ -102,15 +102,14 @@
 
           <panelPlainMenu logoName="home" title="回到首页" openKey='https://www.jd.com/' :show="true"/>
 
-          <panelPlainMenu logoName="jyfk" title="我的建议/反馈"  openKey="feedback" :show="userid"/>
+          <panelPlainMenu logoName="jyfk" title="我的建议/反馈"  openKey="feedback" :show="busStore.userid"/>
 
         <!-- 账号管理个人中心 -->
-          <panelAccountMange :show="userid" />
+          <panelAccountMange :show="busStore.userid" :userPhone="busStore.userPhone"/>
 
-          <panelPlainMenu logoName="login" title="账号登录" openKey="login" :show="!userid" />
+          <panelPlainMenu logoName="login" title="账号登录" openKey="login" :show="!busStore.userid" />
 
-        <div  class="version">版本:{{ version }} </div>
-
+        <div  class="version">版本:{{ busStore.version }} </div>
     </main>
     </Transition>
 
@@ -149,7 +148,7 @@
 <script setup>
 
 //导入主图视频下载功能
-import {videoDownload} from './videoDownload.js'
+import { videoDownload } from './videoDownload.js'
 // console.log("🚀 ~ file: app.vue:203 ~ videoDownLoad:", videoDownLoad)
 
 //各平台持久化的store数据
@@ -158,12 +157,13 @@ import {videoDownload} from './videoDownload.js'
 
 //平台状态store
 const busStore = piniaStore()
-//storeToRefs增加响应性,使用了proxy,所以需要用.value拿到值
-const {  panelLocation, version } = storeToRefs(busStore) 
+//storeToRefs增加响应性,使用了proxy,所以普通简单类型数据需要用.value拿到值, 而复杂数据不需要可以直接.xxx获取
+//  或者直接busStore.xxx调用,也具有响应式
+const {  panelLocation  } = storeToRefs(busStore) 
 
-//  改为
+//  改为pinia中定义
 // let showMain  = ref(true)
-const userid = ref('')
+// const userid = ref('')
 
 //注入函数到inject里,共享浏览器调试面板的顶层window
 const test1 = async() => {
@@ -183,6 +183,11 @@ const test2 = async() => {
   console.log("🚀 ~ file: app.vue:206 ~ test1 ~ res:", res)
 }
 
+//控制三级菜单的开关
+const subDropdown1 = ref(null)
+const openOrClose = (val) => {
+  val == 'open'? subDropdown1.value.handleOpen() : subDropdown1.value.handleClose()
+}
 
 
 //----------------------图片下载------------start----------------------------------
@@ -213,30 +218,17 @@ const onDragstop = async (e) => {
 }
 //---------面板拖拽功能------end------------------
 
-
-
-
 const getUserInfo = async () => {
 let userInfoStore  =  await  API.getUserinfo()
   if(userInfoStore.userid == undefined) {
     API.checkLogin.addEvent()  //添加全局登录拦截
-    return 
     }else{
       API.checkLogin.removeEvent()  //移除全局登录拦截
+      busStore.$patch((state)=>{
+          state.userInfo = userInfoStore
+        })
     }
-    //通知账号管理组件更新手机号
-    API.emitter.emit('getUserPhone')
-
-  busStore.$patch((state)=>{
-      state.userInfo = userInfoStore
-    })
-    userid.value = userInfoStore.userid
 }
-
-onMounted(async () => {
-
-})
-
 onBeforeMount(async () => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   message == 'loginEvent'? getUserInfo() : ''

@@ -92,8 +92,8 @@
 <script setup>
 
 //公共的store数据 
-import {comStore} from './comStore' 
-const store = comStore() 
+import {imageStore} from './comStore' 
+const store = imageStore() 
 const { openImg, percentage, mainImg, detailImg, skuImg, zipname, LinkData } = storeToRefs(store)
 
     const checkAll = reactive({self:{one: true, two: true, three: true}})

@@ -4,13 +4,15 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
 
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+// import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 const pinia = createPinia()
 
 // https://github.com/prazdevs/pinia-plugin-persistedstate  //  pinia数据持久化,自动存取localstorage
-pinia.use(piniaPluginPersistedstate)
+// pinia.use(piniaPluginPersistedstate)
 //-----------------------------------
+// pinia插件  ,提供全局属性
+pinia.use(()=> ({version: '1.0.1'}))
 
 
 // //---------------引入所有API挂载到全局----------

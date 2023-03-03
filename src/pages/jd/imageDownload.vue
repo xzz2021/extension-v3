@@ -9,8 +9,8 @@
 
 
 //公共的store数据 
-import {comStore} from '../../components/comStore' 
-const store = comStore() 
+import {imageStore} from '../../components/comStore' 
+const store = imageStore() 
 const { openImg, percentage, mainImg, detailImg, skuImg, zipname, LinkData } = storeToRefs(store)
 
     const startDownload = async (platform) =>{
