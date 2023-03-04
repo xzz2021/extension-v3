@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-04 09:08:27
+ * @LastEditTime: 2023-03-04 14:59:57
 -->
 <template>
 <div class="jclpanel" >
@@ -17,6 +17,7 @@
       <!-- 诊断工具 -->
         <!-- <panelDiagnosisTool /> -->
       <!-- 下载工具 -->
+      
         <div>
             <el-dropdown placement="right-start" ref="subDropdown1" :hide-on-click="false">
               <span class="entranceBox">

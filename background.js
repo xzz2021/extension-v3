@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-04 10:48:02
+ * @LastEditTime: 2023-03-04 14:52:09
  */
 
 //---------------引入分文件的所有自定义api-----------
@@ -11,12 +11,13 @@ import { bgcApi as API } from './src/api/bgcApi/index'
 
 
 
-//--------------创建右键菜单------------------
-API.createMenu()
-
-
-//------☆☆☆☆------通过监听storage的变化----------监听登录状态的改变-----☆☆☆☆-----------如果改变发送事件----------
-API.loginListenser()
+// 绝大多数事件都应该在onInstalled后执行,因为chrome浏览器本身有缓存会导致js文件数据重复写入导致事件冲突等错误
+chrome.runtime.onInstalled.addListener(function () {
+  //--------------创建右键菜单------------------
+  API.createMenu()
+  //------☆☆☆☆------通过监听storage的变化----------监听登录状态的改变-----☆☆☆☆-----------如果改变发送事件----------
+  API.loginListenser()
+})
 
 
 
@@ -195,8 +196,6 @@ chrome.runtime.onMessage.addListener(
         })()
         return true
       }
-      
-      
         break;
       default: ''
         break;
@@ -206,42 +205,3 @@ chrome.runtime.onMessage.addListener(
 
 
 
-
-
-const ws = new WebSocket('ws://localhost:7777')
-          ws.onopen = (e) => {
-            console.log('-------bg--------已连接------:', new Date())
-            console.log('-------连接----正常-----:', new Date())
-            ws.send(JSON.stringify("bg"))
-            // API.autoReloadTab();
-            // 断开重连后只刷新tab页面
-            chrome.tabs.query({ active: true }, ([tab]) => {
-            if (tab.url.match(/tmall|taobao|1688|yangkeduo|pinduoduo|alibaba|amazon|jd|/)) {  //匹配项最后一个一定要有|符号代表结束
-              // chrome.runtime.reload()
-              chrome.tabs.reload()
-            }
-          })
-  }
-          
-          ws.onmessage = (e) => {
-          console.log("🚀 ~ file: background.js:220 ~ e:", e)
-          
-            if(JSON.parse(e.data) == 'done'){
-              console.log('-----bg收到------编译完成-------------')
-            // API.sendMessage({type: 'complier'})
-            API.autoReloadTab();
-            }
-          }
-  ws.onclose =  (e) => {
-            console.log('--------bg--------断开------:',e.code,'----------', new Date())
-            const aaa22 = setInterval(() => {
-              console.log('-------连接----断开-----:', new Date())
-            }, 3000);
-            setTimeout(() => {
-              clearInterval(aaa22)
-            }, 15000);
-          }
-  ws.onerror =  (e) => {
-            console.log('-------bg-----连接出错------:', new Date())
-          }
-        

@@ -1,54 +1,47 @@
 /*
  * @Date: 2022-09-27 09:33:17
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-04 10:45:22
+ * @LastEditTime: 2023-03-04 16:20:43
  */
 
+//bgd作为通讯的方案不可行,因为bgd会休眠-----需借由content触发事件------
 
 const pluginName = 'wsAutoReloadPlugin';
-const  { WebSocketServer } = require ('ws')
-const wss = new WebSocketServer({ port: 7777 })
+const  WebSocket  = require ('ws')
+const wss = new WebSocket.Server({ port: 7777 })  //  服务端
 
-
+//   开启服务端server
 wss.on('connection', (ws) => {
-  // console.log('----ws--------连接成功-----------')
-  ws.send(JSON.stringify("reload"))
+  // 有任意新的客户端连接时
+  //监听来自其他客户端的消息
   ws.on('message', function message(data) {
-  console.log('----bg消息--------监听成功-----------')
-    if(JSON.parse(data) == "bg"){
+    //data收到的是 Buffery  数据
+    if(data.toString() == "bg"){
       ws.id = 'bg'
     }
-  })
-
-})
-
-function sendMsg (){
-  console.log('aa: ', wss.clients.size);
-  wss.clients.forEach(ws => {
-    if(ws.id == 'bg'){
-      console.log('------------编译完成----发送消息------:', new Date())
-      ws.send(JSON.stringify('done'))
+    if(data.toString() == '编译完成' ) {    //  服务端作为中间人收到webpack客户端编译完成消息,然后通知bgd客户端
+      wss.clients.forEach(ws => {
+        if(ws.id == 'bg') {  // 区分bgd身份
+          ws.send(JSON.stringify("编译完成了bg"))
+          console.log('----编译完成----发送给bgd客户端----', new Date())
+        }
+    })
     }
   })
-}
-
-function sendMsg2 (){
-  console.log('aa22: ', wss.clients.size);
-  wss.clients.forEach(ws => {
-      console.log('------------编译完成----发送消息---222---:', new Date())
-      ws.send(JSON.stringify('done'))
-  })
-}
+})
 
 
 
+//新建webpack客户端------------通过中间人身份通知给服务端----------------
+const complierWs = new WebSocket('ws://127.0.0.1:7777')
 class wsAutoReloadPlugin {
   apply(compiler) {
     compiler.hooks.afterEmit.tap(pluginName, (compilation) => {
-      console.log('------触发------编译--------:', new Date())
-      // sendMsg()
-      sendMsg2()
+      //  每次编译时触发
+      complierWs.send('编译完成')
+      // console.log('------------编译完成----发送消息---333---:', new Date())
     })}}
+
 
 
 module.exports = wsAutoReloadPlugin;

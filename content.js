@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-04 09:40:08
+ * @LastEditTime: 2023-03-04 14:48:45
  */
 // 'use strict'默认启用
 import { createApp } from 'vue'
@@ -19,7 +19,7 @@ pinia.use(()=> ({version: '1.0.1'}))
 import{ contentApi as API} from './src/api/contentApi/index'
 window.API = API
 
-// import './src/api/contentApi/websocket'
+import './src/api/contentApi/websocket'
 
 // //------------------------------------------------------
 
