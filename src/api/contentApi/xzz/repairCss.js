@@ -1,13 +1,13 @@
 /*
  * @Date: 2023-03-03 11:01:03
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-03 11:19:54
+ * @LastEditTime: 2023-03-03 16:41:43
  */
 
 //-------定义全平台的css层级z-index冲突------------
 const repairCss = (val) => {
     let classArr = {
-        jd:  [ '.jdm-toolbar-wrap' ],
+        jd:  [ '.jdm-toolbar-wrap','#v-video' ],
         tb: [ '.jdm-toolbar-wrap' ],
         1688: [ '.jdm-toolbar-wrap' ],
         pdd: [ '._3FiigGnU', '._3aQ41Hcr', '.ui-bubble-container', '.common-footer-module','._2_bR-vs3',

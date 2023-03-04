@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "ali-oss": "^6.17.1",
-    "element-plus": "^2.2.12",
+    "element-plus": "^2.2.32",
     "file-saver": "^2.0.5",
     "pinia": "^2.0.20",
     "vue": "^3.2.13",

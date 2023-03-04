@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-02-21 17:00:05
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-03 11:25:38
+ * @LastEditTime: 2023-03-03 16:38:44
  */
 
 ///////////pageConfig.product.videoData.playUrl
@@ -9,7 +9,7 @@
 
     if (window.location.href.indexOf('item.jd') == -1) return ElMessage.error({message: '请进入商品页面,再点击下载', duration: 2000})
     API.emitter.emit('openPro')  //调用打开蒙版进度条
-    return
+    // return
     let regs = window.location.href.match(/item.jd.com.*?(\d+)/);
       let skuId = regs.length >= 2 ? regs[1] : undefined;
       $('.video-icon').click()

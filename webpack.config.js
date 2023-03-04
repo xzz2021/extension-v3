@@ -94,7 +94,7 @@ const comconfig = {
                             // presenrts: ['@babel/preset-env'],//@babel/preset-env----指示把ES6转换成ES5语法--------
                             // 开启babel缓存,第二次构建时,只构建改动的文件,其余直接读取缓存
                             cacheDirectory: true,
-                            //此处自定义按需treeShaking引入----体积减少300k--UI组件和相应css--------
+                            //此处自定义按需treeShaking引入----体积减少100k--UI组件和相应css-----不要再按需---------
                             // plugins: [["import", {
                             //     "libraryName": "vxe-table",
                             //     "style": true,   // or 'css'

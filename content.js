@@ -17,10 +17,10 @@ window.API = API
 import './src/api/contentApi/websocket'
 // //------------------------------------------------------
 
-//---------全局引入vxe-table----------------
+//---------全局引入vxe-table----------按需引入体积只减少100k,且有bug,,不值得-----不要再按需------
 import 'xe-utils'
 import VXETable from 'vxe-table'
-// import { Table, Modal } from 'vxe-table'
+// import { Table, Modal, Column } from 'vxe-table'
 import 'vxe-table/lib/style.css'
 
 //引入自定义的所有css入口文件
@@ -63,7 +63,7 @@ function createEntry(myapp,id){
     // 必须嵌入body内部,不然面板无法固定
       el.insertAdjacentHTML('afterbegin',`<div id="${id}"></div>`)
       createApp(myapp).use(pinia).use(VXETable).mount(`#${id}`)
-      // createApp(myapp).use(pinia).use(Table).use(Modal).mount(`#${id}`)
+      // createApp(myapp).use(pinia).use(Table).use(Modal).use(Column).mount(`#${id}`)
     }
 }
 
@@ -92,7 +92,6 @@ switch (checkedUrl) {
   default: ''
     break;
 }
-
 
 //-----------------注入js到任意页面------------------
 

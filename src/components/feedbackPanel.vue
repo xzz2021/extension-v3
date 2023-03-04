@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-11-12 09:56:46
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-02-01 14:46:48
+ * @LastEditTime: 2023-03-03 16:05:34
 -->
 <template>
 <div>
@@ -23,14 +23,14 @@
         <div class="feedbackBox">
             <div class="eachBox platformBox">
                 <p style="width:56px;">反馈平台</p> 
-                <el-select v-model="platformValue" size="large" clearable filterable placeholder="请选择反馈平台或者输入关键词进行匹配">
+                <el-select v-model="platformValue"  size="large" clearable filterable placeholder="请选择反馈平台或者输入关键词进行匹配">
                     <el-option v-for="item in platformOptions" :key="item.value" :label="item.value" :value="item.value"> </el-option>
                 </el-select>
             </div>
 
             <div class="eachBox tooltypeBox">
                 <p style="width:56px; text-align:right;">工具</p>
-                <el-select v-model="tooltypeValue" size="large"  filterable placeholder="请选择工具或者输入关键词进行匹配">
+                <el-select v-model="tooltypeValue" size="large"   filterable placeholder="请选择工具或者输入关键词进行匹配">
                     <el-option v-for="item in tooltypeOptions" :key="item.value" :label="item.value" :value="item.value"> </el-option>
                 </el-select>
             </div>

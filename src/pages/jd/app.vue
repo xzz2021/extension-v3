@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-03 09:12:21
+ * @LastEditTime: 2023-03-04 09:08:27
 -->
 <template>
 <div class="jclpanel" >
@@ -18,7 +18,7 @@
         <!-- <panelDiagnosisTool /> -->
       <!-- 下载工具 -->
         <div>
-            <el-dropdown placement="right-start" ref="subDropdown1" >
+            <el-dropdown placement="right-start" ref="subDropdown1" :hide-on-click="false">
               <span class="entranceBox">
                 <div class="one">
                     <panelXzzLogo name="xzgj" />
@@ -116,7 +116,6 @@
     <footer class="footer" @click="busStore.toggleShow()">
       <div class="shrink"> <panelXzzLogo :name="busStore.showMain2 ? 'shrink2': 'shrink'" /> </div>
     </footer>
-
       <!-- 广告面板挂载 -->
         <panelAdvertisingPanel :openAd="busStore.showMain2" />
 
@@ -136,12 +135,12 @@
     <jdImageDownload />
     <jdCommentDownload />
      <!--<keywordRanking ref="zrss" /> -->
-    <div class="test">
+    <!-- <div class="test">
       <div class="test1" >
       <el-button type="primary" @click="test1">test1</el-button>
       </div>
       <el-button type="primary" @click="test2">test2</el-button>
-    </div>
+    </div> -->
 
 </template>
 

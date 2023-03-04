@@ -4,7 +4,8 @@
  * @LastEditTime: 2023-03-03 11:25:08
 -->
 <template>
-
+    <!-- Element Plus 组件 默认 使用英语 -->
+<el-config-provider :locale="zhCn">
     <loginPanel ref="loginRef" />
 
     <taskProgress ref="taskProgressRef" />
@@ -13,9 +14,11 @@
     <commentPanel  />
     <imagePanel  />
     <progressBar />
-
+</el-config-provider>
 </template>
 <script setup>
+
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 
 const loginRef = ref(null)     // 子组件ref要声明才能拿到
 const taskProgressRef = ref(null)
