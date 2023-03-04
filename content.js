@@ -1,3 +1,8 @@
+/*
+ * @Date: 2022-12-06 17:13:35
+ * @LastEditors: xzz2021
+ * @LastEditTime: 2023-03-04 09:40:08
+ */
 // 'use strict'默认启用
 import { createApp } from 'vue'
 //-------pinia----打包60k---------
@@ -14,7 +19,8 @@ pinia.use(()=> ({version: '1.0.1'}))
 import{ contentApi as API} from './src/api/contentApi/index'
 window.API = API
 
-import './src/api/contentApi/websocket'
+// import './src/api/contentApi/websocket'
+
 // //------------------------------------------------------
 
 //---------全局引入vxe-table----------按需引入体积只减少100k,且有bug,,不值得-----不要再按需------
@@ -26,26 +32,6 @@ import 'vxe-table/lib/style.css'
 //引入自定义的所有css入口文件
 import './src/css/style'
 //----------------------
-
-
-
-// Vue.directive('disClick', {
-  //   inserted:  function (el, binding) {
-    //     el.addEventListener("click", function(){
-      //       el.setAttribute("disabled", "disabled")
-      //       setTimeout(() => {
-        //         el.removeAttribute("disabled")
-        //       }, binding.value);
-        //     })
-        //   }
-        // })
-
-        // async copyInfo(val) {
-        //   if (val == '') return;
-        //   let str = val + '';
-        //   navigator.clipboard.writeText(str);
-        //   this.$message({ message: ` '${val}' 已复制到剪切板`, type: 'success', offset: 70, duration: 2000 });
-        // }
 
 //-------------------各平台实例引入----------------
 import app1688 from './src/pages/alibaba/app.vue'
@@ -93,16 +79,8 @@ switch (checkedUrl) {
     break;
 }
 
-//-----------------注入js到任意页面------------------
-
-//----参考------https://stackoverflow.com/questions/9515704/use-a-content-script-to-access-the-page-context-variables-and-functions/9517879#9517879
-const s = document.createElement('script')
-s.src = chrome.runtime.getURL('js/inject.js')
-s.onload = function() {
-    this.remove()
-};//--<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<-------此处分号不可去掉--------应该是立即执行函数必须以分号分隔------
-(document.head || document.documentElement).appendChild(s) // ------document.documentElement----指向html标签
-
+//-----------通过inject渠道------注入js到任意页面----且共享浏览器window--------------
+API.injectFile()
 
 //-----脚本动态参数注入仅限于bgc----------如果动态注入可能需要配置mainfest.json----------
   /* "content_security_policy": {

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-01-09 14:07:13
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-02-21 16:51:27
+ * @LastEditTime: 2023-03-04 10:32:32
 -->
 <template>
     <div>
@@ -56,6 +56,7 @@ onBeforeMount(async () => {
             color: #666;
             cursor: pointer;
             background: rgba(255,252,246,0.39);
+            outline: none;   // 消除黑框
             .xzzone {
               display: flex;
               width: 130px;

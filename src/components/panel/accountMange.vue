@@ -72,6 +72,7 @@ const accountManagement = (arg) => {
             color: #666;
             cursor: pointer;
             background: rgba(255,252,246,0.39);
+            outline: none;   // 消除黑框
             .xzzone {
               display: flex;
               width: 130px;
