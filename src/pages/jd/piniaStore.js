@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-09-15 11:21:04
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-03 09:39:31
+ * @LastEditTime: 2023-03-06 11:25:03
  */
 
 import { defineStore } from 'pinia'
@@ -39,8 +39,6 @@ export const piniaStore = defineStore('selfInfo', {
       userid: (state) => {
         return state.userInfo.userid
       }
-
-
     },
     // persist: true, //持久化
       actions: {  //支持异步

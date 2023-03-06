@@ -7,9 +7,9 @@
   color: #ff9712;
 }
 
-// :global(.el-popper) {
-//   max-width: 400px;
-// }
+:global(.entranceBox) {
+  outline: none;   // 消除黑框
+}
 
 
 
@@ -148,6 +148,7 @@
     width: 100%;
   }
   .el-dropdown-link2{
+    outline: none;   // 消除黑框
     width: 100%;
     height: 26px;
     padding: 5px; 

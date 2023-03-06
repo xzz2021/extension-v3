@@ -6,6 +6,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+
 //----------此插件可以清除注释,console,debugger以及指定不需要的内容--------
 const TerserWebpackPlugin = require('terser-webpack-plugin')
 
@@ -22,7 +23,6 @@ const proconfig = {
     mode: 'production',
     optimization: {  // 优化配置项  实现前提是 ES Modules-------------需修改babel-loader---------
     //     concatenateModules: true,    // 尽可能合并每一个模块到一个函数中  减少体积和运行效率
-        minimize: true,
         minimizer: [   //  把未引用的块剔除掉     压缩
         new TerserWebpackPlugin({//--------------详细配置----------https://github.com/terser/terser
             extractComments: false,      //  不生成LICENSE文件(提取注释)
@@ -43,20 +43,8 @@ const proconfig = {
                 //     eval: true, //是否允许使用eval
                 // }
               },
-        }),  ///3333所以要再次引用一次内置的JS压缩插件
-        // new CssMinimizerPlugin(
-        //     {
-        //         // parallel: 4,///启用多进程
-        //         // minimizerOptions: {
-        //         //     preset: [
-        //         //       "default",
-        //         //       {
-        //         //         discardComments: { removeAll: true },//移除所有注释
-        //         //       },
-        //         //     ],
-        //         //   },
-        //     }
-        // )// 压缩后由90k变为84k
+        }),
+        // new CssMinimizerPlugin()   //  minify the output
         ]     
     },
     //------此处定义可以结合merge整合,避免相同键覆写-------
@@ -84,7 +72,15 @@ const proconfig = {
            }
         ),
         new MiniCssExtractPlugin({
-            filename: './css/[name].css'
+            filename: './css/[name].css',
+            // minimizerOptions: {
+            //     preset: [
+            //       "default",
+            //       {
+            //         discardComments: { removeAll: true },
+            //       },
+            //     ],
+            //   },
         }),
         //可以定义全局上下文的变量
         new webpack.DefinePlugin({

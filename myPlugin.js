@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-09-27 09:33:17
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-04 16:20:43
+ * @LastEditTime: 2023-03-06 11:23:05
  */
 
 //bgd作为通讯的方案不可行,因为bgd会休眠-----需借由content触发事件------
@@ -11,19 +11,18 @@ const  WebSocket  = require ('ws')
 const wss = new WebSocket.Server({ port: 7777 })  //  服务端
 
 //   开启服务端server
-wss.on('connection', (ws) => {
-  // 有任意新的客户端连接时
-  //监听来自其他客户端的消息
+wss.on('connection', (ws) => {  //此处ws代表当前发送消息过来的客户端
+  // 有任意新的客户端连接时 //监听来自其他客户端的消息
+  
   ws.on('message', function message(data) {
     //data收到的是 Buffery  数据
-    if(data.toString() == "bg"){
-      ws.id = 'bg'
-    }
+    if(data.toString() == "bg") { ws.id = 'bg'}
     if(data.toString() == '编译完成' ) {    //  服务端作为中间人收到webpack客户端编译完成消息,然后通知bgd客户端
+      console.log('----当前总客户端数量----:', wss.clients.size)
       wss.clients.forEach(ws => {
         if(ws.id == 'bg') {  // 区分bgd身份
           ws.send(JSON.stringify("编译完成了bg"))
-          console.log('----编译完成----发送给bgd客户端----', new Date())
+          console.log('----编译完成----发送给bgd客户端----', new Date().toLocaleString())
         }
     })
     }
