@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-04 14:52:09
+ * @LastEditTime: 2023-03-07 09:56:46
  */
 
 //---------------引入分文件的所有自定义api-----------
@@ -30,7 +30,6 @@ chrome.runtime.onMessage.addListener(
     // console.log('----------------message: ----------------', message)
     switch (message.type) {
       // fatosy API start 
-
       case 'ztab': {
         (async () => {
           let res = undefined
@@ -147,10 +146,7 @@ chrome.runtime.onMessage.addListener(
         return true
       }
       break;
-
       // fatosy API end 
-
-
       case 'myfetch':  { (async () => {
                        let res =  await API.xzzFetch(message.config.url, message.config)
                        sendResponse(res)})()
@@ -182,7 +178,6 @@ chrome.runtime.onMessage.addListener(
       }
         break;
       case 'complier':    API.autoReloadTab(); sendResponse('刷新完成')  //此处定义开发时的编译后页面自动刷新
-            //  {(async () => {await API.autoReloadTab();sendResponse('刷新完成')})(); return true} 
         break;
       case 'injectFn' : {
         (async () => {

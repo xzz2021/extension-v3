@@ -1,9 +1,8 @@
 /*
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-06 16:14:19
+ * @LastEditTime: 2023-03-08 09:39:34
  */
-
 
 
 
@@ -14,7 +13,7 @@ function createWsConnect() {
   function checkConnect(){  // 不完全心跳检测,清除上次的ws,新开ws进行初始化操作
     setTimeout(() => {
       createWsConnect()
-    }, 3000);
+    }, 5000);
   }
   ws.onopen = (e) => {
     console.log('---bg----连接----正常-----:', new Date())
@@ -31,7 +30,7 @@ ws.onclose =  (e) => {  // 服务端或客户端主动断开时 触发
     //连接关闭后主动断开此次连接
     ws.close()
     recconnectTime ++    //  重连次数
-    if(recconnectTime <= 6)  {createWsConnect()}
+    if(recconnectTime <= 10)  {createWsConnect()}
   }
 
 // ws.onerror =  (e) => {
