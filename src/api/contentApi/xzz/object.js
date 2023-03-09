@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-11-05 15:11:47
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-02-11 12:02:10
+ * @LastEditTime: 2023-03-08 16:27:19
  */
 
 
@@ -14,14 +14,7 @@ const isObjEqual = (...objects) => objects.every((obj) => JSON.stringify(obj) ==
 const isEmpty = (obj) => Reflect.ownKeys(obj).length === 0 && obj.constructor === Object;
 const isEmpty2 = (obj) => JSON.stringify(obj) === '{}'
 
-//浅拷贝对象
-const shallowCopy = obj => Object.assign({}, obj)
-// const shallowCopy2 = obj => {...obj}
 
-//简单数据类型浅拷贝会直接拷贝数据
-//复杂数据类型浅拷贝只是拷贝内存空间指向,修改数据会影响原始数据,因为是同一个内存空间(如内部存在不同属性值会直接覆盖,因为是直接改内存指向)
-//复杂数据类型直接赋值是浅拷贝,会改变其内存指向,而打点操作或者遍历则是深拷贝
-//深拷贝会直接完整复制所有数据(且内部不同属性都会保留,因为是在它自己的内存空间复制属性)
 
 //创建一个没有原型__proto__的空对象
 const map = Object.create(null)
@@ -66,3 +59,73 @@ const objToArr = (obj) =>  Object.values(obj)
 
 // 计算数组某个元素出现次数
 const eleTimes = (arr, val) => arr.filter(x => x === val).length
+
+
+
+//浅拷贝对象
+const shallowCopy = obj => Object.assign({}, obj)
+// const shallowCopy2 = obj => {...obj}
+
+//深拷贝对象
+const deepCopy = obj => JSON.parse(JSON.stringify(obj))
+
+var deepCopy3 = (obj) =>{
+    var str, newobj = obj.constructor === Array ? [] : {};
+    if(typeof obj !== 'object'){
+        return;
+    } else if(window.JSON){
+        str = JSON.stringify(obj), //系列化对象
+        newobj = JSON.parse(str); //还原
+    } else {
+        for(var i in obj){
+            newobj[i] = typeof obj[i] === 'object' ? 
+            deepCopy3(obj[i]) : obj[i]; 
+        }
+    }
+    return newobj;
+};
+
+
+//简单数据类型浅拷贝会直接拷贝数据
+//复杂数据类型浅拷贝只是拷贝内存空间指向,修改数据会影响原始数据,因为是同一个内存空间(如内部存在不同属性值会直接覆盖,因为是直接改内存指向)
+//复杂数据类型直接赋值是浅拷贝,会改变其内存指向,而打点操作或者遍历则是深拷贝
+//深拷贝会直接完整复制所有数据(且内部不同属性都会保留,因为是在它自己的内存空间复制属性)
+
+
+//深拷贝对象222
+const deepCopy2 = (data, hash = new WeakMap()) => {
+    if(typeof data !== 'object' || data === null){
+          throw new TypeError('传入参数不是对象')
+      }
+    // 判断传入的待拷贝对象的引用是否存在于hash中
+    if(hash.has(data)) {
+          return hash.get(data)
+      }
+    let newData = {};
+    const dataKeys = Object.keys(data);
+    dataKeys.forEach(value => {
+       const currentDataValue = data[value];
+       // 基本数据类型的值和函数直接赋值拷贝 
+       if (typeof currentDataValue !== "object" || currentDataValue === null) {
+            newData[value] = currentDataValue;
+        } else if (Array.isArray(currentDataValue)) {
+           // 实现数组的深拷贝
+          newData[value] = [...currentDataValue];
+        } else if (currentDataValue instanceof Set) {
+           // 实现set数据的深拷贝
+           newData[value] = new Set([...currentDataValue]);
+        } else if (currentDataValue instanceof Map) {
+           // 实现map数据的深拷贝
+           newData[value] = new Map([...currentDataValue]);
+        } else { 
+           // 将这个待拷贝对象的引用存于hash中
+           hash.set(data,data)
+           // 普通对象则递归赋值
+           newData[value] = deepCopy(currentDataValue, hash);
+        } 
+     }); 
+    return newData;
+}
+
+
+// const deepCopy4 = obj => Object.create(obj)

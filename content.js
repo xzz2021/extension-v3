@@ -48,7 +48,9 @@ function createEntry(myapp,id){
     //  afterbegin 插入body内部最前面------afterend插入body外部后面
     // 必须嵌入body内部,不然面板无法固定
       el.insertAdjacentHTML('afterbegin',`<div id="${id}"></div>`)
-      createApp(myapp).use(pinia).use(VXETable).mount(`#${id}`)
+      let xzzapp = createApp(myapp)
+      xzzapp.directive('copy', API.vCopy)
+      xzzapp.use(pinia).use(VXETable).mount(`#${id}`)
       // createApp(myapp).use(pinia).use(Table).use(Modal).use(Column).mount(`#${id}`)
     }
 }

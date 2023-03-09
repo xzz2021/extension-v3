@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-04 14:59:57
+ * @LastEditTime: 2023-03-09 08:40:39
 -->
 <template>
 <div class="jclpanel" >
@@ -23,7 +23,7 @@
               <span class="entranceBox">
                 <div class="one">
                     <panelXzzLogo name="xzgj" />
-                    <div class="title" >下载工具</div>
+                    <div class="title">下载工具</div>
                 </div>
                 <panelXzzLogoyjt />
               </span>

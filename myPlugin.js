@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-09-27 09:33:17
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-08 09:32:40
+ * @LastEditTime: 2023-03-08 15:54:29
  */
 
 //bgd作为通讯的方案不可行,因为bgd会休眠-----需借由content触发事件------
@@ -31,7 +31,7 @@ class AutoReloadPlugin {
               ws.send(JSON.stringify("编译完成了bg"))
               console.log('----编译完成----发送给bgd客户端----', new Date().toLocaleString())
             }
-        })
+          })
         }
       })
     })
@@ -54,6 +54,7 @@ class AutoReloadPlugin {
     })
   }
 }
+
 
 
 
