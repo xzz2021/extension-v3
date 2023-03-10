@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-04 14:48:45
+ * @LastEditTime: 2023-03-10 16:49:25
  */
 // 'use strict'默认启用
 import { createApp } from 'vue'
@@ -40,6 +40,8 @@ import apptb from './src/pages/tb/app.vue'
 import appjd from './src/pages/jd/app.vue'
 import appamazon from './src/pages/amazon/app.vue'
 
+//全局自定义组件install插件方式批量引入
+// import appXzz from './src/xzzComponents/index'
 
 //------------vue实例-----挂载入口---------------------
 function createEntry(myapp,id){
@@ -50,6 +52,7 @@ function createEntry(myapp,id){
       el.insertAdjacentHTML('afterbegin',`<div id="${id}"></div>`)
       let xzzapp = createApp(myapp)
       xzzapp.directive('copy', API.vCopy)
+      // xzzapp.use(appXzz)
       xzzapp.use(pinia).use(VXETable).mount(`#${id}`)
       // createApp(myapp).use(pinia).use(Table).use(Modal).use(Column).mount(`#${id}`)
     }

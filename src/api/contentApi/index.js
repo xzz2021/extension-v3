@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-10-29 16:39:29
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-02-21 16:14:13
+ * @LastEditTime: 2023-03-09 13:58:51
  */
 /*
 encryption code
@@ -23,7 +23,7 @@ const files = require.context('./', true, /\.js$/)
 // files.keys().forEach(key => cache2 ={ ...cache2, ...files(key)['default']})
 // console.log("🚀 ~ file: index.js:17 ~ cache2:", cache2)
 
-//对象引入
+//对象引入33333333333333333333333333333333
 function importAllModule(_0x20f2a4){const _0x2d389c={};let _0x536206={};for(let _0x5bcc6e of _0x20f2a4['keys']()){_0x2d389c[_0x5bcc6e]=_0x20f2a4(_0x5bcc6e)['default'];}for(let _0x1bcf2e in _0x2d389c){_0x536206={..._0x536206,..._0x2d389c[_0x1bcf2e]};}return _0x536206;}
 
 export let  contentApi = importAllModule(files)

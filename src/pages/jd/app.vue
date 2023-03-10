@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-09 08:40:39
+ * @LastEditTime: 2023-03-10 16:44:12
 -->
 <template>
 <div class="jclpanel" >
@@ -111,6 +111,9 @@
           <panelPlainMenu logoName="login" title="账号登录" openKey="login" :show="!busStore.userid" />
 
         <div  class="version">版本:{{ busStore.version }} </div>
+        <xzzTest />
+        <xzzTest2 />
+        
     </main>
     </Transition>
 
