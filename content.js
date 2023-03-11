@@ -24,8 +24,8 @@ import './src/api/contentApi/websocket'
 
 
 // {recconnectTime = 6, port = 7777, message={type: 'compiler'}}
-// import { createWsConnect } from './myPluginCopy'
-// createWsConnect({message: 'compiler'})
+// import { createWsConnect } from 'ws-reload-plugin'
+// createWsConnect({})
 // //------------------------------------------------------
 
 //---------全局引入vxe-table----------按需引入体积只减少100k,且有bug,,不值得-----不要再按需------
