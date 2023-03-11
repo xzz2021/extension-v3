@@ -20,7 +20,7 @@ const getUserinfo = async () => {
 
 
 const storeUserinfo = async (obj) => {
-    //传入用户id,token,phone,添加时间戳进行存储
+    //传入用户id,token,phone,添加时间戳进行存储  //直接覆写storage数据
     obj.timeStamp = Date.now()
     await  API.Storage.set({userInfo: obj})
 }

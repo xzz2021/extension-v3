@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-12-06 17:13:35
- * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-11 09:39:37
+ * @LastEditors: xzz
+ * @LastEditTime: 2023-03-11 14:01:25
 -->
 <template>
 <div class="jclpanel" >
@@ -221,23 +221,27 @@ const onDragstop = async (e) => {
 }
 //---------面板拖拽功能------end------------------
 
-const getUserInfo = async () => {
+const updateUserinfo = async () => {
 let userInfoStore  =  await  API.getUserinfo()
+  console.log("🚀 ~ file: app.vue:226 ~ updateUserinfo ~ userInfoStore:", userInfoStore)
   if(userInfoStore.userid == undefined) {
     API.checkLogin.addEvent()  //添加全局登录拦截
+  
     }else{
       API.checkLogin.removeEvent()  //移除全局登录拦截
-      busStore.$patch((state)=>{
-          state.userInfo = userInfoStore
-        })
     }
+    // 同时监听登录退出事件
+    busStore.$patch((state)=>{
+        state.userInfo = userInfoStore
+        // state.userInfo = userInfoStore || { userid: '', userToken: '', userPhone: '', timeStamp: '' }
+      })
 }
 onBeforeMount(async () => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  message == 'loginEvent'? getUserInfo() : ''
+  message == 'loginEvent'? updateUserinfo() : ''
   sendResponse({status: true})
   })
-getUserInfo()
+updateUserinfo()
 API.Storage.set({platform: '京东'})  //必须声明此项,其他独立公共组件才能拿到值
 })
 

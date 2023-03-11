@@ -1,12 +1,13 @@
 /*
  * @Date: 2022-12-06 17:13:35
- * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-11 09:38:27
+ * @LastEditors: xzz
+ * @LastEditTime: 2023-03-11 14:20:27
  */
 
 //---------------引入分文件的所有自定义api-----------
 import { bgcApi as API } from './src/api/bgcApi/index'
-// API= API
+// console.log("🚀 ~ file: background.js:9 ~ API:", API)
+// API = API
 // chrome.API = API // 挂载到全局,从而让api内部也能拿到所有函数
 
 // import { bgdListenMsg } from './myPluginCopy'
@@ -149,7 +150,7 @@ chrome.runtime.onMessage.addListener(
       break;
       // fatosy API end 
       case 'myfetch':  { (async () => {
-                       let res =  await API.xzzFetch(message.config.url, message.config)
+                       let res =  await API.myfetch(message.config.url, message.config)
                        sendResponse(res)})()
                         return true}
         break;

@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-12-06 17:13:35
- * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-11 09:11:22
+ * @LastEditors: xzz
+ * @LastEditTime: 2023-03-11 11:53:40
  */
 
 
@@ -43,4 +43,4 @@ ws.onclose =  (e) => {  // 服务端或客户端主动断开时 触发
 //   }
 }
 
-// DEBUG ? createWsConnect() : ''
+DEBUG ? createWsConnect() : ''

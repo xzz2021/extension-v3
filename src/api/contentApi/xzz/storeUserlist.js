@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-11-23 17:42:52
- * @LastEditors: xzz2021
- * @LastEditTime: 2022-11-24 17:58:02
+ * @LastEditors: xzz
+ * @LastEditTime: 2023-03-11 11:55:37
  */
 
 
@@ -30,13 +30,25 @@ const storeUserlist = async () => {
     }
 }
 
-const updateUserlist = async (id) => {
+const updateUserlist = async (userInfo) => {
+    userInfo.timeStamp = Date.now()
     //删除和退出账号时更新账号列表
     let aa = await  API.Storage.get('userList')
-    if(aa == '') return
-    let newinfo = aa.filter(item => item.userid != id)
+
+    if(aa == '') return API.Storage.set({userList: [userInfo]})
+
+    let newinfo = aa.filter(item => item.userid != userInfo.userid)
+    newinfo.push(userInfo)
     await  API.Storage.set({userList: newinfo})
 }
 
 
-export default {getUserlist, storeUserlist, updateUserlist}
+const deleteUserlist = async (userid) => {
+    let aa = await  API.Storage.get('userList')
+    if(aa == '') return 
+    let newList = aa.filter(item => item.userid != userid)
+    await  API.Storage.set({userList: newList})
+}
+
+
+export default {getUserlist, storeUserlist, updateUserlist, deleteUserlist}

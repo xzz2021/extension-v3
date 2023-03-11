@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-12-13 16:22:15
- * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-03 11:25:08
+ * @LastEditors: xzz
+ * @LastEditTime: 2023-03-11 14:04:11
 -->
 <template>
     <!-- Element Plus 组件 默认 使用英语 -->
@@ -9,7 +9,7 @@
     <loginPanel ref="loginRef" />
 
     <taskProgress ref="taskProgressRef" />
-    <operateHistory  ref="operateHistoryRef" />
+    <!-- <operateHistory  ref="operateHistoryRef" /> -->
     <feedbackPanel  ref="feedbackPanelRef" />
     <commentPanel  />
     <imagePanel  />
