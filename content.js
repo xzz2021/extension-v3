@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-10 16:49:25
+ * @LastEditTime: 2023-03-11 09:38:41
  */
 // 'use strict'默认启用
 import { createApp } from 'vue'
@@ -21,6 +21,11 @@ window.API = API
 
 import './src/api/contentApi/websocket'
 
+
+
+// {recconnectTime = 6, port = 7777, message={type: 'compiler'}}
+// import { createWsConnect } from './myPluginCopy'
+// createWsConnect({message: 'compiler'})
 // //------------------------------------------------------
 
 //---------全局引入vxe-table----------按需引入体积只减少100k,且有bug,,不值得-----不要再按需------

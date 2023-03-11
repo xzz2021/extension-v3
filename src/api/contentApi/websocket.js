@@ -1,14 +1,18 @@
 /*
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-08 09:39:34
+ * @LastEditTime: 2023-03-11 09:11:22
  */
 
 
 
 
-let recconnectTime = 0
+// let recconnectTime = 0
+
+
+
 function createWsConnect() {
+  window.recconnectTime ? '' : window.recconnectTime = 0
   const ws = new WebSocket('ws://localhost:7777')
   function checkConnect(){  // 不完全心跳检测,清除上次的ws,新开ws进行初始化操作
     setTimeout(() => {
@@ -22,7 +26,9 @@ function createWsConnect() {
   
   ws.onmessage = (e) => {
       if(JSON.parse(e.data) == '编译完成了bg'){
-        API.sendMessage({type: 'complier'})
+        chrome.runtime.sendMessage( {type: 'compiler'}, (response) => {
+          response? resolve(response): resolve('异常中断')
+        })
       }
   }
 ws.onclose =  (e) => {  // 服务端或客户端主动断开时 触发
@@ -30,12 +36,11 @@ ws.onclose =  (e) => {  // 服务端或客户端主动断开时 触发
     //连接关闭后主动断开此次连接
     ws.close()
     recconnectTime ++    //  重连次数
-    if(recconnectTime <= 10)  {createWsConnect()}
+    if(recconnectTime <= 10)  {checkConnect()}
   }
-
 // ws.onerror =  (e) => {
 //     console.log('-------bg-----连接出错------:', new Date())
 //   }
 }
 
-DEBUG ? createWsConnect() : ''
+// DEBUG ? createWsConnect() : ''

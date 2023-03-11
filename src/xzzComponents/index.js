@@ -1,10 +1,10 @@
 /*
  * @Date: 2023-03-10 16:23:43
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-10 16:45:58
+ * @LastEditTime: 2023-03-10 17:33:07
  */
 //定义批量全局自定义组件挂载入口
-//这样可以达到在  没有自动引入组件插件 的情况下, 也能随处使用已定义的组件
+//这样可以达到在  没有自动引入组件插件 的情况下, 也能随处使用已定义的组件,且可以按需导入
 
 import xzzTest from "./xzztest";
 import xzzTest2 from "./xzztest2";

@@ -161,7 +161,7 @@ const  messageListenser = () => {
               sendResponse('tab关闭成功')
             }
               break;
-            case 'complier':    API.autoReloadTab(); sendResponse('刷新完成')  //此处定义开发时的编译后页面自动刷新
+            case 'compiler':    API.autoReloadTab(); sendResponse('刷新完成')  //此处定义开发时的编译后页面自动刷新
                   //  {(async () => {await API.autoReloadTab();sendResponse('刷新完成')})(); return true} 
               break;
             case 'injectFn' : {

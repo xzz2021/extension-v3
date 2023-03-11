@@ -1,12 +1,12 @@
 /*
  * @Date: 2022-09-30 16:00:59
  * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-09 10:42:25
+ * @LastEditTime: 2023-03-11 08:43:25
  */
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-// const wsAutoReloadPlugin = require('./myPluginCopy')
-const wsAutoReloadPlugin = require('ws-reload-plugin')
+const {wsAutoReloadPlugin} = require('./myPluginCopy')
+// const wsAutoReloadPlugin = require('ws-reload-plugin')
 const webpack = require('webpack')
 
 const watchconfig = {
