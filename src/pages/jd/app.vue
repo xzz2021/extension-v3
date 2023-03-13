@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz
- * @LastEditTime: 2023-03-11 14:41:28
+ * @LastEditTime: 2023-03-11 15:50:50
 -->
 <template>
 <div class="jclpanel" >
@@ -223,10 +223,9 @@ const onDragstop = async (e) => {
 
 const updateUserinfo = async () => {
 let userInfoStore  =  await  API.getUserinfo()
-  console.log("🚀 ~ file: app.vue:226 ~ updateUserinfo ~ userInfoStore:", userInfoStore)
+  // console.log("🚀 ~ file: app.vue:226 ~ updateUserinfo ~ userInfoStore:", userInfoStore)
   if(userInfoStore.userid == undefined) {
     API.checkLogin.addEvent()  //添加全局登录拦截
-  
     }else{
       API.checkLogin.removeEvent()  //移除全局登录拦截
     }

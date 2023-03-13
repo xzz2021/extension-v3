@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz
- * @LastEditTime: 2023-03-11 14:23:57
+ * @LastEditTime: 2023-03-13 08:44:43
  */
 
 //---------------引入分文件的所有自定义api-----------
@@ -10,8 +10,9 @@ import { bgcApi as API } from './src/api/bgcApi/index'
 // API = API
 // chrome.API = API // 挂载到全局,从而让api内部也能拿到所有函数
 
-// import { bgdListenMsg } from 'ws-reload-plugin'
+// import { bgdListenMsg } from './myPluginCopy'
 // bgdListenMsg()
+
 
 // 绝大多数事件都应该在onInstalled后执行,因为chrome浏览器本身有缓存会导致js文件数据重复写入导致事件冲突等错误
 chrome.runtime.onInstalled.addListener(function () {
@@ -22,14 +23,15 @@ chrome.runtime.onInstalled.addListener(function () {
 })
 
 
-
 // --------------------约定传送信息类型,根据类型执行相应函数-----------------------
 //--------☆☆☆☆☆--------监听所有发送的信息-----根据信息类别调用引入的函数----------☆☆☆☆☆-----
 // API.messageListenser()
 // import './src/api/bgcApi/messageListenser.js'
 chrome.runtime.onMessage.addListener(
   (message, sender, sendResponse) => {
-    // console.log('----------------message: ----------------', message)
+    // console.log("🚀 ~ file: background.js:34 ~ message:", message)
+    //此处定义开发时的编译后页面自动刷新
+    // if(message == 'compiler') {  API.autoReloadTab(); sendResponse('刷新完成'); return }  
     switch (message.type) {
       // fatosy API start 
       case 'ztab': {

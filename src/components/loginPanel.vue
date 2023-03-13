@@ -42,7 +42,7 @@
                     <el-dropdown @command="inputAccount" placement="bottom-end">
                         <span class="el-dropdown-link">
                           <!-- <i class="funicon-dropdown listDropdown"></i> -->
-                          <svg class="xzzsymbol" style="width:20px; height:20px;" aria-hidden="true"><use xlink:href="#xzzicon3-dropdown"></use></svg>
+                          <svg class="xzzsymbol" style="width:18px; height:18px;" aria-hidden="true"><use xlink:href="#xzzicon3-dropdown"></use></svg>
                         </span>
                         <template  #dropdown>
                           <el-dropdown-menu >
@@ -64,9 +64,9 @@
               </el-form-item>
               <el-form-item>
                 <div class="tipBox">
-                  <el-checkbox-group v-model="loginForm.keep" >
-                    <el-checkbox label="记住用户名" name="keep"></el-checkbox>
-                  </el-checkbox-group>
+                  <!-- <el-checkbox-group v-model="loginForm.keep" > -->
+                    <el-checkbox label="记住用户名" v-model="loginForm.keep"></el-checkbox>
+                  <!-- </el-checkbox-group> -->
                   <div class="tip2">未注册手机号登录将自动注册</div>
                 </div>
               </el-form-item>
@@ -95,7 +95,7 @@ let userList = reactive({self:[]})    //在本地存储中获取到的有效期�
 
 let exchangeList = reactive({self:[]})   //等待切换的有效期内的账户列表
 
-let loginForm = reactive({ phone: null, code: '', keep: ['记住用户名'] })   //  登录表单数据
+let loginForm = reactive({ phone: null, code: '', keep: true })   //  登录表单数据
 
     const rules = reactive({  //校验规则
         phone: [
@@ -133,22 +133,18 @@ let loginForm = reactive({ phone: null, code: '', keep: ['记住用户名'] })  
       await ruleFormRef.validate((valid, fields) => { isValid = valid })
       if (!isValid) return ElMessage.error({ message: '输入有误,请重试!', duration: 1500 })
 
-      // let res = await  API.submitLogin(loginForm)  
+      let res = await  API.submitLogin(loginForm)  
 
-      // if(res.ret == undefined) return  ElMessage.error({ message: '验证码错误,请重试!', duration: 1500 })
+      if(res.ret == undefined) return  ElMessage.error({ message: '验证码错误,请重试!', duration: 1500 })
 
-      // let curUserInfo =  {userid: res.data.user_id , userToken: res.data.token, userPhone: loginForm.phone} 
+      let curUserInfo =  {userid: res.data.user_id , userToken: res.data.token, userPhone: loginForm.phone} 
 
-      let curUserInfo =  {userid: loginForm.code , userToken: '35464646454657', userPhone: loginForm.phone} 
-
+      // let curUserInfo =  {userid: loginForm.code , userToken: '35464646454657', userPhone: loginForm.phone}  //test
         await API.storeUserinfo(curUserInfo) // 存储账号信息  
-
         // await API.storeUserlist()   
-        if(loginForm.keep[0] == '记住用户名'){ API.updateUserlist(curUserInfo) }   // 更新本地存储的用户列表
-
-        console.log("🚀 ~ file: loginPanel.vue:153 ~ submitForm ~ loginForm.keep[0]:", loginForm.keep[0])
+        
+        if(loginForm.keep == true){ await API.updateUserlist(curUserInfo) }   // 更新本地存储的用户列表
         updateUserinfo() //获取更新后的信息
-
         loginClose()
     }
 
@@ -181,7 +177,6 @@ let loginForm = reactive({ phone: null, code: '', keep: ['记住用户名'] })  
       let id = userInfo.self.userid
       //拿到所有本地存储的用户列表数据
       userList.self = await API.getUserlist()
-      console.log("🚀 ~ file: loginPanel.vue:181 ~ updateUserinfo ~ userList.self:", userList.self)
       //-------------------------------拿到空值---------------???????????
       // console.log('storelist.length: ', storelist.length);  //-------reactive数组----即使赋值也会转换成代理对象数组
       exchangeList.self  =  userList.self.filter(item => item.userid != id)
