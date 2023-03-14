@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-10-05 09:17:58
- * @LastEditors: xzz2021
- * @LastEditTime: 2023-02-21 15:09:26
+ * @LastEditors: xzz
+ * @LastEditTime: 2023-03-13 11:44:13
  */
 const Storage = {
 
@@ -12,13 +12,15 @@ const Storage = {
             resolve('设定失败:参数必须是object且不能为空')
         }else{
             let tip = '77'
-            let l = 1
+            let l = 0
             for(const key in obj) {
+                l ++
                 if(obj[key] == undefined) return tip = `${key}设定成功失败,值不能为undefined`
+                
                 chrome.storage.local.set({[key]: obj[key]}, ()=> {
-                    // console.log(`${l}:${key}设定成功,值为${JSON.stringify(obj[key])}`)
-                    tip = ` ${l}:${key}设定成功,值为${obj[key]} `
-                    l++
+                    tip = ` ${l}:${key}设定成功,值为${JSON.stringify(obj[key])}`
+                    if(key == 'taskData') return 
+                    console.log("🚀 ~ file: storage.js:23 ~ chrome.storage.local.set ~ tip:", tip)
                 })
             }
             resolve(tip)

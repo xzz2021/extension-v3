@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-09-15 11:21:04
- * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-06 11:25:03
+ * @LastEditors: xzz
+ * @LastEditTime: 2023-03-13 14:52:40
  */
 
 import { defineStore } from 'pinia'
@@ -11,8 +11,10 @@ export const piniaStore = defineStore('selfInfo', {
     // arrow function recommended for full type inference
     state: () => {
       return {
+        count: 0,
         showMain2: true,  // 是否显示主面板  //这里定义在app里无法拿到,估计是template编译时没有对pinia的.value进行转换
-        panelLocation: JSON.parse(localStorage.getItem('panelLocation')) || { lx: 60, ly: 120 },
+        panelLocation: { lx: 120, ly: 80 },
+        // panelLocation: JSON.parse(localStorage.getItem('panelLocation')) || { lx: 60, ly: 120 },
         // sitePlatform: '京东',
         // urlCheck: window.location.href.indexOf('item.jd') == -1, //检查当前页是否是商品页,true则return弹出提示
 
@@ -30,6 +32,8 @@ export const piniaStore = defineStore('selfInfo', {
       //   let aa = localStorage.getItem('panelLocation')
       //   return  aa ? JSON.parse(aa)  : { lx: 60, ly: 120 }
       // },
+      // panelLocation: (state) => {
+      // },
       userPhone: (state) => {
         if(state.userInfo.userPhone == '') return ''
         let a = state.userInfo.userPhone + ''
@@ -43,12 +47,22 @@ export const piniaStore = defineStore('selfInfo', {
     // persist: true, //持久化
       actions: {  //支持异步
         async increment() {
-          await API.wait(6)
-          this.count++
+          await API.wait(2)
+          this.count += 99
         },
-        storeLoc(loc){
-          this.panelLocation = loc
-          localStorage.setItem('panelLocation', JSON.stringify(loc))
+        async getLocation() {
+          let loc = await  API.Storage.get('jdLocation')
+          if(loc == '') return
+          // return loc
+          // console.log("🚀 ~ file: piniaStore.js:52 ~ getLocation ~ loc:", loc)
+          // this.panelLocation = loc
+          
+        },
+        async storeLocation(loc){
+          this.panelLocation = loc // 因为值是双向绑定的,所以此处必须再次赋当前的新值, 一个实时,一个本地
+          // console.log("🚀 ~ file: piniaStore.js:62 ~ storeLocation ~ loc:", loc)
+          // localStorage.setItem('panelLocation', JSON.stringify(loc))
+          await  API.Storage.set({'jdLocation': loc})
           },
         toggleShow(){
           this.showMain2 = !this.showMain2

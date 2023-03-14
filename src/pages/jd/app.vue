@@ -1,13 +1,15 @@
 <!--
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz
- * @LastEditTime: 2023-03-11 15:50:50
+ * @LastEditTime: 2023-03-13 15:04:32
 -->
 <template>
 <div class="jclpanel" >
   
     <!-- <VueDragResize dragCancel=".dragbox .advertiseBox,.dragbox .footer,.dragbox  .jclmain" :isActive="true" :w="180" :h="60" :x="panelLocation.lx" :y="panelLocation.ly" :z="22" v-if="reloadDrag" :isResizable="false" @dragstop="onDragstop" > -->
-    <VueDragResize dragCancel=".jclmain" dragHandle=".handleBox" :isActive="true" :w="180" :h="60" :x="panelLocation.lx" :y="panelLocation.ly" :z="22" v-if="reloadDrag" :isResizable="false" @dragstop="onDragstop" >
+    <VueDragResize dragCancel=".jclmain" dragHandle=".handleBox" :isActive="true" :w="180" :h="60" 
+    :x="panelLocation.lx" :y="panelLocation.ly" :z="22" v-if="reloadDrag" :isResizable="false" 
+    @dragstop="onDragstop" >
       <!-- https://github.com/kirillmurashov/vue-drag-resize/tree/v2.0.3 -->
     <div class="dragbox">
         <panelHeader />
@@ -114,6 +116,7 @@
         <!-- <xzzTest />
         <xzzTest2 /> -->
         
+        <!-- <div @click="busStore.increment()">{{ count }}</div> -->
     </main>
     </Transition>
 
@@ -152,21 +155,13 @@
 
 //导入主图视频下载功能
 import { videoDownload } from './videoDownload.js'
-// console.log("🚀 ~ file: app.vue:203 ~ videoDownLoad:", videoDownLoad)
-
-//各平台持久化的store数据
-// const userstore = userStore()
-// const { panelLocation } = storeToRefs(userstore)
 
 //平台状态store
 const busStore = piniaStore()
 //storeToRefs增加响应性,使用了proxy,所以普通简单类型数据需要用.value拿到值, 而复杂数据不需要可以直接.xxx获取
 //  或者直接busStore.xxx调用,也具有响应式
-const {  panelLocation  } = storeToRefs(busStore) 
+const {   panelLocation, count  } = storeToRefs(busStore) 
 
-//  改为pinia中定义
-// let showMain  = ref(true)
-// const userid = ref('')
 
 //注入函数到inject里,共享浏览器调试面板的顶层window
 const test1 = async() => {
@@ -209,14 +204,14 @@ const openOrClose = (val) => {
 let reloadDrag = ref(true)
 const onDragstop = async (e) => {
   // console.log('=========zhixing==========')
-  if(panelLocation.value.lx == e.left && panelLocation.value.ly == e.top) return window.open('http://pddzd.junchenlun.com/plugs/index.html#/')
+  if(panelLocation.lx == e.left && panelLocation.ly == e.top) return window.open('http://pddzd.junchenlun.com/plugs/index.html#/')
   let winHeight = window.innerHeight - 60
   let winWidth = window.innerWidth - 200
   if(e.top < 0 || e.left < 0 || e.top > winHeight || e.left > winWidth){
     reloadDrag.value = false
     setTimeout(() => { reloadDrag.value = true }, 100)
   }else{
-    busStore.storeLoc({ lx: e.left, ly: e.top })   //移动后存储和更新最新的坐标
+    busStore.storeLocation({ lx: e.left, ly: e.top })   //移动后存储和更新最新的坐标
   }
 }
 //---------面板拖拽功能------end------------------
@@ -243,6 +238,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 updateUserinfo()
 API.Storage.set({platform: '京东'})  //必须声明此项,其他独立公共组件才能拿到值
 })
+
+onMounted(async() => {
+  // busStore.getLocation()
+})
+
+
 
 </script>
 
