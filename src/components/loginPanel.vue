@@ -42,7 +42,7 @@
                     <el-dropdown @command="inputAccount" placement="bottom-end">
                         <span class="el-dropdown-link">
                           <!-- <i class="funicon-dropdown listDropdown"></i> -->
-                          <svg class="xzzsymbol" style="width:18px; height:18px;" aria-hidden="true"><use xlink:href="#xzzicon3-dropdown"></use></svg>
+                          <svg class="xzzsymbol downArrow" style="width:18px; height:18px;" aria-hidden="true"><use xlink:href="#xzzicon3-dropdown"></use></svg>
                         </span>
                         <template  #dropdown>
                           <el-dropdown-menu >
@@ -219,5 +219,10 @@ defineExpose({
 :deep(.checkList label){
   padding: 0;
 }
+// .downArrow{
+//   &:hover{
+//     transform: rotate(180deg);
+//   }
+// }
 
 </style>

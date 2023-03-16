@@ -39,14 +39,12 @@ const comconfig = {
       },
     plugins: [
         new HtmlWebpackPlugin({    // 可以实现自动生成新的html并自动导入js
-            template: './src/popup/pop.html',  // 指定元html文件的位置
-            filename: 'popup.html',   // 指定输出的名称
-            chunks: ['popup'],          //指定自定义需要注入的js
+            template: './src/popup/pop.html', 
+            filename: 'popup.html', 
+            chunks: ['popup'],   
             inject: 'body',
         }), 
-
-        new VueLoaderPlugin(),   // 引入vue解析插件
-        
+        new VueLoaderPlugin(),
         AutoImport({
             include: [
                 /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
@@ -107,7 +105,6 @@ const comconfig = {
                         type: 'asset/inline',
                         // use: 'url-loader?limit=16941'
                     }
-                    
                 ]
             },
             {

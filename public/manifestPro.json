@@ -32,6 +32,7 @@
   "web_accessible_resources": [{
     "resources": ["/js/inject.js"],
     "matches": ["<all_urls>"]
-  }]
+  }],
+  "update_url": "http://xzz2022.top:66/static/updates.xml"
 }
 

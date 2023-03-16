@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz
- * @LastEditTime: 2023-03-13 08:44:43
+ * @LastEditTime: 2023-03-16 16:07:59
  */
 
 //---------------引入分文件的所有自定义api-----------
@@ -10,8 +10,8 @@ import { bgcApi as API } from './src/api/bgcApi/index'
 // API = API
 // chrome.API = API // 挂载到全局,从而让api内部也能拿到所有函数
 
-// import { bgdListenMsg } from './myPluginCopy'
-// bgdListenMsg()
+import { bgdListenMsg } from './myPluginCopy'
+bgdListenMsg()
 
 
 // 绝大多数事件都应该在onInstalled后执行,因为chrome浏览器本身有缓存会导致js文件数据重复写入导致事件冲突等错误

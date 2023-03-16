@@ -1,11 +1,11 @@
 <!--
  * @Date: 2022-12-13 16:22:15
  * @LastEditors: xzz
- * @LastEditTime: 2023-03-11 16:14:43
+ * @LastEditTime: 2023-03-16 14:01:51
 -->
 <template>
     <!-- Element Plus 组件 默认 使用英语 -->
-<el-config-provider :locale="zhCn">
+<el-config-provider :locale="zhCn" :z-index="99999999">
     <loginPanel ref="loginRef" />
 
     <taskProgress ref="taskProgressRef" />

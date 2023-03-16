@@ -1,13 +1,12 @@
 /*
  * @Date: 2022-10-05 09:17:58
  * @LastEditors: xzz
- * @LastEditTime: 2023-03-13 11:44:13
+ * @LastEditTime: 2023-03-14 14:27:21
  */
 const Storage = {
 
     set(obj){
         return new Promise( (resolve, reject) => {
-
         if(Object.prototype.toString.call(obj) !== '[object Object]' && JSON.stringify(obj) === '{}'){
             resolve('设定失败:参数必须是object且不能为空')
         }else{
@@ -16,11 +15,10 @@ const Storage = {
             for(const key in obj) {
                 l ++
                 if(obj[key] == undefined) return tip = `${key}设定成功失败,值不能为undefined`
-                
                 chrome.storage.local.set({[key]: obj[key]}, ()=> {
                     tip = ` ${l}:${key}设定成功,值为${JSON.stringify(obj[key])}`
                     if(key == 'taskData') return 
-                    console.log("🚀 ~ file: storage.js:23 ~ chrome.storage.local.set ~ tip:", tip)
+                    console.log("🚀 chrome.storage.local.set ~ :", tip)
                 })
             }
             resolve(tip)

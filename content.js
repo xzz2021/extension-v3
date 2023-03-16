@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz
- * @LastEditTime: 2023-03-11 16:32:28
+ * @LastEditTime: 2023-03-16 14:12:40
  */
 // 'use strict'默认启用
 import { createApp } from 'vue'
@@ -25,8 +25,8 @@ window.API = API
 
 // {recconnectTime = 6, port = 7777, message={type: 'compiler'}}
 // import { createWsConnect } from './myPluginCopy'
-const { createWsConnect } = require('./myPluginCopy') 
-createWsConnect({})
+const { createWsConnect } = require('ws-reload-plugin') 
+DEBUG ? createWsConnect({}) : ''
 // //------------------------------------------------------
 
 //---------全局引入vxe-table----------按需引入体积只减少100k,且有bug,,不值得-----不要再按需------

@@ -5,8 +5,8 @@
  */
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const {wsAutoReloadPlugin} = require('./myPluginCopy')
-// const wsAutoReloadPlugin = require('ws-reload-plugin')
+// const {wsAutoReloadPlugin} = require('./myPluginCopy')
+const {wsAutoReloadPlugin} = require('ws-reload-plugin')
 const webpack = require('webpack')
 
 const watchconfig = {
