@@ -1,14 +1,14 @@
 /*
  * @Date: 2022-10-29 16:39:29
- * @LastEditors: xzz2021
- * @LastEditTime: 2023-03-04 09:28:21
+ * @LastEditors: xzz
+ * @LastEditTime: 2023-03-17 15:32:50
  */
 //------------注入函数到浏览器window---------------
 // window._ = _
 // window.jq = $
 
 
-// 此处定义的注入js 环境  约等于   浏览器控制台
+// 此处定义的注入js 环境  约等于   浏览器控制台========可以拿到最高权限==========
 // function tte(para){
 //     let ttt = window.pageConfig.product.imageList
 //     window.postMessage(ttt, "*")
@@ -43,14 +43,8 @@ window.addEventListener('xzz', (params)=> {
 // window.tte = tte
 
 
-// =============================将所有content改成inject=====注入========的方法===========
-/**
- * injectScript - Inject internal script to available access to the `window`
- *
- * @param  {type} file_path Local path of the internal script.
- * @param  {type} tag The tag as string, where the script will be append (default: 'body').
- * @see    {@link http://stackoverflow.com/questions/20499994/access-window-variable-from-content-script}
- */
+// ======将所有content改成inject=====注入====的方法=======demo======不可使用,因为context的chrome不同====
+
 // function injectScript(file_path, tag) {
 //     var node = document.getElementsByTagName(tag)[0];
 //     var script = document.createElement('script');

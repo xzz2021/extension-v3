@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz
- * @LastEditTime: 2023-03-16 14:12:40
+ * @LastEditTime: 2023-03-17 15:40:53
  */
 // 'use strict'默认启用
 import { createApp } from 'vue'
@@ -11,7 +11,7 @@ import { createPinia } from 'pinia'
 const pinia = createPinia()
 
 //-----------------------------------
-// pinia插件  ,提供全局属性
+// pinia插件,可以直接写入全局可使用的属性
 pinia.use(()=> ({version: '1.0.1'}))
 
 
@@ -25,7 +25,8 @@ window.API = API
 
 // {recconnectTime = 6, port = 7777, message={type: 'compiler'}}
 // import { createWsConnect } from './myPluginCopy'
-const { createWsConnect } = require('ws-reload-plugin') 
+const { createWsConnect } = require('ws-reload-plugin')
+// createWsConnect({}) 
 DEBUG ? createWsConnect({}) : ''
 // //------------------------------------------------------
 

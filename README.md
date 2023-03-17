@@ -1,13 +1,19 @@
+<!--
+ * @Date: 2022-12-06 17:13:17
+ * @LastEditors: xzz
+ * @LastEditTime: 2023-03-17 15:49:33
+-->
 # 全新的框架
 技术栈：vue3.2+scss+element-plus+vxe-table+chromeV3+webpack5
 
-部分依赖：jquery,lodash,pinia,websocket,
+部分依赖：jquery,lodash,pinia,websocket, node版本最好>=18.13.0
 
 ### 文件结构说明
 public/manifest.json开发模式；public/manifestPro.json生产模式；因为使用了不同的css注入方式
 
 api存放自定义封装的函数，bgcApi目录下会自动引入background.js；contentApi目录下会自动全局引入content.js；请建立自己的文件夹编写，避免合并冲突，公共区域会存放提取大家优化完善的方法函数
 ##### components存放公共共性组件，然后会由各平台app.vue作为子组件引入，由于tab隔离，不再建立全局兄弟组件
+xzzComponents定义可批量或单独按需导入挂载到全局的组件
 ##### css为样式集合
 
 ### 编译配置

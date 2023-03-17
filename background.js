@@ -1,17 +1,35 @@
 /*
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz
- * @LastEditTime: 2023-03-16 16:07:59
+ * @LastEditTime: 2023-03-17 16:07:25
  */
 
 //---------------引入分文件的所有自定义api-----------
 import { bgcApi as API } from './src/api/bgcApi/index'
-// console.log("🚀 ~ file: background.js:9 ~ API:", API)
-// API = API
-// chrome.API = API // 挂载到全局,从而让api内部也能拿到所有函数
 
-import { bgdListenMsg } from './myPluginCopy'
-bgdListenMsg()
+// chrome.API = API // 挂载到全局,从而让api内部也能拿到所有函数//暂不使用,尽可能不去污染chrome
+
+
+//=========自动刷新方案一============================
+// import { bgdListenMsg } from 'ws-reload-plugin'
+// bgdListenMsg()
+
+// 上面如果需要按需刷新限定条件, 可以取消引入,解开下面的函数
+//=========自动刷新方案二==========================
+chrome.runtime.onMessage.addListener(
+  (message, sender, sendResponse) => {
+    if(message == 'compiler'){
+      chrome.tabs.query({ active: true }, ([tab]) => {
+        if (tab.url.match(/tmall|taobao|1688|yangkeduo|pinduoduo|alibaba|amazon|jd|/)) { 
+          chrome.runtime.reload()
+          chrome.tabs.reload()
+        } else {
+          chrome.runtime.reload()
+        }
+      })
+  }
+  sendResponse('reload successful')
+  })
 
 
 // 绝大多数事件都应该在onInstalled后执行,因为chrome浏览器本身有缓存会导致js文件数据重复写入导致事件冲突等错误
@@ -181,8 +199,8 @@ chrome.runtime.onMessage.addListener(
         sendResponse('tab关闭成功')
       }
         break;
-      case 'compiler':    API.autoReloadTab(); sendResponse('刷新完成')  //此处定义开发时的编译后页面自动刷新
-        break;
+      // case 'compiler':    API.autoReloadTab(); sendResponse('刷新完成')  //此处定义开发时的编译后页面自动刷新
+      //   break;
       case 'injectFn' : {
         (async () => {
           // function fn() {
