@@ -9,11 +9,9 @@
       <Transition name="fade">
     <main class="jclmain" v-show="showMain">
 
-      
       <panelPlainMenu logoName="jyfk" title="视频下载" @click="videoDownload2"   :show="true"/>
       <!-- 诊断工具 -->
         <!-- <panelDiagnosisTool /> -->
-
 
       <!-- 补单工具 -->
           <!-- <panelOrderToolPanel  banId='134'/> -->

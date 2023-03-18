@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz
- * @LastEditTime: 2023-03-17 16:07:25
+ * @LastEditTime: 2023-03-18 09:10:28
  */
 
 //---------------引入分文件的所有自定义api-----------
@@ -16,18 +16,30 @@ import { bgcApi as API } from './src/api/bgcApi/index'
 
 // 上面如果需要按需刷新限定条件, 可以取消引入,解开下面的函数
 //=========自动刷新方案二==========================
+// chrome.runtime.onMessage.addListener(
+//   (message, sender, sendResponse) => {
+//     console.log("🚀 ~ file: background.js:21 ~ sender:", sender)
+//   //   if(message == 'compiler'){
+//   //     chrome.tabs.query({ active: true }, ([tab]) => {
+//   //       if (tab.url.match(/tmall|taobao|1688|yangkeduo|pinduoduo|alibaba|amazon|jd|/)) { 
+//   //         chrome.runtime.reload()
+//   //         chrome.tabs.reload()
+//   //       } else {
+//   //         chrome.runtime.reload()
+//   //       }
+//   //     })
+//   // }
+//   sendResponse('reload successful')
+//   })
+
+
+  //=========自动刷新方案三==========================
 chrome.runtime.onMessage.addListener(
   (message, sender, sendResponse) => {
-    if(message == 'compiler'){
-      chrome.tabs.query({ active: true }, ([tab]) => {
-        if (tab.url.match(/tmall|taobao|1688|yangkeduo|pinduoduo|alibaba|amazon|jd|/)) { 
+      chrome.tabs.query({ url: sender.url }, ([tab]) => {
           chrome.runtime.reload()
-          chrome.tabs.reload()
-        } else {
-          chrome.runtime.reload()
-        }
+          chrome.tabs.reload(tab.id)
       })
-  }
   sendResponse('reload successful')
   })
 
