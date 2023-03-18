@@ -36,10 +36,12 @@ import { bgcApi as API } from './src/api/bgcApi/index'
   //=========自动刷新方案三==========================
 chrome.runtime.onMessage.addListener(
   (message, sender, sendResponse) => {
+    if(message == 'compiler'){
       chrome.tabs.query({ url: sender.url }, ([tab]) => {
           chrome.runtime.reload()
           chrome.tabs.reload(tab.id)
       })
+    }
   sendResponse('reload successful')
   })
 
