@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz
- * @LastEditTime: 2023-03-17 15:40:53
+ * @LastEditTime: 2023-03-24 09:35:11
  */
 // 'use strict'默认启用
 import { createApp } from 'vue'
@@ -40,6 +40,10 @@ import 'vxe-table/lib/style.css'
 import './src/css/style'
 //----------------------
 
+
+// 自定义v-指令引入
+import * as xzzDirectives from './src/components/directive'
+
 //-------------------各平台实例引入----------------
 import app1688 from './src/pages/alibaba/app.vue'
 // import apptmall from './src/pages/tmall/app.vue'
@@ -58,8 +62,15 @@ function createEntry(myapp,id){
     // 必须嵌入body内部,不然面板无法固定
       el.insertAdjacentHTML('afterbegin',`<div id="${id}"></div>`)
       let xzzapp = createApp(myapp)
-      xzzapp.directive('copy', API.vCopy)
+
+      //  自定义v-指令批量引入
+      Object.keys(xzzDirectives).forEach(item => { xzzapp.directive(item, xzzDirectives[item]) })
+
       // xzzapp.use(appXzz)
+      // console.log("🚀 ~ file: content.js:70 ~ createEntry ~ config:", xzzapp.config)
+
+      xzzapp.provide('xzzmessage', 'hello')  // 直接写入全局可使用的变量  组件内使用inject('xzzmessage')接收
+
       xzzapp.use(pinia).use(VXETable).mount(`#${id}`)
       // createApp(myapp).use(pinia).use(Table).use(Modal).use(Column).mount(`#${id}`)
     }

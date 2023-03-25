@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-10-29 16:39:29
  * @LastEditors: xzz
- * @LastEditTime: 2023-03-17 15:32:50
+ * @LastEditTime: 2023-03-25 15:22:09
  */
 //------------注入函数到浏览器window---------------
 // window._ = _
@@ -31,7 +31,10 @@ window.addEventListener('xzz', (params)=> {
 
         let res =  eval(params.detail.fn)
         // console.log("🚀 ~ file: inject.js:34 ~ window.addEventListener ~ res:", res)
-        window.postMessage(res, "*")
+        window.postMessage(res, "*")   //尽可能不使用通配符,明确指定来源窗口
+    //     let targetOrigin = params.detail.currentHref
+    //    window.postMessage(res, targetOrigin)
+
     } catch (error) {
     }
 },false)

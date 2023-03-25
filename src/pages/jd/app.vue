@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz
- * @LastEditTime: 2023-03-18 09:10:42
+ * @LastEditTime: 2023-03-24 09:48:20
 -->
 <template>
 <div class="jclpanel" >
@@ -112,7 +112,7 @@
 
           <panelPlainMenu logoName="login" title="账号登录" openKey="login" :show="!busStore.userid" />
 
-        <div  class="version">版本:{{ busStore.version }} </div>
+        <div  class="version" v-copy2>版本:{{ busStore.version }} </div>
         <!-- <xzzTest />
         <xzzTest2 /> -->
         
@@ -161,6 +161,20 @@ const busStore = piniaStore()
 //storeToRefs增加响应性,使用了proxy,所以普通简单类型数据需要用.value拿到值, 而复杂数据不需要可以直接.xxx获取
 //  或者直接busStore.xxx调用,也具有响应式
 const {   panelLocation, count  } = storeToRefs(busStore) 
+
+
+
+//-------创建一个依赖某变量的新变量,并通过computed实现双向依赖变化-------computed约等于有缓存的watch------
+/* const count22 = ref(1)
+const plusOne = computed({
+  get: () => count22.value + 1,
+  set: (val) => {
+    count.value = val - 1
+  }
+})
+plusOne.value = 1
+console.log(count22.value) // 0 */
+
 
 
 //注入函数到inject里,共享浏览器调试面板的顶层window
