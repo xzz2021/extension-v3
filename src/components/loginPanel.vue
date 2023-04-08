@@ -134,8 +134,10 @@ let loginForm = reactive({ phone: null, code: '', keep: true })   //  登录表�
       if (!isValid) return ElMessage.error({ message: '输入有误,请重试!', duration: 1500 })
 
       let res = await  API.submitLogin(loginForm)  
+      // console.log("🚀 ~ file: loginPanel.vue:137 ~ submitForm ~ res:", res)
 
-      if(res.ret == undefined) return  ElMessage.error({ message: '验证码错误,请重试!', duration: 1500 })
+      // if(res.ret == undefined) return  ElMessage.error({ message: '验证码错误,请重试!', duration: 1500 })
+      if(res.ret == undefined) return  
 
       let curUserInfo =  {userid: res.data.user_id , userToken: res.data.token, userPhone: loginForm.phone} 
 

@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-12-06 17:13:35
  * @LastEditors: xzz
- * @LastEditTime: 2023-03-18 10:25:46
+ * @LastEditTime: 2023-04-07 11:18:58
  */
 
 //---------------引入分文件的所有自定义api-----------
@@ -10,7 +10,7 @@ import { bgcApi as API } from './src/api/bgcApi/index'
 // chrome.API = API // 挂载到全局,从而让api内部也能拿到所有函数//暂不使用,尽可能不去污染chrome
 
 
-//=========自动刷新方案一============================
+//=========自动刷新方案一=================此方案会拦截掉全局的其他监听事件====待优化sendResponse========
 // import { bgdListenMsg } from 'ws-reload-plugin'
 // bgdListenMsg()
 
@@ -34,16 +34,16 @@ import { bgcApi as API } from './src/api/bgcApi/index'
 
 
   //=========自动刷新方案三==========================
-// chrome.runtime.onMessage.addListener(
-//   (message, sender, sendResponse) => {
-//     if(message == 'compiler'){
-//       chrome.tabs.query({ url: sender.url }, ([tab]) => {
-//           chrome.runtime.reload()
-//           chrome.tabs.reload(tab.id)
-//       })
-//     }
-//   sendResponse('reload successful')
-//   })
+chrome.runtime.onMessage.addListener(
+  (message, sender, sendResponse) => {
+    if(message == 'compiler'){
+      chrome.tabs.query({ url: sender.url }, ([tab]) => {
+          chrome.runtime.reload()
+          chrome.tabs.reload(tab.id)
+      })
+      sendResponse('reload successful')
+    }
+  })
 
 
 // 绝大多数事件都应该在onInstalled后执行,因为chrome浏览器本身有缓存会导致js文件数据重复写入导致事件冲突等错误
