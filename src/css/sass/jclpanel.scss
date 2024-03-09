@@ -34,11 +34,11 @@
 
 
 
-.jclpanel {
+// .jclpanel {
   z-index: 996;
   position: fixed;
 
-  .jclmain {
+  // .jclmain {
       @include flexcencol;
       padding-top: 7px;
       background-color: #fff;
